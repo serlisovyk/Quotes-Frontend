@@ -4,9 +4,9 @@
     "paths": {
       "@components/*": ["./app/_components/*"],
       "@config/*": ["./app/_config/*"],
+      "@hooks/*": ["./app/_hooks/*"],
       "@utils/*": ["./app/_utils/*"],
       "@services/*": ["./app/_services/*"],
-      "@queries/*": ["./app/_queries/*"],
       "@public/*": ["./public/*"]
     }
   }

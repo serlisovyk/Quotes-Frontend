@@ -4,7 +4,6 @@ import { ToastContainer } from 'react-toastify'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Loader from '@components/Loader'
-import QueryProvider from './query-provider'
 import './globals.css'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -36,9 +35,7 @@ export default function RootLayout({ children }) {
             hideProgressBar={false}
           />
           <Header />
-          <QueryProvider>
-            <main className="container mx-auto p-4">{children}</main>
-          </QueryProvider>
+          <main className="container mx-auto p-4">{children}</main>
           <Footer />
         </Suspense>
       </body>

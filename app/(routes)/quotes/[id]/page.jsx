@@ -6,8 +6,8 @@ import Button from '@components/Button'
 import CategoryTags from '@components/CategoryTags'
 import Loader from '@components/Loader'
 import { ROUTES } from '@config/constants'
-import { useDeleteQuote } from '@queries/useDeleteQuote'
-import { useGetSingleQuote } from '@queries/useGetSingleQuote'
+import { useDeleteQuote } from '@hooks/useDeleteQuote'
+import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
 
 export default function QuotePage({ params: { id } }) {
   const router = useRouter()

@@ -16,7 +16,6 @@
     "docker:dev:down": "docker compose -f docker-compose.dev.yml down"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.101.4",
     "deep-equal": "^2.2.3",
     "next": "^16.3.0",
     "react": "^19.2.8",
@@ -26,7 +25,6 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
-    "@tanstack/react-query-devtools": "^5.101.4",
     "@testing-library/dom": "^10.4.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.2",

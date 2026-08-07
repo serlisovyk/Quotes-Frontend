@@ -3,7 +3,7 @@
 import Button from '@components/Button'
 import Quotes from '@components/Quotes'
 import Loader from '@components/Loader'
-import { useGetRandomQuotes } from '@queries/useGetRandomQuotes'
+import { useGetRandomQuotes } from '@hooks/useGetRandomQuotes'
 
 export default function RandomQuotesPage() {
   const { quotes, isLoading, error, refetch } = useGetRandomQuotes()

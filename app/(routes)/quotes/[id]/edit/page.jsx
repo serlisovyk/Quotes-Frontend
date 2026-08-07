@@ -1,13 +1,13 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useState, useEffect } from 'react'
+import { useCallback, useState, useEffect } from 'react'
 import QuoteForm from '@components/QuoteForm'
 import Loader from '@components/Loader'
 import { INITIAL_FORM_VALUES, ROUTES } from '@config/constants'
 import { isQuoteFormValid } from '@utils/validation'
-import { useUpdateQuote } from '@queries/useUpdateQuote'
-import { useGetSingleQuote } from '@queries/useGetSingleQuote'
+import { useUpdateQuote } from '@hooks/useUpdateQuote'
+import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
 
 export default function EditQuotePage({ params: { id } }) {
   const router = useRouter()
@@ -15,11 +15,14 @@ export default function EditQuotePage({ params: { id } }) {
   const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES)
   const [validationErrors, setValidationErrors] = useState({})
 
-  const formatFormValues = ({ text, author, categories }) => ({
-    text,
-    author,
-    categories: categories.join(', '),
-  })
+  const formatFormValues = useCallback(
+    ({ text, author, categories }) => ({
+      text,
+      author,
+      categories: categories.join(', '),
+    }),
+    []
+  )
 
   const { quote, isLoading } = useGetSingleQuote(id, formatFormValues)
 

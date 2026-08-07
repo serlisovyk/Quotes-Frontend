@@ -7,7 +7,7 @@ import Quote from '@components/Quote'
 import Loader from '@components/Loader'
 import Button from '@components/Button'
 import { MY_QUOTE_ID, ROUTES } from '@config/constants'
-import { useGetSingleQuote } from '@queries/useGetSingleQuote'
+import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
 
 export default function HomePage() {
   const router = useRouter()

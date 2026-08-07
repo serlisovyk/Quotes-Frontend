@@ -13,7 +13,7 @@ import {
   createSearchQueryString,
   createSearchValuesFromQueryString,
 } from '@utils/queryString'
-import { useGetSearchQuotes } from '@queries/useGetSearchQuotes'
+import { useGetSearchQuotes } from '@hooks/useGetSearchQuotes'
 
 export default function SearchQuotesPage() {
   const router = useRouter()

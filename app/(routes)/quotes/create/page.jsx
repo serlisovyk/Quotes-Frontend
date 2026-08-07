@@ -5,7 +5,7 @@ import { useState } from 'react'
 import QuoteForm from '@components/QuoteForm'
 import { INITIAL_FORM_VALUES, ROUTES } from '@config/constants'
 import { isQuoteFormValid } from '@utils/validation'
-import { useCreateQuote } from '@queries/useCreateQuote'
+import { useCreateQuote } from '@hooks/useCreateQuote'
 
 export default function CreateQuotePage() {
   const router = useRouter()
