@@ -10,7 +10,7 @@ https://quotes-xi-five.vercel.app/
 
 <p align="left">
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/postgresql-colored.svg" width="40" height="40" alt="Postgresql" />
-  
+
   <img width="12" />
 
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nodejs-colored.svg" width="40" height="40" alt="NodeJS" />
@@ -25,7 +25,7 @@ https://quotes-xi-five.vercel.app/
 
   <br>
   <br>
-  
+
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/nextjs-colored.svg" width="40" height="40" alt="Next js" />
 
   <img width="12" />

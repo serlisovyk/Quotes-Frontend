@@ -2,6 +2,7 @@ import { ALLOWED_SEARCH_PARAM_NAMES } from '@config/constants'
 import {
   createSearchQueryString,
   createSearchValuesFromQueryString,
+  createSearchValuesFromSearchParamsObject,
 } from '@utils/queryString'
 
 describe('createSearchQueryString utility function', () => {
@@ -16,7 +17,7 @@ describe('createSearchQueryString utility function', () => {
 
     const result = createSearchQueryString(queryParams)
     expect(result).toBe(
-      'text=life&author=Albert+Einstein&category=inspiration&limit=10&offset=5'
+      'text=life&author=Albert+Einstein&category=inspiration&limit=10&offset=5',
     )
   })
 
@@ -138,5 +139,38 @@ describe('createSearchValuesFromQueryString utility function', () => {
 
     expect(mockSearchParams.get).not.toHaveBeenCalledWith('unsupportedParam1')
     expect(mockSearchParams.get).not.toHaveBeenCalledWith('unsupportedParam2')
+  })
+})
+
+describe('createSearchValuesFromSearchParamsObject utility function', () => {
+  test('creates allowed search values from Next page searchParams object', () => {
+    const result = createSearchValuesFromSearchParamsObject({
+      text: 'life',
+      author: 'Seneca',
+      category: 'stoicism',
+      limit: '10',
+      offset: '20',
+      unsupported: 'value',
+    })
+
+    expect(result).toEqual({
+      text: 'life',
+      author: 'Seneca',
+      category: 'stoicism',
+      limit: '10',
+      offset: '20',
+    })
+  })
+
+  test('uses the first value when a search param contains an array', () => {
+    const result = createSearchValuesFromSearchParamsObject({
+      text: ['first', 'second'],
+      author: '',
+      category: undefined,
+    })
+
+    expect(result).toEqual({
+      text: 'first',
+    })
   })
 })

@@ -1,31 +1,24 @@
-'use client'
-
 import Image from 'next/image'
-import { useRouter } from 'next/navigation'
 import сhurchillImage from '@public/сhurchill.jpg'
 import Quote from '@components/Quote'
-import Loader from '@components/Loader'
 import Button from '@components/Button'
+import StatusMessage from '@components/StatusMessage'
 import { MY_QUOTE_ID, ROUTES } from '@config/constants'
-import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
+import { fetchQuoteByIdOrNull } from '@services/services'
 
-export default function HomePage() {
-  const router = useRouter()
+export const dynamic = 'force-dynamic'
 
-  const { quote, isLoading, error } = useGetSingleQuote(MY_QUOTE_ID)
+export default async function HomePage() {
+  const quote = await fetchQuoteByIdOrNull(MY_QUOTE_ID)
 
-  if (error) {
+  if (!quote?.id) {
     return (
-      <p className="text-gray-600 text-center p-10">
-        Error while fetching quotes for the home page. Please try again later.
-      </p>
+      <StatusMessage
+        text="Error while fetching quotes for the home page. Please try again later."
+        className="p-10"
+      />
     )
   }
-
-  if (isLoading) return <Loader isFullHeight={true} />
-
-  const routeToRandomQuotesPage = () => router.push(ROUTES.RANDOM)
-  const routeToSearchPage = () => router.push(ROUTES.SEARCH)
 
   return (
     <>
@@ -34,7 +27,7 @@ export default function HomePage() {
           <div className="text-2xl lg:text-4xl font-bold italic text-violet-900">
             Success is not final, failure is not fatal: it is the courage to continue
             that counts. <br />
-            <span className="text-violet-600">&nbsp; — Winston Churchill</span>
+            <span className="text-violet-600">&nbsp; - Winston Churchill</span>
           </div>
         </div>
         <div>
@@ -51,7 +44,7 @@ export default function HomePage() {
         <div className="max-w-xl text-xl text-indigo-400">
           <div className="mb-2 md:mb-5">
             These are the words of a politician, soldier, journalist, and true leader
-            — who traversed a long road of trials; his words and steely will reshaped
+            - who traversed a long road of trials; his words and steely will reshaped
             the course of history. He proved that a single resolute voice, tempered
             in adversity, can ignite an entire nation.
           </div>
@@ -70,12 +63,8 @@ export default function HomePage() {
         </div>
       </section>
       <section className="flex flex-col sm:flex-row justify-center md:mb-10">
-        <Button onClick={routeToRandomQuotesPage} text="Random Quotes" />
-        <Button
-          onClick={routeToSearchPage}
-          text="Search Quotes"
-          variant="secondary"
-        />
+        <Button href={ROUTES.RANDOM} text="Random Quotes" />
+        <Button href={ROUTES.SEARCH} text="Search Quotes" variant="secondary" />
       </section>
     </>
   )

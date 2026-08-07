@@ -10,7 +10,7 @@ export default function CategoryTags({
   const displayedCategories = getDisplayedCategories(
     categories,
     selectedCategory,
-    isSingleQuotePage
+    isSingleQuotePage,
   )
 
   return (

@@ -1,17 +1,38 @@
-import { API_URL } from '@config/constants'
+import 'server-only'
 import { createApiError } from '@services/fetcherErrorsHandler'
 import { createSearchQueryString } from '@utils/queryString'
 
-const request = async (method, endpoint, payload = null, queryParams = {}) => {
+const getApiUrl = () => process.env.API_URL
+
+const createUrl = (endpoint, queryParams = {}) => {
+  const apiUrl = getApiUrl()
+
+  if (!apiUrl) {
+    throw new Error('API_URL environment variable is required.')
+  }
+
   const queryString = createSearchQueryString(queryParams)
 
-  const url = queryString
-    ? `${API_URL}/${endpoint}?${queryString}`
-    : `${API_URL}/${endpoint}`
+  return queryString
+    ? `${apiUrl}/${endpoint}?${queryString}`
+    : `${apiUrl}/${endpoint}`
+}
+
+const request = async (
+  method,
+  endpoint,
+  payload = null,
+  queryParams = {},
+  fetchOptions = {},
+) => {
+  const url = createUrl(endpoint, queryParams)
 
   const options = {
+    ...fetchOptions,
     method,
-    headers: {},
+    headers: {
+      ...(fetchOptions.headers || {}),
+    },
   }
 
   if (method === 'POST' || method === 'PATCH') {
@@ -39,10 +60,14 @@ const request = async (method, endpoint, payload = null, queryParams = {}) => {
 }
 
 const requests = {
-  get: (endpoint, queryParams = {}) => request('GET', endpoint, null, queryParams),
-  post: (endpoint, payload) => request('POST', endpoint, payload),
-  patch: (endpoint, payload) => request('PATCH', endpoint, payload),
-  delete: (endpoint) => request('DELETE', endpoint),
+  get: (endpoint, queryParams = {}, fetchOptions = {}) =>
+    request('GET', endpoint, null, queryParams, fetchOptions),
+  post: (endpoint, payload, fetchOptions = {}) =>
+    request('POST', endpoint, payload, {}, fetchOptions),
+  patch: (endpoint, payload, fetchOptions = {}) =>
+    request('PATCH', endpoint, payload, {}, fetchOptions),
+  delete: (endpoint, fetchOptions = {}) =>
+    request('DELETE', endpoint, null, {}, fetchOptions),
 }
 
 export default requests

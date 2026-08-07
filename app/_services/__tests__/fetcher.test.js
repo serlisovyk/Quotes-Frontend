@@ -1,8 +1,8 @@
 const API_URL = 'http://api.test'
 
-async function importFreshFetcher() {
+async function importFreshFetcher({ apiUrl = API_URL } = {}) {
   jest.resetModules()
-  process.env.NEXT_PUBLIC_API_URL = API_URL
+  process.env.API_URL = apiUrl
 
   const fetcherModule = await import('@services/fetcher')
 
@@ -22,7 +22,7 @@ describe('Services fetcher', () => {
 
   afterEach(() => {
     delete global.fetch
-    delete process.env.NEXT_PUBLIC_API_URL
+    delete process.env.API_URL
     jest.clearAllMocks()
   })
 
@@ -43,6 +43,39 @@ describe('Services fetcher', () => {
         headers: {},
       },
     )
+  })
+
+  test('uses API_URL for server requests', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, status: 200, body: { quotes: [] } }),
+    )
+
+    const fetcher = await importFreshFetcher({
+      apiUrl: 'http://private-api.test',
+    })
+
+    await fetcher.get('quotes')
+
+    expect(global.fetch).toHaveBeenCalledWith('http://private-api.test/quotes', {
+      method: 'GET',
+      headers: {},
+    })
+  })
+
+  test('passes Next fetch options through to GET requests', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, status: 200, body: { quotes: [] } }),
+    )
+
+    const fetcher = await importFreshFetcher()
+
+    await fetcher.get('quotes', {}, { cache: 'no-store' })
+
+    expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/quotes`, {
+      method: 'GET',
+      headers: {},
+      cache: 'no-store',
+    })
   })
 
   test('returns true for successful DELETE requests without parsing JSON', async () => {

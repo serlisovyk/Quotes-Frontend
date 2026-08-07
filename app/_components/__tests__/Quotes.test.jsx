@@ -29,7 +29,7 @@ describe('Quotes Component', () => {
 
   test('renders the correct number of Quote components', () => {
     const { getAllByTestId } = render(
-      <Quotes quotes={mockQuotes} selectedCategory="" searchText="" />
+      <Quotes quotes={mockQuotes} selectedCategory="" searchText="" />,
     )
 
     expect(getAllByTestId('quote')).toHaveLength(mockQuotes.length)
@@ -37,7 +37,7 @@ describe('Quotes Component', () => {
 
   test('renders quotes with the correct text', () => {
     const { getByText } = render(
-      <Quotes quotes={mockQuotes} selectedCategory="" searchText="" />
+      <Quotes quotes={mockQuotes} selectedCategory="" searchText="" />,
     )
 
     mockQuotes.forEach((quote) => expect(getByText(quote.text)).toBeTruthy())
@@ -45,7 +45,7 @@ describe('Quotes Component', () => {
 
   test('renders without crashing when no quotes are provided', () => {
     const { container } = render(
-      <Quotes quotes={[]} selectedCategory="" searchText="" />
+      <Quotes quotes={[]} selectedCategory="" searchText="" />,
     )
 
     expect(container).toBeTruthy()

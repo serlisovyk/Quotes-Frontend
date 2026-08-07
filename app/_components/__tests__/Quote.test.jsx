@@ -15,7 +15,7 @@ describe('Quote Component', () => {
 
   test('renders the quote text and author', () => {
     const { getByText } = render(
-      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />
+      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />,
     )
 
     expect(getByText(/This is a test quote text which/)).toBeTruthy()
@@ -24,19 +24,19 @@ describe('Quote Component', () => {
 
   test('truncates the quote text if it is too long', () => {
     const { getByText } = render(
-      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />
+      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />,
     )
 
     expect(
       getByText(
-        /This is a test quote text which is greater than 200 characters. This is really very long text which is displayed on the quuotes page in the quotes application which helps to work with different quotes\.\.\./
-      )
+        /This is a test quote text which is greater than 200 characters. This is really very long text which is displayed on the quuotes page in the quotes application which helps to work with different quotes\.\.\./,
+      ),
     ).toBeTruthy()
   })
 
   test('renders the CategoryTags component', () => {
     const { getByTestId } = render(
-      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />
+      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />,
     )
 
     expect(getByTestId('category-tags')).toBeTruthy()
@@ -49,7 +49,7 @@ describe('Quote Component', () => {
         quote={mockQuote}
         selectedCategory="category1"
         searchText={searchText}
-      />
+      />,
     )
 
     const highlightedText = getByText(/test quote text/i)
@@ -60,7 +60,7 @@ describe('Quote Component', () => {
 
     expect(getByText(/This is a /)).toBeTruthy()
     expect(
-      getByText(/This is really very long text which is displayed/)
+      getByText(/This is really very long text which is displayed/),
     ).toBeTruthy()
   })
 })

@@ -1,29 +1,25 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Button from '@components/Button'
 import CategoryTags from '@components/CategoryTags'
-import Loader from '@components/Loader'
+import DeleteQuoteButton from '@components/DeleteQuoteButton'
+import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { ROUTES } from '@config/constants'
-import { useDeleteQuote } from '@hooks/useDeleteQuote'
-import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
+import { fetchQuoteByIdOrNull } from '@services/services'
+import { isQuoteValidId } from '@utils/validation'
 
-export default function QuotePage({ params: { id } }) {
-  const router = useRouter()
+export const dynamic = 'force-dynamic'
 
-  const { quote, isLoading } = useGetSingleQuote(id)
+export default async function QuotePage({ params }) {
+  const { id } = await params
 
-  const onSuccessRedirect = () => router.push(ROUTES.HOME)
+  if (!isQuoteValidId(id)) {
+    return <QuoteNotFoundMessage id={id} />
+  }
 
-  const { deleteQuote, isPending } = useDeleteQuote(id, onSuccessRedirect)
+  const quote = await fetchQuoteByIdOrNull(id)
 
-  if (isLoading) return <Loader isFullHeight={true} />
-
-  if (!quote.id) {
-    return (
-      <p className="text-center text-2xl mt-10">{`Quote with id ${id} not found.`}</p>
-    )
+  if (!quote?.id) {
+    return <QuoteNotFoundMessage id={id} />
   }
 
   return (
@@ -34,7 +30,7 @@ export default function QuotePage({ params: { id } }) {
         </h2>
         <p className="text-2xl text-center text-gray-600 dark:text-gray-300 mb-10">
           <Link href={`/search?author=${quote.author}`}>
-            —{' '}
+            -{' '}
             <span className="hover:underline hover:text-blue-600 hover:dark:text-blue-300">
               {quote.author}
             </span>
@@ -43,15 +39,8 @@ export default function QuotePage({ params: { id } }) {
         <CategoryTags categories={quote.categories} isSingleQuotePage={true} />
       </div>
       <div className="flex justify-center mb-6">
-        <Link href={`/quotes/${quote.id}/edit`}>
-          <Button text="Edit" variant="primary" />
-        </Link>
-        <Button
-          onClick={deleteQuote}
-          text="Delete"
-          variant="danger"
-          disabled={isPending}
-        />
+        <Button href={`${ROUTES.QUOTES}/${quote.id}/edit`} text="Edit" />
+        <DeleteQuoteButton quoteId={quote.id} />
       </div>
     </div>
   )

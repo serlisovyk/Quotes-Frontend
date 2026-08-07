@@ -1,63 +1,29 @@
-'use client'
-
-import { useRouter } from 'next/navigation'
-import { useCallback, useState, useEffect } from 'react'
 import QuoteForm from '@components/QuoteForm'
-import Loader from '@components/Loader'
-import { INITIAL_FORM_VALUES, ROUTES } from '@config/constants'
-import { isQuoteFormValid } from '@utils/validation'
-import { useUpdateQuote } from '@hooks/useUpdateQuote'
-import { useGetSingleQuote } from '@hooks/useGetSingleQuote'
+import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
+import { updateQuoteAction } from '@actions/quoteActions'
+import { fetchQuoteByIdOrNull } from '@services/services'
+import { createInitialQuoteFormState, createQuoteFormValues } from '@utils/quoteForm'
+import { isQuoteValidId } from '@utils/validation'
 
-export default function EditQuotePage({ params: { id } }) {
-  const router = useRouter()
+export const dynamic = 'force-dynamic'
 
-  const [formValues, setFormValues] = useState(INITIAL_FORM_VALUES)
-  const [validationErrors, setValidationErrors] = useState({})
+export default async function EditQuotePage({ params }) {
+  const { id } = await params
 
-  const formatFormValues = useCallback(
-    ({ text, author, categories }) => ({
-      text,
-      author,
-      categories: categories.join(', '),
-    }),
-    []
-  )
-
-  const { quote, isLoading } = useGetSingleQuote(id, formatFormValues)
-
-  useEffect(() => {
-    if (quote) setFormValues(quote)
-  }, [quote])
-
-  const onSuccessRedirect = () => router.push(`${ROUTES.QUOTES}/${id}`)
-
-  const { updateQuote, isPending } = useUpdateQuote(id, onSuccessRedirect)
-
-  const handleSubmit = () => {
-    if (!isQuoteFormValid({ values: formValues, setValidationErrors })) return
-
-    const { text, author, categories } = formValues
-
-    const payload = {
-      text,
-      author,
-      categories: categories.split(',').map((category) => category.trim()),
-    }
-
-    updateQuote(payload)
+  if (!isQuoteValidId(id)) {
+    return <QuoteNotFoundMessage id={id} />
   }
 
-  if (isLoading) return <Loader isFullHeight={true} />
+  const quote = await fetchQuoteByIdOrNull(id)
+
+  if (!quote?.id) {
+    return <QuoteNotFoundMessage id={id} />
+  }
 
   return (
     <QuoteForm
-      values={formValues}
-      setValues={setFormValues}
-      validationErrors={validationErrors}
-      setValidationErrors={setValidationErrors}
-      handleSubmit={handleSubmit}
-      isLoading={isPending}
+      action={updateQuoteAction.bind(null, id)}
+      initialState={createInitialQuoteFormState(createQuoteFormValues(quote))}
       buttonText="Update"
     />
   )

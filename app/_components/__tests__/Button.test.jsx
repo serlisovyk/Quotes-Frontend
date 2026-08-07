@@ -42,4 +42,14 @@ describe('Button Component', () => {
 
     expect(mockOnClick).toHaveBeenCalledTimes(1)
   })
+
+  test('renders a link when href is provided', () => {
+    render(<Button text="Go to Search" href="/search" />)
+
+    const link = screen.getByRole('link', { name: /go to search/i })
+
+    expect(link).toBeTruthy()
+    expect(link.getAttribute('href')).toBe('/search')
+    expect(link.className).toContain('bg-violet-900')
+  })
 })

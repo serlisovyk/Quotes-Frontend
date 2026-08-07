@@ -56,7 +56,7 @@ export function highlightText(text, searchText) {
 export function getDisplayedCategories(
   categories,
   selectedCategory,
-  isSingleQuotePage = false
+  isSingleQuotePage = false,
 ) {
   if (isSingleQuotePage) return categories
 

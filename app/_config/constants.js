@@ -1,5 +1,3 @@
-export const API_URL = process.env.NEXT_PUBLIC_API_URL
-
 export const ALLOWED_SEARCH_PARAM_NAMES = [
   'text',
   'author',

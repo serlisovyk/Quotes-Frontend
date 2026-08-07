@@ -1,4 +1,9 @@
-import { isQuoteFormValid, getSearchInputValidationMessage } from '@utils/validation'
+import {
+  createQuotePayload,
+  getQuoteFormValidationErrors,
+  isQuoteFormValid,
+  getSearchInputValidationMessage,
+} from '@utils/validation'
 
 describe('isQuoteFormValid utility function', () => {
   let setValidationErrors
@@ -97,6 +102,48 @@ describe('isQuoteFormValid utility function', () => {
   })
 })
 
+describe('getQuoteFormValidationErrors utility function', () => {
+  test('returns empty errors for valid quote values', () => {
+    const result = getQuoteFormValidationErrors({
+      text: 'This is a valid quote text.',
+      author: 'Author Name',
+      categories: 'category1, category2',
+    })
+
+    expect(result).toEqual({})
+  })
+
+  test('returns validation errors without requiring React setters', () => {
+    const result = getQuoteFormValidationErrors({
+      text: 'Short',
+      author: 'A',
+      categories: '',
+    })
+
+    expect(result).toEqual({
+      text: 'Text must be at least 10 characters long.',
+      author: 'Author must be between 2 and 255 characters long.',
+      categories: 'There must be at least one category.',
+    })
+  })
+})
+
+describe('createQuotePayload utility function', () => {
+  test('normalizes category input into trimmed category names', () => {
+    const result = createQuotePayload({
+      text: 'This is a valid quote text.',
+      author: 'Author Name',
+      categories: 'category1, category2, category3',
+    })
+
+    expect(result).toEqual({
+      text: 'This is a valid quote text.',
+      author: 'Author Name',
+      categories: ['category1', 'category2', 'category3'],
+    })
+  })
+})
+
 describe('getSearchInputValidationMessage utility function', () => {
   test('returns error message for text less than 3 characters', () => {
     const result = getSearchInputValidationMessage('text', 'ab')
@@ -121,7 +168,7 @@ describe('getSearchInputValidationMessage utility function', () => {
   test('returns error message for invalid category', () => {
     const result = getSearchInputValidationMessage('category', 'invalid-category@')
     expect(result).toBe(
-      'Category can only contain lowercase letters, numbers, and dashes.'
+      'Category can only contain lowercase letters, numbers, and dashes.',
     )
   })
 

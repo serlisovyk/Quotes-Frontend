@@ -1,19 +1,37 @@
 'use client'
 
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 
 export default function InputField({
   id,
+  name = id,
   placeholder,
   value,
+  defaultValue = '',
   onChange,
   error,
   showError,
 }) {
   const inputRef = useRef(null)
+  const isControlled = value !== undefined
+  const [innerValue, setInnerValue] = useState(defaultValue)
+
+  const currentValue = isControlled ? (value ?? '') : innerValue
+
+  const handleChange = (event) => {
+    if (!isControlled) {
+      setInnerValue(event.target.value)
+    }
+
+    onChange?.(event)
+  }
 
   const handleClear = () => {
-    onChange({ target: { value: '' } })
+    if (!isControlled) {
+      setInnerValue('')
+    }
+
+    onChange?.({ target: { value: '' } })
     inputRef.current?.focus()
   }
 
@@ -27,12 +45,13 @@ export default function InputField({
           type="text"
           ref={inputRef}
           id={id}
+          name={name}
           placeholder={placeholder}
-          value={value ?? ''}
-          onChange={onChange}
+          value={currentValue}
+          onChange={handleChange}
           className="py-2 pl-3 pr-12 w-full border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-white"
         />
-        {value && (
+        {currentValue && (
           <button
             type="button"
             onClick={handleClear}

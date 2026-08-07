@@ -7,8 +7,8 @@ export const createSearchQueryString = (queryParams = {}) => {
         ALLOWED_SEARCH_PARAM_NAMES.includes(key) &&
         value !== undefined &&
         value !== null &&
-        value !== ''
-    )
+        value !== '',
+    ),
   )
 
   return new URLSearchParams(filteredParams).toString()
@@ -20,6 +20,19 @@ export const createSearchValuesFromQueryString = (searchParams) => {
     if (value) {
       acc[searchParamName] = value
     }
+    return acc
+  }, {})
+}
+
+export const createSearchValuesFromSearchParamsObject = (searchParams = {}) => {
+  return ALLOWED_SEARCH_PARAM_NAMES.reduce((acc, searchParamName) => {
+    const rawValue = searchParams[searchParamName]
+    const value = Array.isArray(rawValue) ? rawValue[0] : rawValue
+
+    if (value) {
+      acc[searchParamName] = value
+    }
+
     return acc
   }, {})
 }

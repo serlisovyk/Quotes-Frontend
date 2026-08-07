@@ -8,6 +8,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "format": "prettier . --write",
+    "format:check": "prettier . --check",
     "test": "jest",
     "test:watch": "jest --watch",
     "docker:up": "docker compose up -d --build",
@@ -16,12 +18,11 @@
     "docker:dev:down": "docker compose -f docker-compose.dev.yml down"
   },
   "dependencies": {
-    "deep-equal": "^2.2.3",
     "next": "^16.3.0",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
     "react-spinners": "^0.17.0",
-    "react-toastify": "^11.1.0"
+    "sonner": "^2.0.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.3",
@@ -33,6 +34,7 @@
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
     "postcss": "^8.5.26",
+    "prettier": "^3.9.6",
     "sharp": "^0.35.3",
     "tailwindcss": "^4.3.3"
   }

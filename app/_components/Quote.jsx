@@ -14,7 +14,12 @@ export default function Quote({ quote, selectedCategory, searchText }) {
       <Link href={`/quotes/${id}`}>
         <p className="mb-4 text-xl italic text-gray-900 dark:text-gray-100">
           &quot;
-          {renderQuoteText({ fullText: text, visiblePart, searchText, isTruncated })}
+          {renderQuoteText({
+            fullText: text,
+            visiblePart,
+            searchText,
+            isTruncated,
+          })}
           &quot;
         </p>
       </Link>

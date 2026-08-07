@@ -1,11 +1,10 @@
 import localFont from 'next/font/local'
 import { Suspense } from 'react'
-import { ToastContainer } from 'react-toastify'
+import AppToasts from '@components/AppToasts'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Loader from '@components/Loader'
 import './globals.css'
-import 'react-toastify/dist/ReactToastify.css'
 
 const geistSans = localFont({
   src: './fonts/GeistVF.woff',
@@ -22,6 +21,11 @@ const geistMono = localFont({
 export const metadata = {
   title: 'Quotes app',
   description: 'Frontend app for working with quotes API',
+  icons: {
+    icon: '/navIcon.png',
+    shortcut: '/navIcon.png',
+    apple: '/navIcon.png',
+  },
 }
 
 export default function RootLayout({ children }) {
@@ -29,11 +33,7 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Suspense fallback={<Loader />}>
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-          />
+          <AppToasts />
           <Header />
           <main className="container mx-auto p-4">{children}</main>
           <Footer />
