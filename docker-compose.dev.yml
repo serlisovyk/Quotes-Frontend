@@ -1,0 +1,20 @@
+name: quotes-client-dev
+
+services:
+  client:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - '4000:4000'
+    volumes:
+      - .:/app
+      - quotes_client_node_modules:/app/node_modules
+      - quotes_client_next:/app/.next
+
+volumes:
+  quotes_client_node_modules:
+  quotes_client_next:

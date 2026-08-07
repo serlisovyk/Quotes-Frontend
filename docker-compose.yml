@@ -1,0 +1,10 @@
+name: quotes-client
+
+services:
+  client:
+    image: serhii5105/quotes-client:latest
+    restart: unless-stopped
+    env_file:
+      - ./.env
+    ports:
+      - '4000:4000'

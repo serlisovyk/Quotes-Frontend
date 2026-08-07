@@ -28,17 +28,18 @@ export default function SearchQuotesPage() {
   useEffect(() => {
     const qsValues = createSearchValuesFromQueryString(searchParams)
     const newValues = { ...INITIAL_SEARCH_VALUES, ...qsValues }
+    const hasQueryValues = Object.keys(qsValues).length > 0
 
-    if (!deepEqual(newValues, searchValues)) {
-      setSearchValues(newValues)
+    setSearchValues((currentValues) =>
+      deepEqual(newValues, currentValues) ? currentValues : newValues
+    )
 
-      if (Object.keys(qsValues).length === 0) {
-        setQueryParams({})
-        setSearchSubmitted(false)
-      } else {
-        setQueryParams(qsValues)
-        setSearchSubmitted(true)
-      }
+    if (!hasQueryValues) {
+      setQueryParams({})
+      setSearchSubmitted(false)
+    } else {
+      setQueryParams(qsValues)
+      setSearchSubmitted(true)
     }
   }, [searchParams])
 
