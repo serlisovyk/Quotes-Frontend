@@ -5,6 +5,14 @@ import { fetchRandomQuotesResult } from '@services/services'
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Random Quotes',
+  description: 'Browse a fresh set of random quotes with one click.',
+  alternates: {
+    canonical: '/random',
+  },
+}
+
 export default async function RandomQuotesPage() {
   const { quotes, hasError } = await fetchRandomQuotesResult()
 

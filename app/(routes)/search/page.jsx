@@ -8,6 +8,14 @@ import { createSearchValuesFromSearchParamsObject } from '@utils/queryString'
 
 export const dynamic = 'force-dynamic'
 
+export const metadata = {
+  title: 'Search Quotes',
+  description: 'Search quotes by text, author, category, limit, and offset.',
+  alternates: {
+    canonical: '/search',
+  },
+}
+
 export default async function SearchQuotesPage({ searchParams }) {
   const resolvedSearchParams = await searchParams
   const queryParams = createSearchValuesFromSearchParamsObject(resolvedSearchParams)

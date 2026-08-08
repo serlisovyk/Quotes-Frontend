@@ -9,6 +9,18 @@ import { isQuoteValidId } from '@utils/validation'
 
 export const dynamic = 'force-dynamic'
 
+export async function generateMetadata({ params }) {
+  const { id } = await params
+
+  return {
+    title: `Quote #${id}`,
+    description: `Read quote #${id} and explore related author and category links.`,
+    alternates: {
+      canonical: `/quotes/${id}`,
+    },
+  }
+}
+
 export default async function QuotePage({ params }) {
   const { id } = await params
 
@@ -25,9 +37,9 @@ export default async function QuotePage({ params }) {
   return (
     <div>
       <div className="max-w-6xl mx-auto p-6 mt-7 bg-white shadow-lg rounded-lg dark:bg-gray-800">
-        <h2 className="text-xl md:text-2xl font-bold text-center mb-6 text-violet-900 dark:text-violet-300">
+        <h1 className="text-xl md:text-2xl font-bold text-center mb-6 text-violet-900 dark:text-violet-300">
           {quote.text}
-        </h2>
+        </h1>
         <p className="text-2xl text-center text-gray-600 dark:text-gray-300 mb-10">
           <Link href={`/search?author=${quote.author}`}>
             -{' '}

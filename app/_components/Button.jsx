@@ -19,10 +19,18 @@ export default function Button({
 
   const className = `${baseClasses} ${variantClasses[variant]}`
 
+  const linkProps = disabled
+    ? {
+        'aria-disabled': true,
+        tabIndex: -1,
+        onClick: (event) => event.preventDefault(),
+      }
+    : {}
+
   return (
     <div className="text-center m-2.5 md:m-5">
       {href ? (
-        <Link href={href} className={className} aria-disabled={disabled}>
+        <Link href={href} className={className} {...linkProps}>
           {text}
         </Link>
       ) : (

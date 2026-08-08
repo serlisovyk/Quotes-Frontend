@@ -1,7 +1,11 @@
-export default function BurgerButton({ isOpen, toggleMenu }) {
+export default function BurgerButton({ isOpen, toggleMenu, controls }) {
   return (
     <button
+      type="button"
       onClick={toggleMenu}
+      aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+      aria-expanded={isOpen}
+      aria-controls={controls}
       className="ml-auto text-gray-800 dark:text-white focus:outline-none md:hidden"
     >
       <svg

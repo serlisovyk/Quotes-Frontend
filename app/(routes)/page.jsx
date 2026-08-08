@@ -33,9 +33,10 @@ export default async function HomePage() {
         <div>
           <Image
             src={сhurchillImage}
-            alt="Churchill photo"
+            alt="Portrait of Winston Churchill"
             width={500}
             height={500}
+            priority
             className="rounded-full w-50 h-50"
           />
         </div>

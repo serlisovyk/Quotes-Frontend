@@ -4,6 +4,12 @@ import AppToasts from '@components/AppToasts'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Loader from '@components/Loader'
+import {
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SITE_OG_IMAGE,
+  SITE_URL,
+} from '@config/site'
 import './globals.css'
 
 const geistSans = localFont({
@@ -19,8 +25,39 @@ const geistMono = localFont({
 })
 
 export const metadata = {
-  title: 'Quotes app',
-  description: 'Frontend app for working with quotes API',
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: SITE_NAME,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: SITE_DESCRIPTION,
+  applicationName: SITE_NAME,
+  alternates: {
+    canonical: '/',
+  },
+  openGraph: {
+    type: 'website',
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [
+      {
+        url: SITE_OG_IMAGE,
+        alt: `${SITE_NAME} icon`,
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary',
+    title: SITE_NAME,
+    description: SITE_DESCRIPTION,
+    images: [SITE_OG_IMAGE],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
   icons: {
     icon: '/navIcon.png',
     shortcut: '/navIcon.png',
@@ -28,14 +65,24 @@ export const metadata = {
   },
 }
 
+export const viewport = {
+  themeColor: '#ffffff',
+  colorScheme: 'light dark',
+}
+
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <Suspense fallback={<Loader />}>
+          <a href="#main-content" className="skip-link">
+            Skip to content
+          </a>
           <AppToasts />
           <Header />
-          <main className="container mx-auto p-4">{children}</main>
+          <main id="main-content" className="container mx-auto p-4">
+            {children}
+          </main>
           <Footer />
         </Suspense>
       </body>

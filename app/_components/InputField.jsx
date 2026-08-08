@@ -13,13 +13,14 @@ export default function InputField({
   showError,
 }) {
   const inputRef = useRef(null)
-  const isControlled = value !== undefined
+  const hasControlledValue = value !== undefined
   const [innerValue, setInnerValue] = useState(defaultValue)
+  const errorId = `${id}-error`
 
-  const currentValue = isControlled ? (value ?? '') : innerValue
+  const currentValue = hasControlledValue ? (value ?? '') : innerValue
 
   const handleChange = (event) => {
-    if (!isControlled) {
+    if (!hasControlledValue) {
       setInnerValue(event.target.value)
     }
 
@@ -27,7 +28,7 @@ export default function InputField({
   }
 
   const handleClear = () => {
-    if (!isControlled) {
+    if (!hasControlledValue) {
       setInnerValue('')
     }
 
@@ -49,13 +50,15 @@ export default function InputField({
           placeholder={placeholder}
           value={currentValue}
           onChange={handleChange}
+          aria-invalid={showError && !!error}
+          aria-describedby={showError && error ? errorId : undefined}
           className="py-2 pl-3 pr-12 w-full border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-white"
         />
         {currentValue && (
           <button
             type="button"
             onClick={handleClear}
-            aria-label="Clear input field"
+            aria-label={`Clear ${placeholder}`}
             className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 hover:text-gray-600 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
             <svg
@@ -68,7 +71,11 @@ export default function InputField({
           </button>
         )}
       </div>
-      {showError && error && <p className="text-red-500 text-base">{error}</p>}
+      {showError && error && (
+        <p id={errorId} className="text-red-500 text-base">
+          {error}
+        </p>
+      )}
     </div>
   )
 }
