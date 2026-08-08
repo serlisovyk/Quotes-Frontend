@@ -59,7 +59,7 @@ export default function InputField({
             type="button"
             onClick={handleClear}
             aria-label={`Clear ${placeholder}`}
-            className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center text-gray-400 hover:text-gray-600 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="absolute right-3 top-1/2 -translate-y-1/2 flex cursor-pointer items-center text-gray-400 transition-colors duration-200 hover:text-gray-600 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
           >
             <svg
               className="h-5 w-5 fill-current"

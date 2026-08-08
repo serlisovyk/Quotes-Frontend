@@ -2,7 +2,7 @@ import Quotes from '@components/Quotes'
 import SearchForm from '@components/SearchForm'
 import Pagination from '@components/Pagination'
 import StatusMessage from '@components/StatusMessage'
-import { INITIAL_SEARCH_VALUES } from '@config/constants'
+import { INITIAL_SEARCH_VALUES, ROUTES } from '@config/constants'
 import { fetchQuotesResult } from '@services/services'
 import { createSearchValuesFromSearchParamsObject } from '@utils/queryString'
 
@@ -12,7 +12,7 @@ export const metadata = {
   title: 'Search Quotes',
   description: 'Search quotes by text, author, category, limit, and offset.',
   alternates: {
-    canonical: '/search',
+    canonical: ROUTES.SEARCH,
   },
 }
 

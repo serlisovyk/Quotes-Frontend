@@ -6,7 +6,7 @@ export default function BurgerButton({ isOpen, toggleMenu, controls }) {
       aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
       aria-expanded={isOpen}
       aria-controls={controls}
-      className="ml-auto text-gray-800 dark:text-white focus:outline-none md:hidden"
+      className="ml-auto cursor-pointer text-gray-800 transition-colors duration-200 focus:outline-none md:hidden dark:text-white"
     >
       <svg
         className="w-6 h-6"

@@ -16,7 +16,7 @@ export async function generateMetadata({ params }) {
     title: `Quote #${id}`,
     description: `Read quote #${id} and explore related author and category links.`,
     alternates: {
-      canonical: `/quotes/${id}`,
+      canonical: `${ROUTES.QUOTES}/${id}`,
     },
   }
 }

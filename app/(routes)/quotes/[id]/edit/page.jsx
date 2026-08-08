@@ -1,6 +1,7 @@
 import QuoteForm from '@components/QuoteForm'
 import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { updateQuoteAction } from '@actions/quoteActions'
+import { ROUTES } from '@config/constants'
 import { fetchQuoteByIdOrNull } from '@services/services'
 import {
   createInitialQuoteFormState,
@@ -17,7 +18,7 @@ export async function generateMetadata({ params }) {
     title: `Edit Quote #${id}`,
     description: `Update quote #${id}, including its text, author, and categories.`,
     alternates: {
-      canonical: `/quotes/${id}/edit`,
+      canonical: `${ROUTES.QUOTES}/${id}/edit`,
     },
   }
 }

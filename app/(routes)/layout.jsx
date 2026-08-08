@@ -4,11 +4,13 @@ import AppToasts from '@components/AppToasts'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
 import Loader from '@components/Loader'
+import { ROUTES } from '@config/constants'
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_OG_IMAGE,
   SITE_URL,
+  SKIP_LINK_CLASS_NAME,
 } from '@config/site'
 import './globals.css'
 
@@ -33,7 +35,7 @@ export const metadata = {
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
   alternates: {
-    canonical: '/',
+    canonical: ROUTES.HOME,
   },
   openGraph: {
     type: 'website',
@@ -72,15 +74,17 @@ export const viewport = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Suspense fallback={<Loader />}>
-          <a href="#main-content" className="skip-link">
+    <html lang="en" className="scrollbar-gutter-stable">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col overflow-y-scroll bg-(--background) font-sans text-(--foreground) antialiased`}
+      >
+        <Suspense fallback={<Loader isFullHeight={true} />}>
+          <a href="#main-content" className={SKIP_LINK_CLASS_NAME}>
             Skip to content
           </a>
           <AppToasts />
           <Header />
-          <main id="main-content" className="container mx-auto p-4">
+          <main id="main-content" className="container mx-auto flex-1 p-4">
             {children}
           </main>
           <Footer />

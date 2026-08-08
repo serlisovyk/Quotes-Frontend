@@ -1,6 +1,5 @@
-import Quotes from '@components/Quotes'
 import RandomQuotesRefreshButton from '@components/RandomQuotesRefreshButton'
-import StatusMessage from '@components/StatusMessage'
+import { ROUTES } from '@config/constants'
 import { fetchRandomQuotesResult } from '@services/services'
 
 export const dynamic = 'force-dynamic'
@@ -9,7 +8,7 @@ export const metadata = {
   title: 'Random Quotes',
   description: 'Browse a fresh set of random quotes with one click.',
   alternates: {
-    canonical: '/random',
+    canonical: ROUTES.RANDOM,
   },
 }
 
@@ -18,15 +17,8 @@ export default async function RandomQuotesPage() {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl mb-6 text-center dark:text-white">Random Quotes</h1>
-
-      <RandomQuotesRefreshButton />
-
-      {hasError ? (
-        <StatusMessage text="Error while fetching random quotes" />
-      ) : (
-        <Quotes quotes={quotes} />
-      )}
+      <h1 className="mb-6 text-center text-3xl dark:text-white">Random Quotes</h1>
+      <RandomQuotesRefreshButton quotes={quotes} hasError={hasError} />
     </div>
   )
 }

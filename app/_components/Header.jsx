@@ -62,7 +62,7 @@ export default function Header() {
               <button
                 type="button"
                 aria-label="Close mobile navigation"
-                className="opacity-80 w-full transition-all duration-200 fixed h-full left-0 top-0 z-30 bg-black md:hidden"
+                className="fixed left-0 top-0 z-30 h-full w-full cursor-pointer bg-black opacity-80 transition-all duration-200 md:hidden"
                 onClick={toggleMenu}
               />
             </>
