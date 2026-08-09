@@ -1,4 +1,8 @@
-import { CATEGORY_NAME_REGEX } from '@config/constants'
+import {
+  CATEGORY_NAME_REGEX,
+  MAX_ENTITY_ID,
+  MAX_SEARCH_LIMIT,
+} from '@config/constants'
 
 export function getQuoteFormValidationErrors(values) {
   const errors = {}
@@ -47,18 +51,33 @@ export function isQuoteFormValid({ values, setValidationErrors }) {
 }
 
 export function getSearchInputValidationMessage(name, value) {
-  if (name === 'text' && value && value.length < 3) {
-    return 'Text must be at least 3 characters long.'
-  }
-  if (name === 'author' && value && value.length < 2) {
-    return 'Author must be at least 2 characters long.'
-  }
   if (name === 'category' && value && !CATEGORY_NAME_REGEX.test(value)) {
     return 'Category can only contain lowercase letters, numbers, and dashes.'
+  }
+
+  if (name === 'limit' && value) {
+    const parsedLimit = Number(value)
+
+    if (
+      !Number.isInteger(parsedLimit) ||
+      parsedLimit < 1 ||
+      parsedLimit > MAX_SEARCH_LIMIT
+    ) {
+      return `Limit must be in range 1..${MAX_SEARCH_LIMIT}.`
+    }
+  }
+
+  if (name === 'offset' && value) {
+    const parsedOffset = Number(value)
+
+    if (!Number.isInteger(parsedOffset) || parsedOffset < 0) {
+      return 'Offset must be a positive integer or zero.'
+    }
   }
 }
 
 export function isQuoteValidId(id) {
   const parsedId = parseInt(id, 10)
-  return Number.isInteger(parsedId) && parsedId > 0 && parsedId < 2147483647
+
+  return Number.isInteger(parsedId) && parsedId > 0 && parsedId <= MAX_ENTITY_ID
 }

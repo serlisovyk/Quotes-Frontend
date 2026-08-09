@@ -31,7 +31,7 @@ describe('Services result helpers', () => {
       createResponse({
         ok: true,
         body: [{ id: 1, text: 'Stay sharp' }],
-      })
+      }),
     )
 
     const { fetchRandomQuotesResult } = await importFreshServices()
@@ -53,7 +53,7 @@ describe('Services result helpers', () => {
             message: 'Some error occurred',
           },
         },
-      })
+      }),
     )
 
     const { fetchRandomQuotesResult } = await importFreshServices()
@@ -73,7 +73,7 @@ describe('Services result helpers', () => {
           quotes: [{ id: 1, text: 'Stay sharp' }],
           total: 20,
         },
-      })
+      }),
     )
 
     const { fetchQuotesResult } = await importFreshServices()
@@ -96,7 +96,7 @@ describe('Services result helpers', () => {
             message: 'Some error occurred',
           },
         },
-      })
+      }),
     )
 
     const { fetchQuotesResult } = await importFreshServices()

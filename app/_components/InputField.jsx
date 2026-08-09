@@ -6,6 +6,10 @@ export default function InputField({
   id,
   name = id,
   placeholder,
+  type = 'text',
+  min,
+  max,
+  step,
   value,
   defaultValue = '',
   onChange,
@@ -43,10 +47,13 @@ export default function InputField({
           {placeholder}
         </label>
         <input
-          type="text"
+          type={type}
           ref={inputRef}
           id={id}
           name={name}
+          min={min}
+          max={max}
+          step={step}
           placeholder={placeholder}
           value={currentValue}
           onChange={handleChange}

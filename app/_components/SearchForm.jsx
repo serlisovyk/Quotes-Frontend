@@ -79,22 +79,28 @@ export default function SearchFields({
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="text-xl grid grid-cols-1 lg:grid-cols-[1fr_1fr_1fr_0.3fr] gap-4 mb-6">
-        {searchInputFields.map(({ id, name, placeholder, value, error }) => (
-          <InputField
-            key={id}
-            id={id}
-            name={name}
-            placeholder={placeholder}
-            value={value}
-            onChange={(e) => handleInputChange(name, e.target.value)}
-            error={error}
-            showError={showError}
-          />
-        ))}
+      <div className="mb-6 grid grid-cols-1 gap-4 text-xl lg:grid-cols-[1fr_1fr_1fr_0.35fr_0.35fr]">
+        {searchInputFields.map(
+          ({ id, name, placeholder, type, min, max, step, value, error }) => (
+            <InputField
+              key={id}
+              id={id}
+              name={name}
+              placeholder={placeholder}
+              type={type}
+              min={min}
+              max={max}
+              step={step}
+              value={value}
+              onChange={(e) => handleInputChange(name, e.target.value)}
+              error={error}
+              showError={showError}
+            />
+          ),
+        )}
       </div>
 
-      <div className="flex justify-center mb-6">
+      <div className="mb-6 flex justify-center">
         <Button type="submit" text="Search" />
         <Button onClick={handleClear} text="Clear" variant="secondary" />
       </div>

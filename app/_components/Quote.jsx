@@ -10,7 +10,7 @@ export default function Quote({ quote, selectedCategory, searchText }) {
   const visiblePart = isTruncated ? text.slice(0, MAX_VISIBLE_TEXT_LENGTH) : text
 
   return (
-    <div className="bg-gray-200 dark:bg-gray-800 p-4 shadow-md rounded-lg hover:-translate-y-1.5 hover:bg-gray-100 hover:dark:bg-gray-700 transition-transform duration 400">
+    <div className="rounded-lg bg-gray-200 p-4 shadow-md transition-transform duration-300 hover:-translate-y-1.5 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700">
       <Link href={`/quotes/${id}`}>
         <p className="mb-4 text-xl italic text-gray-900 dark:text-gray-100">
           &quot;
@@ -26,8 +26,8 @@ export default function Quote({ quote, selectedCategory, searchText }) {
 
       <p className="mb-10 text-right text-xl font-semibold text-gray-700 dark:text-gray-300">
         <Link href={`/search?author=${author}`}>
-          —{' '}
-          <span className="hover:underline hover:text-blue-600 hover:dark:text-blue-300">
+          -{' '}
+          <span className="hover:text-blue-600 hover:underline hover:dark:text-blue-300">
             {author}
           </span>
         </Link>

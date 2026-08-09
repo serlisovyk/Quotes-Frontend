@@ -3,10 +3,7 @@ import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { updateQuoteAction } from '@actions/quoteActions'
 import { ROUTES } from '@config/constants'
 import { fetchQuoteByIdOrNull } from '@services/services'
-import {
-  createInitialQuoteFormState,
-  createQuoteFormValues,
-} from '@utils/quoteForm'
+import { createInitialQuoteFormState, createQuoteFormValues } from '@utils/quoteForm'
 import { isQuoteValidId } from '@utils/validation'
 
 export const dynamic = 'force-dynamic'

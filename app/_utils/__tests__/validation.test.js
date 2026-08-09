@@ -145,23 +145,13 @@ describe('createQuotePayload utility function', () => {
 })
 
 describe('getSearchInputValidationMessage utility function', () => {
-  test('returns error message for text less than 3 characters', () => {
+  test('does not block short text searches because backend accepts them', () => {
     const result = getSearchInputValidationMessage('text', 'ab')
-    expect(result).toBe('Text must be at least 3 characters long.')
-  })
-
-  test('returns no message for valid text length', () => {
-    const result = getSearchInputValidationMessage('text', 'abc')
     expect(result).toBeUndefined()
   })
 
-  test('returns error message for author less than 2 characters', () => {
+  test('does not block short author searches because backend accepts them', () => {
     const result = getSearchInputValidationMessage('author', 'A')
-    expect(result).toBe('Author must be at least 2 characters long.')
-  })
-
-  test('returns no message for valid author length', () => {
-    const result = getSearchInputValidationMessage('author', 'AB')
     expect(result).toBeUndefined()
   })
 
@@ -174,6 +164,26 @@ describe('getSearchInputValidationMessage utility function', () => {
 
   test('returns no message for valid category', () => {
     const result = getSearchInputValidationMessage('category', 'valid-category')
+    expect(result).toBeUndefined()
+  })
+
+  test('returns error message for invalid limit', () => {
+    const result = getSearchInputValidationMessage('limit', '100')
+    expect(result).toBe('Limit must be in range 1..50.')
+  })
+
+  test('returns no message for valid limit', () => {
+    const result = getSearchInputValidationMessage('limit', '10')
+    expect(result).toBeUndefined()
+  })
+
+  test('returns error message for invalid offset', () => {
+    const result = getSearchInputValidationMessage('offset', '-1')
+    expect(result).toBe('Offset must be a positive integer or zero.')
+  })
+
+  test('returns no message for valid offset', () => {
+    const result = getSearchInputValidationMessage('offset', '0')
     expect(result).toBeUndefined()
   })
 })

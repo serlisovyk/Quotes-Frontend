@@ -45,6 +45,10 @@ export const DEFAULT_SEARCH_LIMIT = 10
 
 export const DEFAULT_SEARCH_OFFSET = 0
 
+export const MAX_SEARCH_LIMIT = 50
+
+export const MAX_ENTITY_ID = 2147483647
+
 export const MAX_VISIBLE_CATEGORIES = 10
 
 export const MAX_VISIBLE_TEXT_LENGTH = 200

@@ -1,7 +1,6 @@
 'use client'
 
 import { useActionState, useEffect, useState } from 'react'
-import { toast } from 'sonner'
 import QuoteFormFields from '@components/QuoteFormFields'
 import Button from '@components/Button'
 
@@ -12,14 +11,6 @@ export default function QuoteForm({ action, initialState, buttonText }) {
   useEffect(() => {
     setFormState(actionState)
   }, [actionState])
-
-  useEffect(() => {
-    if (!actionState.formError) return
-
-    toast.error(actionState.formError, {
-      id: `quote-form-error-${buttonText.toLowerCase()}`,
-    })
-  }, [actionState.formError, buttonText])
 
   const setValues = (values) => {
     setFormState({

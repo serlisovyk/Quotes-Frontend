@@ -1,7 +1,6 @@
 'use client'
 
-import { useActionState, useEffect } from 'react'
-import { toast } from 'sonner'
+import { useActionState } from 'react'
 import Button from '@components/Button'
 import { deleteQuoteAction } from '@actions/quoteActions'
 
@@ -14,12 +13,6 @@ export default function DeleteQuoteButton({ quoteId }) {
     deleteQuoteAction.bind(null, quoteId),
     initialState,
   )
-
-  useEffect(() => {
-    if (!state?.error) return
-
-    toast.error(state.error, { id: `delete-quote-error-${quoteId}` })
-  }, [quoteId, state?.error])
 
   return (
     <form action={formAction}>
