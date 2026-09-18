@@ -3,11 +3,12 @@ import { DEFAULT_SEARCH_LIMIT, DEFAULT_SEARCH_OFFSET } from '@config/constants'
 import { createSearchQueryString } from '@utils/queryString'
 
 const baseClasses =
-  'inline-flex min-w-12 justify-center px-4 py-3 text-xl rounded-lg focus:outline-none focus:ring-2 focus:ring-opacity-50'
+  'inline-flex min-w-12 justify-center rounded-lg px-4 py-3 text-xl transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50'
 
 const variants = {
-  primary: 'bg-violet-900 text-white focus:ring-violet-600 hover:bg-violet-700',
-  secondary: 'bg-gray-300 text-gray-800 focus:ring-blue-500 hover:bg-gray-400',
+  primary: 'bg-violet-900 text-white focus-visible:ring-violet-600',
+  secondary:
+    'cursor-pointer bg-gray-300 text-gray-800 focus-visible:ring-blue-500 hover:bg-gray-400',
   disabled: 'bg-gray-300 text-gray-800 opacity-50 cursor-not-allowed',
 }
 
@@ -22,6 +23,14 @@ function PaginationLink({ children, href, active = false, disabled = false }) {
   const className = `${baseClasses} ${
     disabled ? variants.disabled : active ? variants.primary : variants.secondary
   }`
+
+  if (active) {
+    return (
+      <span aria-current="page" className={className}>
+        {children}
+      </span>
+    )
+  }
 
   if (disabled) {
     return (
