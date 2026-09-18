@@ -78,7 +78,7 @@ export default function SearchFields({
   })
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} noValidate>
       <div className="mb-6 grid grid-cols-1 gap-4 text-xl lg:grid-cols-[1fr_1fr_1fr_0.35fr_0.35fr]">
         {searchInputFields.map(
           ({ id, name, placeholder, type, min, max, step, value, error }) => (
