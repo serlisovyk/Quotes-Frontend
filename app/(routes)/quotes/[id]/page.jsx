@@ -7,8 +7,6 @@ import { ROUTES } from '@config/constants'
 import { fetchQuoteByIdOrNull } from '@services/services'
 import { isQuoteValidId } from '@utils/validation'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ params }) {
   const { id } = await params
 

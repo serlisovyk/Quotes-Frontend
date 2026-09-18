@@ -3,13 +3,19 @@ import churchillImage from '@public/churchill.jpg'
 import Quote from '@components/Quote'
 import Button from '@components/Button'
 import StatusMessage from '@components/StatusMessage'
-import { MY_QUOTE_ID, ROUTES } from '@config/constants'
+import {
+  HOME_QUOTE_REVALIDATE_SECONDS,
+  MY_QUOTE_ID,
+  ROUTES,
+} from '@config/constants'
 import { fetchQuoteByIdOrNull } from '@services/services'
 
-export const dynamic = 'force-dynamic'
-
 export default async function HomePage() {
-  const quote = await fetchQuoteByIdOrNull(MY_QUOTE_ID)
+  const quote = await fetchQuoteByIdOrNull(MY_QUOTE_ID, {
+    next: {
+      revalidate: HOME_QUOTE_REVALIDATE_SECONDS,
+    },
+  })
 
   if (!quote?.id) {
     return (

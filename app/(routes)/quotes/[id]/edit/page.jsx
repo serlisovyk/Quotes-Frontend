@@ -27,7 +27,7 @@ export default async function EditQuotePage({ params }) {
     return <QuoteNotFoundMessage id={id} />
   }
 
-  const quote = await fetchQuoteByIdOrNull(id)
+  const quote = await fetchQuoteByIdOrNull(id, { cache: 'no-store' })
 
   if (!quote?.id) {
     return <QuoteNotFoundMessage id={id} />

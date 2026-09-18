@@ -108,4 +108,82 @@ describe('Services result helpers', () => {
       hasError: true,
     })
   })
+
+  test('uses no-store for search requests', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: true,
+        body: {
+          quotes: [],
+          total: 0,
+        },
+      }),
+    )
+
+    const { fetchQuotes } = await importFreshServices()
+    await fetchQuotes({ text: 'sharp' })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes?text=sharp`,
+      expect.objectContaining({
+        cache: 'no-store',
+      }),
+    )
+  })
+
+  test('uses no-store for random quote requests', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: true,
+        body: [],
+      }),
+    )
+
+    const { fetchRandomQuotes } = await importFreshServices()
+    await fetchRandomQuotes()
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/random`,
+      expect.objectContaining({
+        cache: 'no-store',
+      }),
+    )
+  })
+
+  test('uses quote details revalidation by default for single quote requests', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: true,
+        body: { id: 1, text: 'Stay sharp' },
+      }),
+    )
+
+    const { fetchQuoteById, QUOTE_DETAILS_FETCH_OPTIONS } =
+      await importFreshServices()
+    await fetchQuoteById(1)
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/1`,
+      expect.objectContaining(QUOTE_DETAILS_FETCH_OPTIONS),
+    )
+  })
+
+  test('allows callers to override single quote cache behavior', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: true,
+        body: { id: 1, text: 'Stay sharp' },
+      }),
+    )
+
+    const { fetchQuoteById } = await importFreshServices()
+    await fetchQuoteById(1, { cache: 'no-store' })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/1`,
+      expect.objectContaining({
+        cache: 'no-store',
+      }),
+    )
+  })
 })
