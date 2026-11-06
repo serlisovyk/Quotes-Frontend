@@ -19,10 +19,11 @@ Branch `my-236-not-found-error-loading`. Behavior: `ai/superpowers/specs/2026-11
 - **404 status** comes from `notFound()` in the page; the root layout is untouched.
 - **`error.jsx`** is a client component (Next requires it) at `(routes)` level, so the header and footer
   stay. "Try again" reuses `Button` with `onClick={reset}`.
-- **`loading.jsx`**: one at `(routes)` level over the existing `Loader`, in a `role="status"` element with
-  an `sr-only` "Loading"; per-route files would be identical. The built HTML of the static pages (home,
-  create) is checked to still hold their content, not the spinner (the boundary rule in
-  `architecture.md`).
+- **`loading.jsx`**: only for `random` and `search`, both rendering the new `LoadingStatus` component
+  (`role="status"`, `sr-only` "Loading", the existing `Loader`). Not at `(routes)` level and not for the
+  quote and edit pages: a `loading.jsx` above a page that calls `notFound()` makes Next stream the shell
+  first, so the response is 200 instead of 404 (found in the production check; the first version had one
+  root file). The static pages (home, create) need none.
 - **`QuoteNotFoundMessage`** has no use left once the pages call `notFound()` (its uses are the quote
   page, the edit page and its own test); it is deleted with its test.
 - **noindex**: `robots: { index: false }` in the create `metadata` and the edit `generateMetadata`.
@@ -34,7 +35,8 @@ Branch `my-236-not-found-error-loading`. Behavior: `ai/superpowers/specs/2026-11
 - `app/_services/services.js`: `fetchQuoteIfExists`.
 - `app/(routes)/quotes/[id]/page.jsx`, `edit/page.jsx`: guards with `notFound()`; edit metadata `robots`.
 - `app/(routes)/quotes/create/page.jsx`: metadata `robots`.
-- `app/(routes)/not-found.jsx`, `error.jsx`, `loading.jsx`: new.
+- `app/(routes)/not-found.jsx`, `error.jsx`: new; `random/loading.jsx`, `search/loading.jsx` and
+  `app/_components/LoadingStatus.jsx`: new.
 - `app/sitemap.js`: `/quotes/create` removed.
 - `app/_components/QuoteNotFoundMessage.jsx` and its test: removed.
 - `ai/map.md`: route files, removed component, the "does not have" line; `ai/rules/architecture.md`: one
@@ -47,8 +49,8 @@ Branch `my-236-not-found-error-loading`. Behavior: `ai/superpowers/specs/2026-11
 - `quotes/[id]/__tests__/page.test.jsx`, `quotes/[id]/edit/__tests__/page.test.jsx`: `notFound` called for
   an invalid id (service not called) and for `null`; a rejection propagates; edit metadata `noindex`.
 - `quotes/create/__tests__/page.test.jsx`: metadata `noindex`.
-- `__tests__/not-found.test.jsx`, `error.test.jsx`, `loading.test.jsx` in `(routes)`: headings and
-  actions, `reset` called on click.
+- `__tests__/not-found.test.jsx`, `error.test.jsx` in `(routes)`: headings and actions, `reset` called
+  on click; `_components/__tests__/LoadingStatus.test.jsx`.
 - `app/__tests__/sitemap.test.js` (`@config/site` mocked): no `/quotes/create`.
 
 ## Verification

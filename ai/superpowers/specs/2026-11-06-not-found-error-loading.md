@@ -10,8 +10,8 @@
 - Not-found page: heading "Page not found", a short explanation and a "Go to home page" link.
 - Error page: heading "Something went wrong", a short explanation and a "Try again" `<button>` that
   renders the segment again (`reset`). The header and footer stay visible on both pages.
-- A server page that is still loading shows the spinner (`Loader`) in the content area, announced to
-  assistive technology as "Loading".
+- `/random` and `/search` show a spinner while they load, announced to assistive technology as
+  "Loading". The quote pages have no loading state: it would turn their 404 into a 200.
 - Home page: unchanged, it renders without the quote card on any failure.
 - `/quotes/create` and `/quotes/<id>/edit` carry `<meta name="robots" content="noindex">`; `sitemap.xml`
   lists home, random and search only.

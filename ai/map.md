@@ -36,7 +36,7 @@ The route group holds the pages and the root layout; it does not change the URLs
 - `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
 - `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
 - `error.jsx` — a failed page load (network error, 5xx): heading and a "Try again" button (`reset`).
-- `loading.jsx` — the spinner shown while a server page loads.
+- `random/loading.jsx`, `search/loading.jsx` — the spinner (`LoadingStatus`) while the page loads; the quote pages have none: a `loading.jsx` above a `notFound()` makes the response 200.
 - `app/robots.js`, `app/sitemap.js` — metadata routes (the sitemap lists home, random and search).
 
 ## Shared folders (`app/_*`)
@@ -59,7 +59,7 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
 - `_components/` — one file per component, default export, PascalCase; tests in `__tests__/`.
   - Client components (`'use client'`): `AppToasts`, `Header`, `MenuItems`, `InputField`, `QuoteForm`, `SearchForm`,
     `DeleteQuoteButton`, `RandomQuotesRefreshButton`.
-  - Server components: `Quote`, `Quotes`, `CategoryTag`, `CategoryTags`, `QuoteFormFields`,
+  - Server components: `Quote`, `Quotes`, `LoadingStatus`, `CategoryTag`, `CategoryTags`, `QuoteFormFields`,
     `Pagination`, `StatusMessage`, `Button`, `BurgerButton`, `Loader`, `Footer`.
 - `_services/__tests__/`, `_utils/__tests__/`, `_components/__tests__/` — Jest tests next to what they cover.
 

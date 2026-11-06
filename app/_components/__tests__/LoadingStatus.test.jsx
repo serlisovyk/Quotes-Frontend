@@ -1,9 +1,9 @@
 import { render, screen } from '@testing-library/react'
-import Loading from '../loading'
+import LoadingStatus from '@components/LoadingStatus'
 
-describe('Loading page', () => {
+describe('LoadingStatus Component', () => {
   it('announces the loading state', () => {
-    render(<Loading />)
+    render(<LoadingStatus />)
 
     expect(screen.getByRole('status').textContent).toContain('Loading')
   })
