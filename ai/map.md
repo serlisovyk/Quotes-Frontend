@@ -9,7 +9,7 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `next.config.mjs` — `output: 'standalone'` (the production `Dockerfile` needs it), React Compiler, strict mode.
 - `jsconfig.json` — the path aliases `@components`, `@config`, `@actions`, `@utils`, `@services`, `@public`.
 - `jest.config.js` — `next/jest`, jsdom, the same aliases; `mocks/empty.js` stands in for `server-only`.
-- `eslint.config.mjs` — flat config: `eslint-config-next/core-web-vitals` and test-file overrides.
+- `eslint.config.mjs` — flat config: `eslint-config-next/core-web-vitals`, test-file and per-file overrides, `eslint-config-prettier`.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
 - `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `test`, `test:watch`.
 - `package-lock.json` — the lockfile (npm).

@@ -22,7 +22,7 @@ docs only, no behavior change, so there is no spec.
 - `.prettierignore`: `node_modules`, `package-lock.json`, `.next`, `.swc`, `.vercel`, `out`, `coverage`,
   `.claude`.
 - `jest.config.js`: `.claude` in `testPathIgnorePatterns` and `modulePathIgnorePatterns` (`.next` stays).
-- `eslint.config.mjs`: `.claude/**` in the global ignores if `eslint .` does not skip it already.
+- `eslint.config.mjs`: `defineConfig` with `globalIgnores` (`.next`, `.claude`, `coverage`), Next config through `extends`, the test override, `react-hooks/set-state-in-effect` off only in `QuoteForm` and `SearchForm`, `eslint-config-prettier` last (new devDependency).
 - `npm run format`: if it changes files, a separate `style: apply prettier` commit.
 
 ## Decision records

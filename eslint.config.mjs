@@ -1,8 +1,13 @@
-import { globalIgnores } from 'eslint/config'
+import { defineConfig, globalIgnores } from 'eslint/config'
 import nextVitals from 'eslint-config-next/core-web-vitals'
+import prettier from 'eslint-config-prettier'
 
-const eslintConfig = [
-  ...nextVitals,
+export default defineConfig([
+  globalIgnores(['.next', '.claude', 'coverage']),
+  {
+    files: ['**/*.{js,jsx,mjs}'],
+    extends: [nextVitals],
+  },
   {
     files: ['**/__tests__/**/*.{js,jsx}', '**/*.test.{js,jsx}'],
     rules: {
@@ -10,11 +15,10 @@ const eslintConfig = [
     },
   },
   {
+    files: ['app/_components/QuoteForm.jsx', 'app/_components/SearchForm.jsx'],
     rules: {
       'react-hooks/set-state-in-effect': 'off',
     },
   },
-  globalIgnores(['.next/**', '.claude/**', 'node_modules/**', 'coverage/**']),
-]
-
-export default eslintConfig
+  prettier,
+])
