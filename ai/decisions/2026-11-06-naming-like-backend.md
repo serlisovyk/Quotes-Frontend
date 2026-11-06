@@ -5,9 +5,8 @@ Date: 2026-11-06 · Status: accepted (not implemented)
 ## Context
 
 The current tree has PascalCase component files in one flat folder, camelCase modules, default exports, six
-path aliases and tests in `__tests__` folders. The previous record asked for role suffixes in the plural
-(`*.constants.js`, `*.utils.js`). The backend repo of this product names files, folders and tests another
-way, and the author wants the two repos to read alike.
+path aliases and `__tests__` folders; the previous record asked for plural role suffixes. The backend repo
+of this product uses singular suffixes, and the author wants the two repos to read alike.
 
 ## Decision
 
@@ -24,10 +23,9 @@ way, and the author wants the two repos to read alike.
 - Named exports only; route files keep the default export Next.js requires.
 - One alias, `@/`, for the sources (the backend's `#` imports do not exist here); import order is
   packages, `@/` (with `@/constants` last), `./`, styles.
-- Constants live in the file of their domain, general helpers in their own util module.
-- Colours go through role-named theme tokens with light and dark values.
-- Rejected: plural suffixes (a second spelling next to the backend's); a suffix on components and hooks
-  (the author's call); keeping PascalCase files and the six aliases.
+- Constants live in the file of their domain, general helpers in their own util module; colours go
+  through role-named theme tokens with light and dark values.
+- Rejected: plural suffixes, a suffix on components and hooks, keeping PascalCase files and six aliases.
 
 ## Consequences
 
