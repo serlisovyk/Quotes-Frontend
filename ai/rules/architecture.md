@@ -19,6 +19,9 @@ has one job (decision `naming-like-backend`):
 
 ## Data fetching
 
+- A client component that calls `useSearchParams` gets its own `<Suspense fallback={null}>` boundary, as
+  small as possible, never around a layout's body: without it, or with a boundary around the whole page,
+  Next.js prerenders a spinner instead of the page content.
 - Fetch on the server, in a page, a layout or a server component. A component is a client component
   (`'use client'`) only when it needs state, effects, browser APIs or hooks such as `useRouter`; keep it
   as small as possible and pass it data as props.
