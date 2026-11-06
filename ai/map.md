@@ -49,6 +49,7 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
 - `_utils/` — pure helpers.
   - `validation.js` — form and search validation, the request payload, the id check.
   - `quoteActionState.js`, `quoteForm.js` — the shapes of form values and action state.
+  - `escapeRegExp.js` — escapes RegExp special characters in user text.
   - `queryString.js` — search params to and from a query string. `utils.js` — endpoint path, text highlight, categories.
 - `_config/` — `constants.js` (routes, limits, cache seconds, menu, highlight classes), `inputFields.js` (form and
   search field definitions), `site.js` (site name, description, `SITE_URL`, skip-link classes).

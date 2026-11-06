@@ -3,6 +3,7 @@ import {
   QUOTES_API_ENDPOINT,
   HIGHLIGHT_STYLES,
 } from '@config/constants'
+import { escapeRegExp } from '@utils/escapeRegExp'
 
 export const getSingleQuoteApiEndpoint = (id) => `${QUOTES_API_ENDPOINT}/${id}`
 
@@ -39,7 +40,7 @@ export function renderQuoteText({ fullText, visiblePart, searchText, isTruncated
 export function highlightText(text, searchText) {
   if (!searchText || searchText.length < 3) return text
 
-  const parts = text.split(new RegExp(`(${searchText})`, 'gi'))
+  const parts = text.split(new RegExp(`(${escapeRegExp(searchText)})`, 'gi'))
 
   return parts.map((part, index) => {
     if (part.toLowerCase() === searchText.toLowerCase()) {

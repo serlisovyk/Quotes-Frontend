@@ -1,7 +1,8 @@
 import Link from 'next/link'
 import CategoryTags from '@components/CategoryTags'
+import { createSearchQueryString } from '@utils/queryString'
 import { renderQuoteText } from '@utils/utils'
-import { MAX_VISIBLE_TEXT_LENGTH } from '@config/constants'
+import { MAX_VISIBLE_TEXT_LENGTH, ROUTES } from '@config/constants'
 
 export default function Quote({ quote, selectedCategory, searchText }) {
   const { id, text, author, categories } = quote
@@ -25,7 +26,7 @@ export default function Quote({ quote, selectedCategory, searchText }) {
       </Link>
 
       <p className="mb-10 text-right text-xl font-semibold text-gray-700 dark:text-gray-300">
-        <Link href={`/search?author=${author}`}>
+        <Link href={`${ROUTES.SEARCH}?${createSearchQueryString({ author })}`}>
           -{' '}
           <span className="hover:text-blue-600 hover:underline hover:dark:text-blue-300">
             {author}

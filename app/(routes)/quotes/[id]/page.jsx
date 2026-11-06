@@ -5,6 +5,7 @@ import DeleteQuoteButton from '@components/DeleteQuoteButton'
 import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { ROUTES } from '@config/constants'
 import { fetchQuoteByIdOrNull } from '@services/services'
+import { createSearchQueryString } from '@utils/queryString'
 import { isQuoteValidId } from '@utils/validation'
 
 export async function generateMetadata({ params }) {
@@ -39,7 +40,9 @@ export default async function QuotePage({ params }) {
           {quote.text}
         </h1>
         <p className="text-2xl text-center text-gray-600 dark:text-gray-300 mb-10">
-          <Link href={`/search?author=${quote.author}`}>
+          <Link
+            href={`${ROUTES.SEARCH}?${createSearchQueryString({ author: quote.author })}`}
+          >
             -{' '}
             <span className="hover:underline hover:text-blue-600 hover:dark:text-blue-300">
               {quote.author}
