@@ -33,12 +33,13 @@ has one job (decision `structure-and-naming`):
 
 ## Server Actions
 
-- A Server Action does one mutation: validate the form data, call a service, revalidate, redirect.
+- A Server Action does one mutation, in this order: validate the form data, call a service, revalidate,
+  redirect.
 - Validation runs on the server through the validation utils, and the action returns the form state
   (`values`, `errors`, `formError`) instead of throwing; an API failure is turned into the same state.
 - After a successful mutation the action calls `revalidatePath` for every public page that shows the
-  quote, then `redirect`s. `redirect` works by throwing, so it is called outside any `try` / `catch` that
-  turns errors into form state.
+  quote, then `redirect`s. `redirect` works by throwing, so it is never inside a `try` / `catch`: the `try`
+  holds only the service call, and `revalidatePath` and `redirect` follow it.
 - Success is told with a `?toast=<type>` query parameter that the toasts component turns into a Sonner
   toast and then removes from the URL; a failure is an inline message next to the form or the button
   (decision `toasts-and-inline-errors`).
