@@ -1,7 +1,7 @@
 # Style Rules
 
 Prettier decides the formatting (`.prettierrc`); these are the rules it does not. They follow the
-workspace code style standard plus this project's naming (decision `structure-and-naming`).
+workspace code style standard plus this project's naming (decision `naming-like-backend`).
 
 The current tree predates the file names and folders below (`ai/map.md` shows it as it is). It is moved
 in one dedicated repo-wide change; other tasks do not rename files, and until then a new file follows its
@@ -43,12 +43,15 @@ neighbours.
 
 ## Files, names and imports
 
-- Files and folders are kebab-case. A file that is not a component carries its role as a suffix:
-  `quotes.constants.js`, `quotes.utils.js`, `quotes.service.js`, `quotes.action.js`. A component has no
-  suffix: `components/quote-form/quote-form.jsx`. Names Next.js requires stay as they are (`page.jsx`,
-  `layout.jsx`, `not-found.jsx`, `robots.js`, `sitemap.js`).
-- A component lives in a folder of its own with an `index.js` barrel; a test sits next to the module it
-  covers (`quote-form.test.jsx`).
+- Files and folders are kebab-case. A module carries its role as a singular suffix: `.service.js`,
+  `.fetcher.js`, `.action.js`, `.util.js`, `.constant.js`, `.config.js`, `.error.js`, `.mock.js`,
+  `.test.js` (`quotes.constant.js`, `escape-reg-exp.util.js`). A component and a hook have no suffix:
+  `components/quote-form/quote-form.jsx`, `hooks/use-quote-form/use-quote-form.js`. Names Next.js
+  requires stay as they are (`page.jsx`, `layout.jsx`, `not-found.jsx`, `robots.js`, `sitemap.js`).
+- Every module, a util included, lives in a folder of its own with an `index.js` barrel
+  (`utils/escape-reg-exp/escape-reg-exp.util.js`). A test sits next to the module it covers
+  (`quote-form.test.jsx`); shared mocks and test helpers live in `tests/mocks` and `tests/utils`
+  (`ai/rules/testing.md`).
 - Names in code: components and classes PascalCase, hooks `use<Name>`, functions camelCase verbs,
   constants `UPPER_SNAKE_CASE`. A ref is named after the element it points to (`titleInputRef`).
 - Named exports only. Pages, layouts and the other route files keep the default export Next.js requires.
@@ -59,8 +62,8 @@ neighbours.
   own folder, even when one component is its only user.
 - A file of a component holds only its imports and the component: constants go to `constants/`, helpers
   to `utils/`, logic to a hook.
-- A constant lives in the file of its domain (`QUOTE_TEXT_MAX_LENGTH` in `quotes.constants.js`). General
-  helpers (`isPlainObject`) live in their own utils file, not in a domain one.
+- A constant lives in the file of its domain (`QUOTE_TEXT_MAX_LENGTH` in `quotes.constant.js`). General
+  helpers (`isPlainObject`) live in a util module of their own, not in a domain one.
 
 ## JSX and text
 

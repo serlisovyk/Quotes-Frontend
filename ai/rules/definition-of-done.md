@@ -7,8 +7,8 @@ approval.
 
 - New code follows `ai/rules/architecture.md`, `ai/rules/react.md` and `ai/rules/style.md`: the layer that
   owns it, server components by default, API access only through the services; kebab-case files with
-  role suffixes, named exports, one component per file, imports through `@/` in the order
-  `ai/rules/style.md` sets.
+  singular role suffixes (none on components and hooks), a folder with an `index.js` per module, named
+  exports, one component per file, imports through `@/` in the order `ai/rules/style.md` sets.
 - `API_URL` is read only in the services; nothing server-only reaches a client component.
 - A Server Action validates on the server, returns form state for failures, revalidates the affected
   pages and redirects outside any `try` / `catch`.
@@ -34,9 +34,12 @@ approval.
 
 ## Tests
 
-- New or changed behavior in a service, an action, a util or a component has a Jest test that fails
-  without the change; tests query by role or accessible name, as a user would.
-- `npm test` is green, and no test was deleted or skipped to make it pass.
+- The change was test-driven (`ai/rules/testing.md`): its failing test was committed first as its own
+  `test:` commit, and a bug fix started with a test that reproduces the bug.
+- New or changed behavior in a service, the fetcher, an action, a util, a hook, a component or a page with
+  logic has a Jest test next to the module that fails without the change; tests query by role or
+  accessible name, as a user would.
+- `npm test` is green, coverage did not drop, and no test was deleted or skipped to make it pass.
 
 ## Docs (in the same change, within `ai/rules/docs.md`)
 

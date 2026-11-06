@@ -1,6 +1,6 @@
 # React Rules
 
-Why: decisions `structure-and-naming` and `native-next-caching`. Layers, fetching and Server Actions:
+Why: decisions `naming-like-backend` and `native-next-caching`. Layers, fetching and Server Actions:
 `ai/rules/architecture.md`; code style: `ai/rules/style.md`.
 
 ## Server and client components
@@ -32,8 +32,8 @@ Why: decisions `structure-and-naming` and `native-next-caching`. Layers, fetchin
 - Prefer no state. Derive values during render; read the URL on the server through `searchParams`
   instead of copying it into state.
 - A component with real logic (a form's fields, submit, focus, a menu's open state) moves it into its own
-  hook, `use<Component>` in `use-<component>.js` next to it, and keeps only the markup. Pure utilities are
-  imported directly, no dependency injection.
+  hook, `use<Component>` in `hooks/use-<component>/use-<component>.js`, and keeps only the markup. Pure
+  utilities are imported directly, no dependency injection.
 - Mutations are forms bound to a Server Action: `<form action={formAction}>` with `useActionState`. The
   action returns the next form state; the form renders `errors` next to the fields and `formError` above
   the button, and disables the button while `isPending`.
@@ -53,8 +53,9 @@ Why: decisions `structure-and-naming` and `native-next-caching`. Layers, fetchin
 
 ## Hooks
 
-- A hook lives in `use-<name>.js` and exports `use<Name>`. The Rules of Hooks hold; `eslint-config-next`
-  checks them.
+- A hook has no role suffix: it lives in `hooks/use-<name>/use-<name>.js` with an `index.js` barrel and its
+  test, and exports `use<Name>`. The Rules of Hooks hold; `eslint-config-next` checks them.
+- A hook is tested through `renderHook` or the component that uses it (`ai/rules/testing.md`).
 - Each kind of hook call is its own paragraph: context, refs and ids (`useRef`, `useId`), router and
   browser hooks, the `useState` block, action state (`useActionState`, `useTransition`). Values derived
   from a hook's result form the next paragraph.
