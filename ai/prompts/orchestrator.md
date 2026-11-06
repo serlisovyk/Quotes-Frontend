@@ -20,8 +20,8 @@ Before anything else, read `AGENTS.md`, `ai/workflow.md`, and `ai/map.md`.
 - The Фундамент milestone and any repo-wide change (tooling, lint or format config, file moves or
   renames) run **one at a time**, never alongside other tasks.
 - Otherwise take up to **3** issues that `ai/workflow.md` ("Parallel work") lets run side by side. Use
-  `ai/map.md` and each issue's «Что сделать» to judge overlap and name the shared files up front; when
-  unsure, take fewer.
+  `ai/map.md`, the «Параллельно с…» line of each issue's «Порядок» section and its «Что сделать» to
+  judge overlap and name the shared files up front; when unsure, take fewer.
 
 ## 2. Ask the author everything up front
 

@@ -12,7 +12,7 @@ Actions, Sonner toasts, Jest + Testing Library. No TypeScript. Keep the code pra
 proportional to the project size; clarity, UX polish and maintainability matter more than clever
 abstractions.
 
-- Repo: <https://github.com/serlisovyk/Quotes>
+- Repo: <https://github.com/serlisovyk/Quotes-Frontend>
 - Backend repo: <https://github.com/serlisovyk/Quotes-Backend>
 - Tasks: Linear, project **Quotes** (team `MY`, issues `MY-<n>`, label `Frontend`)
 
@@ -71,7 +71,7 @@ If a change materially reshapes a pattern, update the matching skill in the same
 
 - Prefer small, focused changes.
 - A feature lands in the layer that owns it (`ai/rules/architecture.md`): data on the server through
-  `_services`, mutations in Server Actions, pure logic in `_utils`, interactivity in small client
+  services, mutations in Server Actions, pure logic in utils, interactivity in small client
   components.
 - Follow the existing folder structure, file naming and patterns.
 - Do not add new abstractions unless they remove real duplication or clarify a boundary.
@@ -86,7 +86,7 @@ If a change materially reshapes a pattern, update the matching skill in the same
 - Stack: Next.js App Router, React 19 with the React Compiler, JavaScript ESM (`.js`, `.jsx`), Tailwind
   CSS 4, Sonner for toasts.
 - Sources: `app/`; the build output is `.next/`.
-- Tests: Jest + Testing Library, next to the code in `__tests__` folders.
+- Tests: Jest + Testing Library, next to the module they cover.
 - Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config.
 - Environment: server-only `API_URL`; the rest is in `ai/map.md`.
 

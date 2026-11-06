@@ -10,7 +10,7 @@ Pick up Linear issue MY-**{ISSUE}** in the Quotes frontend repo.
 First, set up the environment:
 
 - Fetch the issue from Linear. Check its "blocked by" relations: if a blocker is not `Done`, stop and
-  say so. Read its «Решения автора» section if there is one: those answers are final.
+  say so. Read its «Порядок» section and its «Решения автора» section if there is one: those answers are final.
 - Work on branch `my-{ISSUE}-<slug>` off the latest `main`: lowercase issue id, your own short English
   slug (do not use Linear's `gitBranchName`: it prepends a username and transliterates the Russian
   title).
