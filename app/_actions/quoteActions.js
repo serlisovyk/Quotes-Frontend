@@ -3,7 +3,7 @@
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
 import { ROUTES } from '@/constants'
-import { deleteQuote, patchQuote, postQuote } from '@services/services'
+import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
 import {
   createApiErrorState,
   createDeleteApiErrorState,

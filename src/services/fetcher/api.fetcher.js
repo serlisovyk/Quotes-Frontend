@@ -60,7 +60,7 @@ const request = async (
   return await response.json()
 }
 
-const requests = {
+export const fetcher = {
   get: (endpoint, queryParams = {}, fetchOptions = {}) =>
     request('GET', endpoint, null, queryParams, fetchOptions),
   post: (endpoint, payload, fetchOptions = {}) =>
@@ -70,5 +70,3 @@ const requests = {
   delete: (endpoint, fetchOptions = {}) =>
     request('DELETE', endpoint, null, {}, fetchOptions),
 }
-
-export default requests

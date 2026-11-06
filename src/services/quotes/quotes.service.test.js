@@ -4,7 +4,7 @@ async function importFreshServices() {
   jest.resetModules()
   process.env.API_URL = API_URL
 
-  return import('@services/services')
+  return import('./quotes.service.js')
 }
 
 function createResponse({ ok, status = 200, body }) {

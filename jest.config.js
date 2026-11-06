@@ -20,7 +20,7 @@ const config = {
     '^@services/(.*)$': '<rootDir>/app/_services/$1',
     '^@utils/(.*)$': '<rootDir>/app/_utils/$1',
     '^@public/(.*)$': '<rootDir>/public/$1',
-    '^server-only$': '<rootDir>/mocks/empty.js',
+    '^server-only$': '<rootDir>/src/tests/mocks/server-only',
   },
 }
 

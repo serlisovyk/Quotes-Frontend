@@ -1,6 +1,6 @@
 import 'server-only'
 
-import fetcher from '@services/fetcher'
+import { fetcher } from '@/services/fetcher'
 import { ApiError } from '@/errors/api'
 import {
   HTTP_STATUS_NOT_FOUND,

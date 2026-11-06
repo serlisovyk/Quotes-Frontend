@@ -1,11 +1,11 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
-import { deleteQuote, patchQuote, postQuote } from '@services/services'
 import {
   createQuoteAction,
   deleteQuoteAction,
   updateQuoteAction,
 } from '@actions/quoteActions'
+import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
 import { ApiError } from '@/errors/api'
 
 jest.mock('next/navigation', () => ({
@@ -22,7 +22,7 @@ jest.mock('next/cache', () => ({
   revalidatePath: jest.fn(),
 }))
 
-jest.mock('@services/services', () => ({
+jest.mock('@/services/quotes', () => ({
   postQuote: jest.fn(),
   patchQuote: jest.fn(),
   deleteQuote: jest.fn(),

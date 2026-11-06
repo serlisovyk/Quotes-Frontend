@@ -11,7 +11,7 @@ jest.mock('@/config', () => ({
   },
 }))
 
-jest.mock('@services/services', () => ({
+jest.mock('@/services/quotes', () => ({
   fetchQuoteByIdOrNull: (...args) => mockFetchQuoteByIdOrNull(...args),
 }))
 

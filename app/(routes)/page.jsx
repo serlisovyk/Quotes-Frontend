@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import Quote from '@components/Quote'
 import Button from '@components/Button'
-import { fetchQuoteByIdOrNull } from '@services/services'
+import { fetchQuoteByIdOrNull } from '@/services/quotes'
 import { isQuoteValidId } from '@/utils/validation'
 import { HOME_QUOTE_ID } from '@/config'
 import { HOME_QUOTE_REVALIDATE_SECONDS, ROUTES } from '@/constants'

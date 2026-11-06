@@ -4,9 +4,9 @@ async function importFreshFetcher({ apiUrl = API_URL } = {}) {
   jest.resetModules()
   process.env.API_URL = apiUrl
 
-  const fetcherModule = await import('@services/fetcher')
+  const fetcherModule = await import('./api.fetcher.js')
 
-  return fetcherModule.default
+  return fetcherModule.fetcher
 }
 
 function createResponse({ ok, status = 200, body }) {

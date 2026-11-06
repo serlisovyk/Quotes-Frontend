@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { fetchQuoteIfExists } from '@services/services'
+import { fetchQuoteIfExists } from '@/services/quotes'
 import QuotePage from '../page'
 
 const mockNotFound = jest.fn(() => {
@@ -10,7 +10,7 @@ jest.mock('next/navigation', () => ({
   notFound: () => mockNotFound(),
 }))
 
-jest.mock('@services/services', () => ({
+jest.mock('@/services/quotes', () => ({
   fetchQuoteIfExists: jest.fn(),
 }))
 
