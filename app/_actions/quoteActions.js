@@ -20,17 +20,19 @@ export async function createQuoteAction(_previousState, formData) {
     return createQuoteActionState(values, errors)
   }
 
+  let quote
+
   try {
-    const quote = await postQuote(createQuotePayload(values))
-
-    revalidatePath(ROUTES.HOME)
-    revalidatePath(ROUTES.SEARCH)
-    revalidatePath(ROUTES.RANDOM)
-
-    redirect(`${ROUTES.QUOTES}/${quote.id}?toast=created`)
+    quote = await postQuote(createQuotePayload(values))
   } catch (error) {
     return createApiErrorState(error, values)
   }
+
+  revalidatePath(ROUTES.HOME)
+  revalidatePath(ROUTES.SEARCH)
+  revalidatePath(ROUTES.RANDOM)
+
+  redirect(`${ROUTES.QUOTES}/${quote.id}?toast=created`)
 }
 
 export async function updateQuoteAction(id, _previousState, formData) {
@@ -43,16 +45,16 @@ export async function updateQuoteAction(id, _previousState, formData) {
 
   try {
     await patchQuote(id, createQuotePayload(values))
-
-    revalidatePath(ROUTES.HOME)
-    revalidatePath(ROUTES.SEARCH)
-    revalidatePath(ROUTES.RANDOM)
-    revalidatePath(`${ROUTES.QUOTES}/${id}`)
-
-    redirect(`${ROUTES.QUOTES}/${id}?toast=updated`)
   } catch (error) {
     return createApiErrorState(error, values)
   }
+
+  revalidatePath(ROUTES.HOME)
+  revalidatePath(ROUTES.SEARCH)
+  revalidatePath(ROUTES.RANDOM)
+  revalidatePath(`${ROUTES.QUOTES}/${id}`)
+
+  redirect(`${ROUTES.QUOTES}/${id}?toast=updated`)
 }
 
 export async function deleteQuoteAction(id) {
