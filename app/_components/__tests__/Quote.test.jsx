@@ -63,4 +63,23 @@ describe('Quote Component', () => {
       getByText(/This is really very long text which is displayed/),
     ).toBeTruthy()
   })
+
+  test('renders a quote when the search text has special characters', () => {
+    const quote = { ...mockQuote, text: 'I like c++ and (ab) a lot' }
+    const { getByText } = render(<Quote quote={quote} searchText="c++" />)
+
+    expect(getByText('c++').className).toContain('bg-yellow-300')
+  })
+
+  test.each([
+    ['A & B', '/search?author=A+%26+B'],
+    ['C#', '/search?author=C%23'],
+    ['x+y', '/search?author=x%2By'],
+  ])('encodes the author %s in the author link', (author, href) => {
+    const { getByRole } = render(<Quote quote={{ ...mockQuote, author }} />)
+
+    expect(getByRole('link', { name: `- ${author}` }).getAttribute('href')).toBe(
+      href,
+    )
+  })
 })
