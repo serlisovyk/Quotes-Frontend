@@ -14,12 +14,6 @@ const config = {
 
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^@components/(.*)$': '<rootDir>/app/_components/$1',
-    '^@config/(.*)$': '<rootDir>/app/_config/$1',
-    '^@actions/(.*)$': '<rootDir>/app/_actions/$1',
-    '^@services/(.*)$': '<rootDir>/app/_services/$1',
-    '^@utils/(.*)$': '<rootDir>/app/_utils/$1',
-    '^@public/(.*)$': '<rootDir>/public/$1',
     '^server-only$': '<rootDir>/src/tests/mocks/server-only',
   },
 }

@@ -7,8 +7,6 @@ const SOURCES = ['src/**/*.{js,jsx}']
 
 const SERVICES_FOLDER = 'src/services/**'
 
-const TRANSITIONAL_SERVICES_FOLDER = 'app/_services/**'
-
 const ROUTE_FILES = [
   'src/app/**/{page,layout,not-found,error,loading}.jsx',
   'src/app/{robots,sitemap}.js',
@@ -75,7 +73,7 @@ export default defineConfig([
   },
   {
     files: ['**/*.{js,jsx,mjs}'],
-    ignores: [SERVICES_FOLDER, TRANSITIONAL_SERVICES_FOLDER],
+    ignores: [SERVICES_FOLDER],
     rules: {
       'no-restricted-globals': ['error', { name: 'fetch', message: FETCH_MESSAGE }],
       'no-restricted-properties': ['error', ...restrictedFetchProperties],
@@ -128,7 +126,7 @@ export default defineConfig([
     },
   },
   {
-    files: ['**/__tests__/**/*.{js,jsx}', '**/*.test.{js,jsx}'],
+    files: ['**/*.test.{js,jsx}'],
     rules: {
       'react/display-name': 'off',
     },
