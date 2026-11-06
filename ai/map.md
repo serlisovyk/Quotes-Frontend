@@ -11,7 +11,7 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `jest.config.js` — `next/jest`, jsdom, the same aliases; `mocks/empty.js` stands in for `server-only`.
 - `eslint.config.mjs` — flat config: `eslint-config-next/core-web-vitals` and test-file overrides.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
-- `package.json` — scripts `dev`, `build`, `start`, `lint`, `format`, `format:check`, `test`, `test:watch`, `docker:*`.
+- `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `test`, `test:watch`.
 - `package-lock.json` — the lockfile (npm).
 - `.env.sample`, `.env.production.sample` — tracked templates of the environment; `.env*` is otherwise ignored.
 - `Dockerfile`, `Dockerfile.dev`, `docker-compose.yml`, `docker-compose.dev.yml`, `.dockerignore` — see Docker.
@@ -72,7 +72,8 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 - `Dockerfile.dev` — dev image: `npm ci` and `npm run dev`.
 - `docker-compose.yml` — runs the published image `serhii5105/quotes-client:latest` with `.env` on port 4000.
 - `docker-compose.dev.yml` — builds `Dockerfile.dev`, mounts the project, keeps `node_modules` and `.next` in volumes.
-- `npm run docker:up` / `docker:down` — production compose; `docker:dev` / `docker:dev:down` — dev compose.
+- Production: `docker compose up -d` and `docker compose down`.
+- Dev: `docker compose -f docker-compose.dev.yml up --build` and `docker compose -f docker-compose.dev.yml down`.
 
 ## What the project does not have
 

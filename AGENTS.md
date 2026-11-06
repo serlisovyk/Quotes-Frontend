@@ -98,11 +98,11 @@ npm run dev          # dev server on port 4000
 npm run build        # production build
 npm run start        # serve the production build
 npm run test:watch   # Jest in watch mode
+npm run lint:fix     # ESLint with --fix
 npm run format       # apply Prettier
 ```
 
-Docker scripts (`docker:up`, `docker:down`, `docker:dev`, `docker:dev:down`) are described in
-`ai/map.md`.
+The `docker compose` commands are in `ai/map.md`.
 
 ## Language
 

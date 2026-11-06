@@ -80,14 +80,11 @@ http://localhost:4000
 - `npm run build`: build production app.
 - `npm run start`: start production server.
 - `npm run lint`: run ESLint.
+- `npm run lint:fix`: run ESLint with `--fix`.
 - `npm run format`: format files with Prettier.
 - `npm run format:check`: check Prettier formatting.
 - `npm test`: run tests.
 - `npm run test:watch`: run tests in watch mode.
-- `npm run docker:up`: start production compose service.
-- `npm run docker:down`: stop production compose service.
-- `npm run docker:dev`: start development compose service.
-- `npm run docker:dev:down`: stop development compose service.
 
 ## Docker
 
@@ -95,12 +92,14 @@ Production compose uses the published frontend image:
 
 ```powershell
 docker compose up -d
+docker compose down
 ```
 
 Development compose builds the local dev image and mounts the project:
 
 ```powershell
 docker compose -f docker-compose.dev.yml up --build
+docker compose -f docker-compose.dev.yml down
 ```
 
 The frontend service reads variables from `.env`.
