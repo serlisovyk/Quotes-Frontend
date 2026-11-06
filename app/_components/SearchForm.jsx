@@ -6,8 +6,8 @@ import InputField from '@components/InputField'
 import Button from '@components/Button'
 import { createSearchInputFields } from '@/config'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
-import { createSearchQueryString } from '@utils/queryString'
-import { getSearchInputValidationMessage } from '@utils/validation'
+import { createSearchQueryString } from '@/utils/query-string'
+import { getSearchInputValidationMessage } from '@/utils/validation'
 
 export default function SearchFields({
   initialSearchValues = INITIAL_SEARCH_VALUES,

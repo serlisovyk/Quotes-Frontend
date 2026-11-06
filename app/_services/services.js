@@ -1,14 +1,14 @@
 import 'server-only'
 
 import fetcher from '@services/fetcher'
-import { ApiError } from '@services/fetcherErrorsHandler'
+import { ApiError } from '@/errors/api'
 import {
   HTTP_STATUS_NOT_FOUND,
   QUOTE_DETAILS_REVALIDATE_SECONDS,
   QUOTES_API_ENDPOINT,
   RANDOM_QUOTES_API_ENDPOINT,
 } from '@/constants'
-import { getSingleQuoteApiEndpoint } from '@utils/utils'
+import { getSingleQuoteApiEndpoint } from '@/utils/get-single-quote-api-endpoint'
 
 export const QUOTE_DETAILS_FETCH_OPTIONS = {
   next: {

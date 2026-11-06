@@ -3,7 +3,7 @@ import SearchForm from '@components/SearchForm'
 import Pagination from '@components/Pagination'
 import StatusMessage from '@components/StatusMessage'
 import { fetchQuotesResult } from '@services/services'
-import { createSearchValuesFromSearchParamsObject } from '@utils/queryString'
+import { createSearchValuesFromSearchParamsObject } from '@/utils/query-string'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 
 export const dynamic = 'force-dynamic'

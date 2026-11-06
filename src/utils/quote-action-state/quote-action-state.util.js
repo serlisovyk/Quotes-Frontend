@@ -1,4 +1,4 @@
-import { getApiErrorMessages } from '@services/fetcherErrorsHandler'
+import { getApiErrorMessages } from '@/utils/get-api-error-messages'
 
 export const createQuoteFormValuesFromFormData = (formData) => ({
   text: String(formData.get('text') || ''),

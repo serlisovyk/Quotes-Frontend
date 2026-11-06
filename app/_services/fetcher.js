@@ -1,6 +1,7 @@
 import 'server-only'
-import { createApiError } from '@services/fetcherErrorsHandler'
-import { createSearchQueryString } from '@utils/queryString'
+
+import { createApiError } from '@/utils/create-api-error'
+import { createSearchQueryString } from '@/utils/query-string'
 
 const getApiUrl = () => process.env.API_URL
 

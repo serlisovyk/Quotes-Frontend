@@ -2,7 +2,7 @@ import {
   createSearchQueryString,
   createSearchValuesFromQueryString,
   createSearchValuesFromSearchParamsObject,
-} from '@utils/queryString'
+} from './query-string.util.js'
 import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 
 describe('createSearchQueryString utility function', () => {

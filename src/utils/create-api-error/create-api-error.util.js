@@ -1,29 +1,4 @@
-export class ApiError extends Error {
-  constructor({ message, status, code, fields }) {
-    super(message)
-
-    this.name = 'ApiError'
-    this.status = status
-    this.code = code
-    this.fields = fields
-  }
-}
-
-function getFieldMessages(fields) {
-  if (!fields) return []
-
-  return Object.entries(fields).map(([field, message]) => `${message} (${field})`)
-}
-
-export function getApiErrorMessages(error) {
-  if (error?.fields) {
-    const fieldMessages = getFieldMessages(error.fields)
-
-    if (fieldMessages.length) return fieldMessages
-  }
-
-  return [error?.message || 'Some error occurred']
-}
+import { ApiError } from '@/errors/api'
 
 async function parseErrorBody(response) {
   try {

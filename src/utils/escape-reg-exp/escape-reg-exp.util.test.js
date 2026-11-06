@@ -1,4 +1,4 @@
-import { escapeRegExp } from '@utils/escapeRegExp'
+import { escapeRegExp } from './escape-reg-exp.util.js'
 
 describe('escapeRegExp utility function', () => {
   test.each(['.', '*', '+', '?', '^', '$', '{', '}', '(', ')', '|', '[', ']', '\\'])(

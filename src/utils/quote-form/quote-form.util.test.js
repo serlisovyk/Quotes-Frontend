@@ -1,4 +1,7 @@
-import { createInitialQuoteFormState, createQuoteFormValues } from '@utils/quoteForm'
+import {
+  createInitialQuoteFormState,
+  createQuoteFormValues,
+} from './quote-form.util.js'
 
 describe('createInitialQuoteFormState utility function', () => {
   test('creates clean form state from provided values', () => {

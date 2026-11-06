@@ -3,7 +3,7 @@ import {
   getQuoteFormValidationErrors,
   isQuoteFormValid,
   getSearchInputValidationMessage,
-} from '@utils/validation'
+} from './validation.util.js'
 
 describe('isQuoteFormValid utility function', () => {
   let setValidationErrors

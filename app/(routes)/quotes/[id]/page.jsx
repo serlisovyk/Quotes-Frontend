@@ -4,8 +4,8 @@ import Button from '@components/Button'
 import CategoryTags from '@components/CategoryTags'
 import DeleteQuoteButton from '@components/DeleteQuoteButton'
 import { fetchQuoteIfExists } from '@services/services'
-import { createSearchQueryString } from '@utils/queryString'
-import { isQuoteValidId } from '@utils/validation'
+import { createSearchQueryString } from '@/utils/query-string'
+import { isQuoteValidId } from '@/utils/validation'
 import { ROUTES } from '@/constants'
 
 export async function generateMetadata({ params }) {

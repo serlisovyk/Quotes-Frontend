@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import CategoryTags from '@components/CategoryTags'
-import { createSearchQueryString } from '@utils/queryString'
-import { renderQuoteText } from '@utils/utils'
+import { createSearchQueryString } from '@/utils/query-string'
+import { renderQuoteText } from '@/utils/render-quote-text'
 import { MAX_VISIBLE_TEXT_LENGTH, ROUTES } from '@/constants'
 
 export default function Quote({ quote, selectedCategory, searchText }) {

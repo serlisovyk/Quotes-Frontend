@@ -1,5 +1,5 @@
 import Link from 'next/link'
-import { createSearchQueryString } from '@utils/queryString'
+import { createSearchQueryString } from '@/utils/query-string'
 import { DEFAULT_SEARCH_LIMIT, DEFAULT_SEARCH_OFFSET } from '@/constants'
 
 const baseClasses =

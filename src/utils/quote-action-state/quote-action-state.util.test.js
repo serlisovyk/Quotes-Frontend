@@ -3,7 +3,7 @@ import {
   createDeleteApiErrorState,
   createQuoteActionState,
   createQuoteFormValuesFromFormData,
-} from '@utils/quoteActionState'
+} from './quote-action-state.util.js'
 
 describe('quoteActionState utilities', () => {
   test('creates quote form values from FormData', () => {
