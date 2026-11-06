@@ -3,7 +3,6 @@ import { Suspense } from 'react'
 import AppToasts from '@components/AppToasts'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
-import Loader from '@components/Loader'
 import { ROUTES } from '@config/constants'
 import {
   SITE_DESCRIPTION,
@@ -78,17 +77,21 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col overflow-y-scroll bg-(--background) font-sans text-(--foreground) antialiased`}
       >
-        <Suspense fallback={<Loader isFullHeight={true} />}>
-          <a href="#main-content" className={SKIP_LINK_CLASS_NAME}>
-            Skip to content
-          </a>
+        <a href="#main-content" className={SKIP_LINK_CLASS_NAME}>
+          Skip to content
+        </a>
+
+        <Suspense fallback={null}>
           <AppToasts />
-          <Header />
-          <main id="main-content" className="container mx-auto flex-1 p-4">
-            {children}
-          </main>
-          <Footer />
         </Suspense>
+
+        <Header />
+
+        <main id="main-content" className="container mx-auto flex-1 p-4">
+          {children}
+        </main>
+
+        <Footer />
       </body>
     </html>
   )
