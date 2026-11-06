@@ -72,8 +72,8 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 
 ## Docker
 
-- `Dockerfile` — multi-stage production image (`npm ci`, `npm run build`, runs the standalone `server.js` as a non-root user).
-- `Dockerfile.dev` — dev image: `npm ci` and `npm run dev`.
+- `Dockerfile` — multi-stage production image on `node:24-alpine` (`npm ci`, `npm run build`, runs the standalone `server.js` as a non-root user).
+- `Dockerfile.dev` — dev image on `node:24-alpine`: `npm ci` and `npm run dev`.
 - `docker-compose.yml` — runs the published image `serhii5105/quotes-client:latest` with `.env` on port 4000.
 - `docker-compose.dev.yml` — builds `Dockerfile.dev`, mounts the project, keeps `node_modules` and `.next` in volumes.
 - Production: `docker compose up -d` and `docker compose down`.
