@@ -46,6 +46,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Prettier `endOfLine: auto`](2026-11-06-prettier-end-of-line-auto.md)
 - [package.json choices](2026-11-06-package-json-choices.md)
 - [Pre-commit hook and CI](2026-11-06-pre-commit-hook-and-ci.md)
+- [ESLint stays on 9](2026-11-06-eslint-stays-on-9.md)
 - [Naming and structure like the backend](2026-11-06-naming-like-backend.md) (accepted, not implemented)
 
 ### Architecture
