@@ -6,7 +6,7 @@ the current tree); `ai/rules/react.md` covers components and hooks.
 ## Layers
 
 Data flows one way: constants and utils → services → pages and Server Actions → components. Each folder
-has one job (decision `structure-and-naming`):
+has one job (decision `naming-like-backend`):
 
 | Layer         | Owns                                                                | Must not                                 |
 | ------------- | ------------------------------------------------------------------- | ---------------------------------------- |
