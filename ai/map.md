@@ -31,10 +31,13 @@ The route group holds the pages and the root layout; it does not change the URLs
 - `page.jsx` — `/`: the home page; the card is quote `HOME_QUOTE_ID`, revalidated hourly, left out when missing.
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
-- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete; an invalid or missing id shows a message.
-- `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic.
-- `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`.
-- `app/robots.js`, `app/sitemap.js` — metadata routes (the sitemap lists the four static pages).
+- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete; an invalid or missing id is a 404 (`notFound()`).
+- `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page.
+- `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
+- `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
+- `error.jsx` — a failed page load (network error, 5xx): heading and a "Try again" button (`reset`).
+- `loading.jsx` — the spinner shown while a server page loads.
+- `app/robots.js`, `app/sitemap.js` — metadata routes (the sitemap lists home, random and search).
 
 ## Shared folders (`app/_*`)
 
@@ -43,7 +46,7 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
 - `_services/` — the only code that calls the backend; every file imports `server-only`.
   - `fetcher.js` — `get`, `post`, `patch`, `delete` over `fetch` and `API_URL`; throws `ApiError` on a bad response.
   - `fetcherErrorsHandler.js` — `ApiError` and the error-message helpers.
-  - `services.js` — the endpoint functions (`fetchQuotesResult`, `fetchRandomQuotesResult`, `fetchQuoteById`,
+  - `services.js` — the endpoint functions (`fetchQuotesResult`, `fetchRandomQuotesResult`, `fetchQuoteById`, `fetchQuoteIfExists`,
     `postQuote`, `patchQuote`, `deleteQuote`) and their cache options.
 - `_actions/quoteActions.js` — Server Actions `createQuoteAction`, `updateQuoteAction`, `deleteQuoteAction`.
 - `_utils/` — pure helpers.
@@ -56,7 +59,7 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
 - `_components/` — one file per component, default export, PascalCase; tests in `__tests__/`.
   - Client components (`'use client'`): `AppToasts`, `Header`, `MenuItems`, `InputField`, `QuoteForm`, `SearchForm`,
     `DeleteQuoteButton`, `RandomQuotesRefreshButton`.
-  - Server components: `Quote`, `Quotes`, `QuoteNotFoundMessage`, `CategoryTag`, `CategoryTags`, `QuoteFormFields`,
+  - Server components: `Quote`, `Quotes`, `CategoryTag`, `CategoryTags`, `QuoteFormFields`,
     `Pagination`, `StatusMessage`, `Button`, `BurgerButton`, `Loader`, `Footer`.
 - `_services/__tests__/`, `_utils/__tests__/`, `_components/__tests__/` — Jest tests next to what they cover.
 
@@ -83,5 +86,5 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 
 - TypeScript, a state-management or server-state library (native Next.js caching instead), a UI kit.
 - Authentication, a database or any backend code: the data comes from the backend API only.
-- `loading.js`, `error.js`, `not-found.js` or middleware files; error and empty states are rendered inline.
+- Middleware files; form and list errors and empty states are rendered inline, only a failed page load reaches `error.jsx`.
 - Client-side API calls: the browser never sees `API_URL`.

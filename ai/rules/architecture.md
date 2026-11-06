@@ -32,6 +32,9 @@ has one job (decision `naming-like-backend`):
 - A read that a page renders returns a result the page can show (`{ quotes, hasError }`), so a backend
   failure becomes an inline message, never a crashed page. A read that returns `null` for a missing item
   lets the page render its not-found message.
+- A page that needs one item tells "missing" from "failed": a missing item (an invalid id, an API 404)
+  calls `notFound()`, a failure is thrown and caught by `error.jsx`. The home card is optional and
+  swallows both.
 - Validate what comes from the URL (the id, the allowed search params) before it reaches the API.
 
 ## Server Actions
