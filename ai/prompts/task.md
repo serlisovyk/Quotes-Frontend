@@ -27,6 +27,8 @@ In particular:
   before any code, with the author's answers in the plan. If something is still to be decided in the plan
   («решить в плане») and has no answer yet, stop after that commit and report the plan with the open
   questions: do not implement until the author approves.
+- Implement test-first (`ai/rules/testing.md`): a failing test committed on its own as `test:`, then the
+  code, then the refactor; a bug starts with a test that reproduces it.
 - Implement in logical commits (Conventional Commits, English). Every commit message ends with a blank
   line and `Co-Authored-By: Claude Sonnet 5.5 <noreply@anthropic.com>`.
 - Update docs in the same change: only what the change made wrong, within the limits of
@@ -41,7 +43,8 @@ Constraints:
 
 - Chat with the author in Russian. Spec, plan, code, and commits stay in English.
 - Touch only what this issue needs.
-- Keep Jest + Testing Library tests green and add or update the ones the change needs.
+- Keep Jest + Testing Library tests green, write the ones the change needs before its code, and never
+  lower coverage.
 - Stop at the author-approval gate (workflow step 11): do not merge, do not push `main`, do not mark the
   issue `Done`.
 - Never use `--no-verify`: the pre-commit hook runs ESLint and Prettier on the staged files; fix what it

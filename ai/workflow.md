@@ -59,6 +59,9 @@ archive of past tasks: read only the plan or spec of the feature you change.
 
 - Follow the plan; commit in logical units, not one giant snapshot. Inspect `git status` and
   `git diff` before each commit.
+- **Test first (TDD, `ai/rules/testing.md`).** Write the failing test, run it and see it fail for the
+  right reason, and commit it on its own as `test:`. Then the code that passes it (`feat:`, `fix:`), then
+  the refactor with the tests green. A bug starts with a test that reproduces it. Coverage only grows.
 - Never bypass a git hook with `--no-verify`; fix what it reports. The pre-commit hook runs ESLint and
   Prettier on the staged files.
 - Conventional Commit messages in English (`feat:`, `fix:`, `refactor:`, `docs:`, `style:`, `test:`,
@@ -86,8 +89,9 @@ Only what the change made wrong, within the limits of `ai/rules/docs.md`:
 - `.env` is not committed; copy it into a worktree only to run `npm run dev` or `npm run build`.
 - If the built-in browser refuses `localhost`, use headless Chrome over the DevTools protocol: the
   browser check is not skipped.
-- Tests are part of the change: new behavior in a service, an action, a util or a component comes with
-  a test, and a changed behavior updates the test that described it.
+- Tests are part of the change: new behavior in a service, the fetcher, an action, a util, a hook, a
+  component or a page with logic comes with a test written before the code, and a changed behavior
+  updates the test that described it.
 
 ## 9. Definition of Done gate
 

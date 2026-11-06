@@ -14,10 +14,12 @@ search parameter, a mutation, a message.
 
 1. Read `ai/map.md` and the rules (`architecture`, `react`, `style`); do not rediscover the code. Names
    below are the standard's; a new file in the current tree follows its neighbours (`ai/rules/style.md`).
+   Start test-first: the failing test of each layer below is committed before its code
+   (`ai/rules/testing.md`).
 2. Split the feature across the layers before writing code:
    - **Constants**: every new shared value (a route, a limit, a cache lifetime, a field definition) in the
-     `*.constants.js` of its domain; a new public route also goes into the menu and the sitemap.
-   - **Utils**: the logic as pure functions in a `*.utils.js` (validation, query strings, form and action
+     `*.constant.js` of its domain; a new public route also goes into the menu and the sitemap.
+   - **Utils**: the logic as pure functions in a `*.util.js` module of its own folder (validation, query strings, form and action
      state). No React, no `fetch`, no `process.env`.
    - **Service**: a new endpoint call is one function in the quotes service over the fetcher, with its
      cache option (`no-store`, or `next.revalidate` from a constant). A read a page shows returns a result
@@ -30,11 +32,11 @@ search parameter, a mutation, a message.
      query, fetch through a service, render the inline error and empty states, export `metadata` with a
      canonical URL.
    - **Component**: a folder `components/<name>/` with `<name>.jsx` and `index.js`, server by default;
-     `'use client'` only for the interactive part, with its logic in `use-<name>.js`. A form uses
+     `'use client'` only for the interactive part, with its logic in `hooks/use-<name>/use-<name>.js`. A form uses
      `useActionState` and shows `errors`, `formError` and a pending state.
    - **Toast**: a new success type is a message in the toasts component's map; failures stay inline.
    - **Styles**: Tailwind utilities with the role-named colour tokens, light and dark.
-3. Write the test next to the module (see Tests), then run the checks.
+3. Keep each test next to its module (see Tests), then run the checks.
 4. Verify per `ai/rules/definition-of-done.md`: use the feature at desktop width and at 390 px against the
    live API, with keyboard and mouse, including its error and empty states.
 
@@ -43,8 +45,11 @@ search parameter, a mutation, a message.
 - Services: mock `fetch` or the fetcher; assert the URL, method, payload, cache option and the error
   result.
 - Utils: plain input and output, including the invalid and empty cases.
-- Components: render with Testing Library, query by role or accessible name, mock `next/navigation` hooks
-  and Server Actions; assert what the user sees and does.
+- Server Actions: call with a `FormData`, mock `next/navigation`, `next/cache` and the services; assert the
+  form state, `revalidatePath` and `redirect`.
+- Components and hooks: render with Testing Library, query by role or accessible name, mock `next/navigation`
+  hooks and Server Actions; assert what the user sees and does.
+- Shared mocks and helpers go to `tests/mocks` and `tests/utils`.
 - A changed behavior updates the test that described it; never delete a test to get green.
 
 ## Recipes

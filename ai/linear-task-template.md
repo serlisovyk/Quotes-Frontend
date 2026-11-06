@@ -57,6 +57,7 @@ What is deliberately excluded; adjacent work goes into separate issues, linked.
 Keep the relevant lines, delete the rest. Copy them into the issue as-is:
 
 - [ ] `ai/superpowers/` — план (+ спека, если меняется поведение) одним коммитом до кода
+- [ ] Тест до кода: падающий тест отдельным коммитом `test:`, баг — сначала тест, который его воспроизводит
 - [ ] `README.md` — фичи, скрипты, структура
 - [ ] `ai/map.md` — если добавлен, переименован или удалён файл, папка, роут, переменная окружения или скрипт
 - [ ] `ai/rules/*`, `ai/skills/*` — если изменился паттерн

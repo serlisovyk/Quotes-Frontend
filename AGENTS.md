@@ -21,7 +21,8 @@ abstractions.
 - `ai/map.md`: where files live, the environment variables, Docker, what the project deliberately
   does **not** have. Read it before exploring the code from scratch.
 - The rules of the area you touch, in `ai/rules/`: `architecture.md` and `react.md` for code,
-  `style.md` for code style and Tailwind, `scope.md` for what not to add without an explicit request.
+  `testing.md` for tests and the test-first way of working, `style.md` for code style and Tailwind,
+  `scope.md` for what not to add without an explicit request.
 - `ai/rules/definition-of-done.md`: the gate before a change is handed over; `ai/rules/docs.md`: one
   fact one home, size limits, no history in docs.
 - `ai/superpowers/` is the archive of past plans and specs: read only the plan or spec of the feature
@@ -50,8 +51,10 @@ The parts that never bend:
 - Merges happen locally into `main`, then `main` is pushed. No pull requests, and never a force-push
   of `main`.
 - Never bypass a git hook (`--no-verify`).
-- Tests are Jest + Testing Library: a change to a service, an action, a util or a component keeps its
-  tests green and adds or updates the ones it needs.
+- Tests are Jest + Testing Library only (no end-to-end), written first: a failing test committed as its
+  own `test:` commit, then the code, then the refactor; a bug starts with a test that reproduces it. A
+  change to a service, an action, a util, a hook or a component keeps its tests green, and coverage
+  only grows.
 
 Prompts to start agent sessions live in `ai/prompts/` (index in `ai/prompts/README.md`):
 `orchestrator.md` runs several tasks from one session, `task.md` runs a single task. Linear issues
@@ -86,7 +89,11 @@ If a change materially reshapes a pattern, update the matching skill in the same
 - Stack: Next.js App Router, React 19 with the React Compiler, JavaScript ESM (`.js`, `.jsx`), Tailwind
   CSS 4, Sonner for toasts.
 - Sources: `app/`; the build output is `.next/`.
-- Tests: Jest + Testing Library, next to the module they cover.
+- Tests: Jest + Testing Library, next to the module they cover; shared mocks and helpers in
+  `tests/mocks`, `tests/utils`; TDD (`ai/rules/testing.md`).
+- Naming: kebab-case, a singular role suffix per module (`.service.js`, `.util.js`), none on components
+  and hooks, a folder with an `index.js` per module, one alias `@/` (`ai/rules/style.md`; the tree is
+  moved by a dedicated change).
 - Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config, which
   also fails `API_URL` and the global `fetch` outside `app/_services`.
 - Pre-commit: Husky runs lint-staged (`eslint --fix` and `prettier --write` on staged files); fix what

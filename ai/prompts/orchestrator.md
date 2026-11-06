@@ -61,7 +61,8 @@ Before anything else, read `AGENTS.md`, `ai/workflow.md`, and `ai/map.md`.
 
 - When a subagent finishes, first read its whole diff yourself, line by line against `ai/rules/` (style
   and React), as `ai/workflow.md` step 10 says, and send every hit back to the same subagent. The author
-  should not have to repeat a rule in review.
+  should not have to repeat a rule in review. Check that the work was test-first: a `test:` commit
+  precedes the code it covers.
 - Then give the author a short summary per issue in Russian: what was done, commits, checks, what was
   checked by hand in the browser (desktop and 390 px), self-review findings, screenshots. Point to the
   branch for the full diff.
