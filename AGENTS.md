@@ -70,24 +70,25 @@ If a change materially reshapes a pattern, update the matching skill in the same
 ## Working Principles
 
 - Prefer small, focused changes.
-- Follow the existing App Router structure.
-- Keep data fetching server-side unless browser interactivity requires a client component.
-- Keep API access behind `app/_services`.
-- Keep Server Actions focused on mutations, validation results, cache invalidation and redirects.
-- Do not add abstractions unless they remove real duplication or clarify a boundary.
+- A feature lands in the layer that owns it (`ai/rules/architecture.md`): data on the server through
+  `_services`, mutations in Server Actions, pure logic in `_utils`, interactivity in small client
+  components.
+- Follow the existing folder structure, file naming and patterns.
+- Do not add new abstractions unless they remove real duplication or clarify a boundary.
 - Do not rewrite working code just to make it look different.
-- Keep UI changes responsive, accessible and consistent with the current visual language.
-- Do not introduce TypeScript.
+- Keep UI changes responsive, accessible, and consistent with the current visual language.
 - If a request conflicts with these rules, follow the user's explicit request and mention the
   tradeoff.
 
 ## Project Defaults
 
-- Package manager: `npm`; `package-lock.json` is the only lockfile.
-- Stack: Next.js App Router, React with the React Compiler, JavaScript ESM, Tailwind CSS 4.
-- Server mutations: Server Actions. Notifications: Sonner success toasts, inline errors for failures.
-- Tests: Jest + Testing Library. Formatting: Prettier (`.prettierrc`); `npm run format` applies it.
-- API base URL: server-only `API_URL`.
+- Package manager: `npm`, never pnpm or yarn; keep `package-lock.json`, no other lockfile.
+- Stack: Next.js App Router, React 19 with the React Compiler, JavaScript ESM (`.js`, `.jsx`), Tailwind
+  CSS 4, Sonner for toasts.
+- Sources: `app/`; the build output is `.next/`.
+- Tests: Jest + Testing Library, next to the code in `__tests__` folders.
+- Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config.
+- Environment: server-only `API_URL`; the rest is in `ai/map.md`.
 
 ## Commands
 

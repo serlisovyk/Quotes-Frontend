@@ -21,10 +21,11 @@ tooling: this change is docs only, so there is no spec.
 
 ## Files
 
-- `AGENTS.md`, `CLAUDE.md` — the entry points. `AGENTS.md` keeps the meaning of the current file
-  (server-side fetching, API only behind `app/_services`, Server Actions for mutations, no
-  abstractions without duplication, no TypeScript, accessible and responsive UI) and adds the
-  project, links, read-first list, workflow rules, commands and languages.
+- `AGENTS.md`, `CLAUDE.md` — the entry points, written to the standard's structure (project, read
+  first, decisions, workflow, skills, working principles, defaults, commands, language,
+  verification). Only project facts (stack, env, cache rules, Docker, commands) come from the old
+  `AGENTS.md` and `docs/`; their structure and wording are replaced. The architecture content moves to
+  `ai/rules/architecture.md`.
 - `ai/map.md` — built from the actual files in `app/`, the configs, the env samples and Docker
   files, including what the project does not have.
 - `ai/workflow.md` — the 13 steps, local merge, parallel work in worktrees.
