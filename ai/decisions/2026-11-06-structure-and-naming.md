@@ -1,6 +1,6 @@
 # Structure and naming conventions
 
-Date: 2026-11-06 · Status: accepted (not implemented)
+Date: 2026-11-06 · Status: superseded by [2026-11-06-naming-like-backend.md](2026-11-06-naming-like-backend.md)
 
 ## Context
 

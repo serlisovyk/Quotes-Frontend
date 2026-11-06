@@ -46,7 +46,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Prettier `endOfLine: auto`](2026-11-06-prettier-end-of-line-auto.md)
 - [package.json choices](2026-11-06-package-json-choices.md)
 - [Pre-commit hook and CI](2026-11-06-pre-commit-hook-and-ci.md)
-- [Structure and naming conventions](2026-11-06-structure-and-naming.md) (accepted, not implemented)
+- [Naming and structure like the backend](2026-11-06-naming-like-backend.md) (accepted, not implemented)
 
 ### Architecture
 
@@ -57,4 +57,10 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 
 - [Tailwind CSS for styling](2026-11-06-tailwind-css.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
-- [Jest and Testing Library stay](2026-11-06-jest-and-testing-library.md)
+- [Jest, Testing Library and TDD](2026-11-06-tests-jest-tdd.md)
+- [No end-to-end tests](2026-11-06-no-e2e-tests.md)
+
+### Superseded
+
+- [Structure and naming conventions](2026-11-06-structure-and-naming.md): by `naming-like-backend`
+- [Jest and Testing Library stay](2026-11-06-jest-and-testing-library.md): by `tests-jest-tdd`

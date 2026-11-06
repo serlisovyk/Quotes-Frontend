@@ -1,6 +1,6 @@
 # Jest and Testing Library stay
 
-Date: 2026-11-06 · Status: accepted
+Date: 2026-11-06 · Status: superseded by [2026-11-06-tests-jest-tdd.md](2026-11-06-tests-jest-tdd.md)
 
 ## Context
 
