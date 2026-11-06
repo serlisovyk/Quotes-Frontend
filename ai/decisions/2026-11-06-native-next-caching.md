@@ -22,7 +22,7 @@ caching.
 
 ## Consequences
 
-- The cache lifetimes are constants in `_config/constants.js`; ten minutes for quote details is a
+- The cache lifetimes are constants; ten minutes for quote details is a
   conservative default, tuned only from real usage.
 - If quote lists multiply and path invalidation becomes too broad, tag-based invalidation is the next
   step; `generateStaticParams` for quote details only makes sense if the backend exposes a reliable list

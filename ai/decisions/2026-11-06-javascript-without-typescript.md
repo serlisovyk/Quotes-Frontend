@@ -18,5 +18,5 @@ syntax to a codebase this small.
 
 - A request that implies TypeScript reverses this record and needs the author's explicit ask and a new
   dated record.
-- Contracts between layers are kept by validation at the boundary (`_utils/validation.js`), by tests and
+- Contracts between layers are kept by validation at the boundary (the validation utils), by tests and
   by the rules.

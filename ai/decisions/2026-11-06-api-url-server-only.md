@@ -9,9 +9,9 @@ variable and client-side `fetch`) was the simple alternative.
 
 ## Decision
 
-- `API_URL` is a plain environment variable, never `NEXT_PUBLIC_`, read only in `_services`.
+- `API_URL` is a plain environment variable, never `NEXT_PUBLIC_`, read only in the services.
 - Every backend call happens on the server: in a server component, a page or a Server Action, through
-  `_services`, which import `server-only`.
+  the services, which import `server-only`.
 - Rejected: client-side calls. They expose the backend origin to the browser and need CORS on the
   backend.
 

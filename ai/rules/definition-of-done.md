@@ -6,14 +6,16 @@ approval.
 ## Code
 
 - New code follows `ai/rules/architecture.md`, `ai/rules/react.md` and `ai/rules/style.md`: the layer that
-  owns it, server components by default, API access only through `_services`.
-- `API_URL` is read only in `_services`; nothing server-only reaches a client component.
+  owns it, server components by default, API access only through the services; kebab-case files with
+  role suffixes, named exports, one component per file, imports through `@/` in the order
+  `ai/rules/style.md` sets.
+- `API_URL` is read only in the services; nothing server-only reaches a client component.
 - A Server Action validates on the server, returns form state for failures, revalidates the affected
   pages and redirects outside any `try` / `catch`.
 - Every read a page renders has a failure path that shows an inline message; a missing item shows the
   not-found message.
-- Shared values come from `_config/constants.js`; no magic numbers in components.
-- No comments, no inline styles.
+- Shared values come from `constants/`; no magic numbers in components.
+- No comments, no inline styles; colours only through the role-named theme tokens, in light and dark.
 - Stale code, classes and constants left behind by the change are removed.
 - Nothing from `ai/rules/scope.md` slipped in.
 

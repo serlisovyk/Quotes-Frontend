@@ -10,7 +10,7 @@ Testing Library in jsdom through `next/jest`. Dropping them or moving to another
 ## Decision
 
 - Jest + Testing Library remain the test stack; `npm test` is part of verification.
-- Tests sit in a `__tests__` folder next to what they cover and query the UI by role or accessible name.
+- Tests sit next to the module they cover and query the UI by role or accessible name.
 - A change to a service, an action, a util or a component keeps its tests green and adds or updates the
   ones it needs.
 - `server-only` is mapped to an empty module in `jest.config.js`, so services can be imported in tests.

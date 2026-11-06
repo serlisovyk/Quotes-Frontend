@@ -33,6 +33,8 @@ Walk the diff against `ai/rules/definition-of-done.md` and the rules of the area
   something outside React; list keys are ids.
 - **Tests**: new behavior has a test that fails without the change; no test was skipped or deleted to get
   green; tests query by role or accessible name.
+- **Style**: the whole diff read line by line against `ai/rules/style.md` and `react.md`: blank lines, destructuring,
+  import order, one component per file, what a component file holds, colour tokens, no comments.
 - **Scope**: nothing from `ai/rules/scope.md` slipped in; no unrelated rewrites; removed behavior left no
   unused code, classes or constants.
 - **Docs drift**: the docs still match the code, none went over its limit (`ai/rules/docs.md`), and a

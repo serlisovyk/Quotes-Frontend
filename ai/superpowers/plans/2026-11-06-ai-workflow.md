@@ -16,7 +16,7 @@ tooling: this change is docs only, so there is no spec.
   `AGENTS.md`. Then `docs/` is deleted and `README.md` stops linking to it.
 - Decision records (all dated 2026-11-06): npm; JavaScript without TypeScript; Jest + Testing
   Library stay; Tailwind CSS; Sonner toasts for success and inline errors for failures; `API_URL`
-  server-only; local merge without a pull request; Prettier `endOfLine: auto`. The record for
+  server-only; local merge without a pull request; Prettier `endOfLine: auto`; structure and naming conventions. The record for
   `endOfLine` only documents the decision: the `.prettierrc` change belongs to MY-219.
 
 ## Files
@@ -41,9 +41,10 @@ tooling: this change is docs only, so there is no spec.
 ## Approach
 
 - Tests stay: Jest + Testing Library are part of verification and of the `feature` skill.
-- Existing code is the source of truth for the map and the rules. Where current files do not match
-  the standard's code style (flat PascalCase component files, default exports), the rules say so
-  and do not ask for a rewrite: renames are a later task.
+- The map describes the real tree. Rules, skills and prompts state the standard's conventions
+  (kebab-case, role suffixes, barrels, named exports, one alias, role-named colour tokens). The gap is
+  one decision record, `structure-and-naming` (accepted, not implemented), and one transition line in
+  `style.md`: the tree is moved in a dedicated repo-wide change.
 - Commits: plan; entry points and `.gitignore`; map and workflow; rules; decisions and the
   `docs/` removal; skills; prompts and Linear template.
 
