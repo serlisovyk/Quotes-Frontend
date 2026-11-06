@@ -4,7 +4,7 @@ import {
   createQuoteAction,
   deleteQuoteAction,
   updateQuoteAction,
-} from '@actions/quoteActions'
+} from './quote.action.js'
 import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
 import { ApiError } from '@/errors/api'
 

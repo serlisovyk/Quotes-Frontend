@@ -1,5 +1,5 @@
 import QuoteForm from '@components/QuoteForm'
-import { createQuoteAction } from '@actions/quoteActions'
+import { createQuoteAction } from '@/actions/quote'
 import { createInitialQuoteFormState } from '@/utils/quote-form'
 import { INITIAL_FORM_VALUES, ROUTES } from '@/constants'
 

@@ -14,7 +14,7 @@ jest.mock('@/services/quotes', () => ({
   fetchQuoteIfExists: jest.fn(),
 }))
 
-jest.mock('@actions/quoteActions', () => ({
+jest.mock('@/actions/quote', () => ({
   updateQuoteAction: jest.fn(),
 }))
 

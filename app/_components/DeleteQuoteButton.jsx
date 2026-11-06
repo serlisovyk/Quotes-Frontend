@@ -2,7 +2,7 @@
 
 import { useActionState } from 'react'
 import Button from '@components/Button'
-import { deleteQuoteAction } from '@actions/quoteActions'
+import { deleteQuoteAction } from '@/actions/quote'
 
 const initialState = {
   error: '',
