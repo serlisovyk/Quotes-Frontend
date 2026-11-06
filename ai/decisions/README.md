@@ -47,7 +47,8 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [package.json choices](2026-11-06-package-json-choices.md)
 - [Pre-commit hook and CI](2026-11-06-pre-commit-hook-and-ci.md)
 - [ESLint stays on 9](2026-11-06-eslint-stays-on-9.md)
-- [Naming and structure like the backend](2026-11-06-naming-like-backend.md) (accepted, not implemented)
+- [Naming and structure like the backend](2026-11-06-naming-like-backend.md)
+- [Barrels per module, layer-wide only for constants and config](2026-11-06-barrels-per-module.md)
 
 ### Architecture
 

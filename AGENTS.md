@@ -88,14 +88,13 @@ If a change materially reshapes a pattern, update the matching skill in the same
 - Package manager: `npm`, never pnpm or yarn; keep `package-lock.json`, no other lockfile.
 - Stack: Next.js App Router, React 19 with the React Compiler, JavaScript ESM (`.js`, `.jsx`), Tailwind
   CSS 4, Sonner for toasts.
-- Sources: `app/`; the build output is `.next/`.
+- Sources: `src/` (alias `@/`); the build output is `.next/`.
 - Tests: Jest + Testing Library, next to the module they cover; shared mocks and helpers in
   `tests/mocks`, `tests/utils`; TDD (`ai/rules/testing.md`).
 - Naming: kebab-case, a singular role suffix per module (`.service.js`, `.util.js`), none on components
-  and hooks, a folder with an `index.js` per module, one alias `@/` (`ai/rules/style.md`; the tree is
-  moved by a dedicated change).
+  and hooks, a folder with an `index.js` per module, one alias `@/` (`ai/rules/style.md`).
 - Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config, which
-  also fails `API_URL` and the global `fetch` outside `app/_services`.
+  also fails `API_URL` and the global `fetch` outside `src/services`.
 - Pre-commit: Husky runs lint-staged (`eslint --fix` and `prettier --write` on staged files); fix what
   it reports.
 - CI: GitHub Actions (`.github/workflows/ci.yml`) on every push runs lint, format check, tests and

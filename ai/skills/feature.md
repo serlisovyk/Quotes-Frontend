@@ -12,8 +12,7 @@ search parameter, a mutation, a message.
 
 ## Steps
 
-1. Read `ai/map.md` and the rules (`architecture`, `react`, `style`); do not rediscover the code. Names
-   below are the standard's; a new file in the current tree follows its neighbours (`ai/rules/style.md`).
+1. Read `ai/map.md` and the rules (`architecture`, `react`, `style`); do not rediscover the code.
    Start test-first: the failing test of each layer below is committed before its code
    (`ai/rules/testing.md`).
 2. Split the feature across the layers before writing code:

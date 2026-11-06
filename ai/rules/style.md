@@ -3,10 +3,6 @@
 Prettier decides the formatting (`.prettierrc`); these are the rules it does not. They follow the
 workspace code style standard plus this project's naming (decision `naming-like-backend`).
 
-The current tree predates the file names and folders below (`ai/map.md` shows it as it is). It is moved
-in one dedicated repo-wide change; other tasks do not rename files, and until then a new file follows its
-neighbours.
-
 ## General
 
 - **No comments in code**: JavaScript, JSX, CSS and the root configs. Names and small functions say what
@@ -56,7 +52,8 @@ neighbours.
   constants `UPPER_SNAKE_CASE`. A ref is named after the element it points to (`titleInputRef`).
 - Named exports only. Pages, layouts and the other route files keep the default export Next.js requires.
 - One alias, `@/`, is the root of the sources. Imports across folders go through it and the folder's
-  barrel; inside one folder a sibling is imported directly (`./quote-form.jsx`).
+  barrel; inside one folder a sibling is imported directly (`./quote-form.jsx`). ESLint rejects `../`, a
+  folder's own barrel, a default export outside the route files and a name that is not kebab-case.
 - **Import order:** packages, then `@/` modules with `@/constants` last, then `./` siblings, then styles.
 - **One component per file**, no exception: a piece that renders markup is a component of its own, in its
   own folder, even when one component is its only user.

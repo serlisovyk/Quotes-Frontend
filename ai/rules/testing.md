@@ -41,7 +41,8 @@ The project keeps an automated suite: Jest with Testing Library in jsdom through
   has a folder with an `index.js` (`ai/rules/style.md`).
 - Shared mocks live in `tests/mocks`, shared test-only helpers in `tests/utils`, each in a folder of its
   own with an `index.js`.
-- Imports use the `@/` alias wherever one reaches the module.
+- A test imports the module it covers by its file (`./quote-form.jsx`); every other module comes through
+  the `@/` alias and its folder, and a mock names that same path (`jest.mock('@/services/quotes')`).
 - A `describe` label names the unit in PascalCase words (`Quote Form`); an `it` label says the behavior
   (`shows the error under the text field`).
 

@@ -1,7 +1,7 @@
 # Architecture Rules
 
-Sources live in `app/` (Next.js App Router). `ai/map.md` says where every folder lives (with the names of
-the current tree); `ai/rules/react.md` covers components and hooks.
+Sources live in `src/` (Next.js App Router, `@/` is its alias); `src/app` holds only the route files. `ai/map.md` says
+where every folder lives; `ai/rules/react.md` covers components and hooks.
 
 ## Layers
 
@@ -28,7 +28,7 @@ has one job (decision `naming-like-backend`):
 - Every API call goes through a service: the fetcher builds the URL from `API_URL`, the quotes service
   exposes one function per endpoint. A page or an action never calls `fetch` itself.
 - `API_URL` is server-only: never prefix it with `NEXT_PUBLIC_`, never read it outside the services.
-  ESLint enforces both: `API_URL` and the global `fetch` fail outside `_services`, tests included.
+  ESLint enforces both: `API_URL` and the global `fetch` fail outside `services/`, tests included.
 - A read that a page renders returns a result the page can show (`{ quotes, hasError }`), so a backend
   failure becomes an inline message, never a crashed page. A read that returns `null` for a missing item
   lets the page render its not-found message.

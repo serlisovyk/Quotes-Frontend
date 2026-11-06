@@ -111,3 +111,11 @@ port 4108 against the live API: home, random, search, a quote, create → edit �
 logo, at desktop and 390 px. Grep of the old names (`_components`, `@components`, `@public`, `navIcon`,
 `__tests__`, …) outside `ai/superpowers/` returns nothing. Docs: map, style, architecture, react,
 testing, `feature` skill, `AGENTS.md`, `CLAUDE.md`, README, decision index.
+
+## Changes during implementation
+
+- The lint-staged run of the components commit failed on the Windows command-line limit (65 staged files
+  with long paths); `.husky/pre-commit` now passes `--max-arg-length 6000`, in a `build:` commit of its own.
+- The six old aliases and the transitional exemption went in one `build:` commit after the routes move,
+  not in the routes commit.
+- Decision `barrels-per-module` records the barrel and `.util.jsx` choices made above.

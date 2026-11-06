@@ -126,15 +126,17 @@ Production example is available in `.env.production.sample`.
 
 ```text
 ai                  # Agent docs: map, rules, workflow, decisions
-app
-├── _actions        # Server Actions for quote mutations
-├── _components     # Shared UI components
-├── _config         # Routes, constants, metadata config
-├── _services       # Server-only API layer
-├── _utils          # Form, validation, query, and action-state helpers
-├── (routes)        # App Router pages and layouts
-├── robots.js       # Robots metadata route
-└── sitemap.js      # Sitemap metadata route
+public              # Static files: home page photo, logo, favicon
+src
+├── actions         # Server Actions for quote mutations
+├── app             # App Router routes: pages, layouts, robots, sitemap
+├── components      # UI components, one folder each
+├── config          # Site, home quote and form field config
+├── constants       # Routes, menu, limits, cache lifetimes
+├── errors          # API error class
+├── services        # Server-only API layer
+├── tests           # Shared test mocks and helpers
+└── utils           # Form, validation, query, and action-state helpers
 ```
 
 ## API
