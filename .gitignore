@@ -17,3 +17,5 @@ build
 out
 
 coverage
+
+.claude/worktrees/
