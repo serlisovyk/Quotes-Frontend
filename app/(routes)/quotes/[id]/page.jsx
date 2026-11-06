@@ -1,10 +1,10 @@
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 import Button from '@components/Button'
 import CategoryTags from '@components/CategoryTags'
 import DeleteQuoteButton from '@components/DeleteQuoteButton'
-import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { ROUTES } from '@config/constants'
-import { fetchQuoteByIdOrNull } from '@services/services'
+import { fetchQuoteIfExists } from '@services/services'
 import { createSearchQueryString } from '@utils/queryString'
 import { isQuoteValidId } from '@utils/validation'
 
@@ -23,15 +23,11 @@ export async function generateMetadata({ params }) {
 export default async function QuotePage({ params }) {
   const { id } = await params
 
-  if (!isQuoteValidId(id)) {
-    return <QuoteNotFoundMessage id={id} />
-  }
+  if (!isQuoteValidId(id)) notFound()
 
-  const quote = await fetchQuoteByIdOrNull(id)
+  const quote = await fetchQuoteIfExists(id)
 
-  if (!quote?.id) {
-    return <QuoteNotFoundMessage id={id} />
-  }
+  if (!quote?.id) notFound()
 
   return (
     <div>

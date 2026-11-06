@@ -1,8 +1,8 @@
+import { notFound } from 'next/navigation'
 import QuoteForm from '@components/QuoteForm'
-import QuoteNotFoundMessage from '@components/QuoteNotFoundMessage'
 import { updateQuoteAction } from '@actions/quoteActions'
 import { ROUTES } from '@config/constants'
-import { fetchQuoteByIdOrNull } from '@services/services'
+import { fetchQuoteIfExists } from '@services/services'
 import { createInitialQuoteFormState, createQuoteFormValues } from '@utils/quoteForm'
 import { isQuoteValidId } from '@utils/validation'
 
@@ -17,21 +17,20 @@ export async function generateMetadata({ params }) {
     alternates: {
       canonical: `${ROUTES.QUOTES}/${id}/edit`,
     },
+    robots: {
+      index: false,
+    },
   }
 }
 
 export default async function EditQuotePage({ params }) {
   const { id } = await params
 
-  if (!isQuoteValidId(id)) {
-    return <QuoteNotFoundMessage id={id} />
-  }
+  if (!isQuoteValidId(id)) notFound()
 
-  const quote = await fetchQuoteByIdOrNull(id, { cache: 'no-store' })
+  const quote = await fetchQuoteIfExists(id, { cache: 'no-store' })
 
-  if (!quote?.id) {
-    return <QuoteNotFoundMessage id={id} />
-  }
+  if (!quote?.id) notFound()
 
   return (
     <QuoteForm

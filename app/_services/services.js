@@ -1,7 +1,9 @@
 import 'server-only'
 
 import fetcher from '@services/fetcher'
+import { ApiError } from '@services/fetcherErrorsHandler'
 import {
+  HTTP_STATUS_NOT_FOUND,
   QUOTE_DETAILS_REVALIDATE_SECONDS,
   QUOTES_API_ENDPOINT,
   RANDOM_QUOTES_API_ENDPOINT,
@@ -57,6 +59,16 @@ export const fetchQuoteById = (id, fetchOptions = QUOTE_DETAILS_FETCH_OPTIONS) =
 
 export const fetchQuoteByIdOrNull = (id, fetchOptions) =>
   fetchQuoteById(id, fetchOptions).catch(() => null)
+
+export const fetchQuoteIfExists = (id, fetchOptions) =>
+  fetchQuoteById(id, fetchOptions).catch((error) => {
+    const isNotFound =
+      error instanceof ApiError && error.status === HTTP_STATUS_NOT_FOUND
+
+    if (isNotFound) return null
+
+    throw error
+  })
 
 export const postQuote = (payload) => fetcher.post(QUOTES_API_ENDPOINT, payload)
 
