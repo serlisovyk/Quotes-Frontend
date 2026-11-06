@@ -3,6 +3,11 @@ import RootLayout from '../layout'
 
 jest.mock('next/font/local', () => () => ({ variable: 'font-variable' }))
 
+jest.mock('@config/site', () => ({
+  ...jest.requireActual('@config/site'),
+  SITE_URL: 'http://localhost:4000',
+}))
+
 jest.mock('@components/AppToasts', () => {
   const pendingPromise = new Promise(() => {})
 

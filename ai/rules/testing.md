@@ -49,6 +49,8 @@ The project keeps an automated suite: Jest with Testing Library in jsdom through
 
 - Mock what is outside the unit: `next/navigation` hooks and `redirect`, `next/cache`, the services in an
   action or a page test, `fetch` in a service test. A test never calls the real API.
+- A test never depends on `.env`: `next/jest` loads it locally, but CI has none. A module that reads an
+  environment value at import (`SITE_URL`, `HOME_QUOTE_ID`) is mocked with the value the test needs.
 - Keep a mock small and explicit; share one through `tests/mocks` only when it removes real repetition.
 - Server Actions are called directly as functions with a `FormData`; a component test mocks the action.
 
