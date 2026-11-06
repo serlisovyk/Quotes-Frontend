@@ -15,6 +15,7 @@
     "lint:fix": "eslint . --fix",
     "format": "prettier . --write",
     "format:check": "prettier . --check",
+    "prepare": "husky",
     "test": "jest",
     "test:watch": "jest --watch"
   },
@@ -34,8 +35,10 @@
     "eslint": "^9.39.5",
     "eslint-config-next": "^16.3.0",
     "eslint-config-prettier": "^10.1.8",
+    "husky": "^9.1.7",
     "jest": "^30.4.2",
     "jest-environment-jsdom": "^30.4.1",
+    "lint-staged": "^17.6.0",
     "postcss": "^8.5.26",
     "prettier": "^3.9.6",
     "sharp": "^0.35.3",
