@@ -13,6 +13,7 @@ const config = {
   testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/.claude/'],
 
   moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
     '^@components/(.*)$': '<rootDir>/app/_components/$1',
     '^@config/(.*)$': '<rootDir>/app/_config/$1',
     '^@actions/(.*)$': '<rootDir>/app/_actions/$1',
