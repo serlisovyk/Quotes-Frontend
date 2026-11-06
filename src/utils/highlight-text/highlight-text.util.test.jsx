@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
-import { highlightText } from './highlight-text.util.jsx'
 import { HIGHLIGHT_STYLES } from '@/constants'
+import { highlightText } from './highlight-text.util.jsx'
 
 const getHighlights = (container) =>
   Array.from(container.querySelectorAll('span')).map((span) => span.textContent)

@@ -1,9 +1,9 @@
+import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 import {
   createSearchQueryString,
   createSearchValuesFromQueryString,
   createSearchValuesFromSearchParamsObject,
 } from './query-string.util.js'
-import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 
 describe('createSearchQueryString utility function', () => {
   test('should return a valid query string with allowed params', () => {

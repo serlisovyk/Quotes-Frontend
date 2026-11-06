@@ -1,12 +1,12 @@
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
+import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
+import { ApiError } from '@/errors/api'
 import {
   createQuoteAction,
   deleteQuoteAction,
   updateQuoteAction,
 } from './quote.action.js'
-import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
-import { ApiError } from '@/errors/api'
 
 jest.mock('next/navigation', () => ({
   redirect: jest.fn((url) => {

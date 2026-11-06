@@ -1,5 +1,4 @@
 import { render, screen } from '@testing-library/react'
-
 import HomePage from './page'
 
 const mockFetchQuoteByIdOrNull = jest.fn()
