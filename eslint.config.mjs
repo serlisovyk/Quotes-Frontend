@@ -14,7 +14,7 @@ const eslintConfig = [
       'react-hooks/set-state-in-effect': 'off',
     },
   },
-  globalIgnores(['.next/**', 'node_modules/**', 'coverage/**']),
+  globalIgnores(['.next/**', '.claude/**', 'node_modules/**', 'coverage/**']),
 ]
 
 export default eslintConfig

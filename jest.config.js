@@ -9,7 +9,8 @@ const config = {
   coverageProvider: 'v8',
   testEnvironment: 'jsdom',
   verbose: true,
-  modulePathIgnorePatterns: ['<rootDir>/.next/'],
+  modulePathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/.claude/'],
+  testPathIgnorePatterns: ['<rootDir>/.next/', '<rootDir>/.claude/'],
 
   moduleNameMapper: {
     '^@components/(.*)$': '<rootDir>/app/_components/$1',
