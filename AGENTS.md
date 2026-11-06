@@ -87,7 +87,12 @@ If a change materially reshapes a pattern, update the matching skill in the same
   CSS 4, Sonner for toasts.
 - Sources: `app/`; the build output is `.next/`.
 - Tests: Jest + Testing Library, next to the module they cover.
-- Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config.
+- Formatting: Prettier (`.prettierrc`); `npm run format` applies it. Linting: ESLint flat config, which
+  also fails `API_URL` and the global `fetch` outside `app/_services`.
+- Pre-commit: Husky runs lint-staged (`eslint --fix` and `prettier --write` on staged files); fix what
+  it reports.
+- CI: GitHub Actions (`.github/workflows/ci.yml`) on every push runs lint, format check, tests and
+  build, the build with `API_URL` and `SITE_URL` from GitHub Secrets.
 - Environment: server-only `API_URL`; the rest is in `ai/map.md`.
 
 ## Commands
@@ -123,4 +128,5 @@ npm run build
 
 Then use the change in the browser (`npm run dev`, with `API_URL` pointing at the live API): desktop
 width and 390 px wide, keyboard and mouse. A green build does not prove a UI change works. If a check
-cannot be run, report that clearly.
+cannot be run, report that clearly. CI runs the same four checks on every push; after a push to
+`main`, wait for it to go green.

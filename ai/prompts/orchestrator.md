@@ -76,7 +76,7 @@ no pull requests. Step 11 says what counts as an approval («продолжай�
    anything non-trivial back to the subagent).
 2. Fast-forward merge into `main`, run the checks from `AGENTS.md` on `main`, check the combined result
    in the browser (a rebase that brought in another branch's UI work can break a component), push `main`.
-3. After the push, wait for CI where it exists, then move the issue to `Done` and comment with the merged
+3. After the push, wait for CI to go green, then move the issue to `Done` and comment with the merged
    commit SHAs and the author's decisions.
 4. Remove the worktree and delete the branch.
 

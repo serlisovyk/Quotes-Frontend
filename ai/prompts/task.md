@@ -44,7 +44,8 @@ Constraints:
 - Keep Jest + Testing Library tests green and add or update the ones the change needs.
 - Stop at the author-approval gate (workflow step 11): do not merge, do not push `main`, do not mark the
   issue `Done`.
-- Never use `--no-verify`.
+- Never use `--no-verify`: the pre-commit hook runs ESLint and Prettier on the staged files; fix what it
+  reports.
 - If the scope is ambiguous or conflicts with a rule or decision record, stop and ask in a plain message,
   the way `ai/workflow.md` step 1 says: do not guess.
 

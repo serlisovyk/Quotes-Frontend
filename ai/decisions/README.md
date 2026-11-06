@@ -45,6 +45,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Merge locally into `main`, no pull requests](2026-11-06-local-merge-without-pr.md)
 - [Prettier `endOfLine: auto`](2026-11-06-prettier-end-of-line-auto.md)
 - [package.json choices](2026-11-06-package-json-choices.md)
+- [Pre-commit hook and CI](2026-11-06-pre-commit-hook-and-ci.md)
 - [Structure and naming conventions](2026-11-06-structure-and-naming.md) (accepted, not implemented)
 
 ### Architecture

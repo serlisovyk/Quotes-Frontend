@@ -65,10 +65,12 @@ Keep the relevant lines, delete the rest. Copy them into the issue as-is:
 
 ## Проверка
 
-Copy into the issue, one line per check under "Verification" in `AGENTS.md`, plus the manual line:
+Copy into the issue, one line per check under "Verification" in `AGENTS.md`, plus the manual line and the
+CI line:
 
 - [ ] `npm run format:check`
 - [ ] `npm run lint`
 - [ ] `npm test`
 - [ ] `npm run build`
 - [ ] Прогнано руками в `npm run dev` против живого API: десктоп и 390px, клавиатура и мышь
+- [ ] CI зелёный после push

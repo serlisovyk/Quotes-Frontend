@@ -83,8 +83,13 @@ http://localhost:4000
 - `npm run lint:fix`: run ESLint with `--fix`.
 - `npm run format`: format files with Prettier.
 - `npm run format:check`: check Prettier formatting.
+- `npm run prepare`: install the Husky pre-commit hook (runs on `npm install`).
 - `npm test`: run tests.
 - `npm run test:watch`: run tests in watch mode.
+
+## CI
+
+GitHub Actions runs lint, format check, tests, and build on every push. The build uses the real backend, so it needs the repository secrets `API_URL` and `SITE_URL`. The pre-commit hook (Husky and lint-staged) runs ESLint and Prettier on staged files.
 
 ## Docker
 

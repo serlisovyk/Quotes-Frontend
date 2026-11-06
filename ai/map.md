@@ -9,9 +9,11 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `next.config.mjs` — `output: 'standalone'` (the production `Dockerfile` needs it), React Compiler, strict mode.
 - `jsconfig.json` — the path aliases `@components`, `@config`, `@actions`, `@utils`, `@services`, `@public`.
 - `jest.config.js` — `next/jest`, jsdom, the same aliases; `mocks/empty.js` stands in for `server-only`.
-- `eslint.config.mjs` — flat config: `eslint-config-next/core-web-vitals`, test-file and per-file overrides, `eslint-config-prettier`.
+- `eslint.config.mjs` — flat config: `eslint-config-next/core-web-vitals`, `API_URL` and `fetch` limited to `_services`, per-file overrides, `eslint-config-prettier`.
+- `.husky/pre-commit`, `.lintstagedrc.json` — the pre-commit hook: lint-staged runs ESLint and Prettier on staged files.
+- `.github/workflows/ci.yml` — CI on every push: lint, format check, tests, build; the build needs the secrets `API_URL`, `SITE_URL`.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
-- `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `test`, `test:watch`.
+- `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `prepare` (installs the hook), `test`, `test:watch`.
 - `package-lock.json` — the lockfile (npm).
 - `.env.sample`, `.env.production.sample` — tracked templates of the environment; `.env*` is otherwise ignored.
 - `Dockerfile`, `Dockerfile.dev`, `docker-compose.yml`, `docker-compose.dev.yml`, `.dockerignore` — see Docker.
@@ -80,5 +82,4 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 - TypeScript, a state-management or server-state library (native Next.js caching instead), a UI kit.
 - Authentication, a database or any backend code: the data comes from the backend API only.
 - `loading.js`, `error.js`, `not-found.js` or middleware files; error and empty states are rendered inline.
-- Git hooks, a lint-staged setup and CI workflows.
 - Client-side API calls: the browser never sees `API_URL`.

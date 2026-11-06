@@ -59,7 +59,8 @@ archive of past tasks: read only the plan or spec of the feature you change.
 
 - Follow the plan; commit in logical units, not one giant snapshot. Inspect `git status` and
   `git diff` before each commit.
-- Never bypass a git hook with `--no-verify`; fix what it reports.
+- Never bypass a git hook with `--no-verify`; fix what it reports. The pre-commit hook runs ESLint and
+  Prettier on the staged files.
 - Conventional Commit messages in English (`feat:`, `fix:`, `refactor:`, `docs:`, `style:`, `test:`,
   `build:`, `ci:`, `chore:`): specific, never `update` or `changes`.
 - Use the matching skill instead of improvising a pattern that already exists.
@@ -138,12 +139,12 @@ git branch -d my-<n>-<slug>
 - History stays linear: rebase onto `main`, then fast-forward. Never force-push `main`.
 - If the branch was pushed, delete it on the remote too (`git push origin --delete my-<n>-<slug>`).
 - Remove the worktree if one was used (`git worktree remove <path>`).
-- If `main` runs a CI workflow, wait for it to go green after the push, polling a few minutes apart (the
-  unauthenticated GitHub API allows 60 requests an hour); a red `main` is fixed right away with a
-  follow-up commit.
+- Wait for the CI run of the pushed `main` to go green, polling a few minutes apart (the unauthenticated
+  GitHub API allows 60 requests an hour); a red `main` is fixed right away with a follow-up commit. CI
+  builds against the real API, so a red build can mean the backend is down: check that first.
 - If `main` deploys to hosting, check the live site read-only after the push; agents never recreate or
   reconnect the hosting project.
-- Move the Linear issue to `Done` once the checks on `main` (and CI, where it exists) are green, and
+- Move the Linear issue to `Done` once the checks on `main` and CI are green, and
   comment with the merged commit SHAs, the author's decisions, what was checked and what was not.
 
 ## Parallel work
