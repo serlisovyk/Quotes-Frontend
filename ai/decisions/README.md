@@ -43,7 +43,8 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [npm is the package manager](2026-11-06-npm-package-manager.md)
 - [JavaScript ESM, no TypeScript](2026-11-06-javascript-without-typescript.md)
 - [Merge locally into `main`, no pull requests](2026-11-06-local-merge-without-pr.md)
-- [Prettier `endOfLine: auto`](2026-11-06-prettier-end-of-line-auto.md) (accepted, not implemented)
+- [Prettier `endOfLine: auto`](2026-11-06-prettier-end-of-line-auto.md)
+- [package.json choices](2026-11-06-package-json-choices.md)
 - [Structure and naming conventions](2026-11-06-structure-and-naming.md) (accepted, not implemented)
 
 ### Architecture

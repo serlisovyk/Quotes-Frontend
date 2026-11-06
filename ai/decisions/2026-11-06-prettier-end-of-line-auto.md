@@ -1,6 +1,6 @@
 # Prettier `endOfLine: auto`
 
-Date: 2026-11-06 · Status: accepted (not implemented)
+Date: 2026-11-06 · Status: accepted
 
 ## Context
 
