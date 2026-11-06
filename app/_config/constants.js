@@ -57,7 +57,5 @@ export const MAX_VISIBLE_CATEGORIES = 10
 
 export const MAX_VISIBLE_TEXT_LENGTH = 200
 
-export const MY_QUOTE_ID = 418402
-
 export const HIGHLIGHT_STYLES =
   'bg-yellow-300 dark:bg-yellow-200 dark:text-gray-800 -m-0.5 p-0.5'

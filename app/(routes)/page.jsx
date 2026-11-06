@@ -2,29 +2,21 @@ import Image from 'next/image'
 import churchillImage from '@public/churchill.jpg'
 import Quote from '@components/Quote'
 import Button from '@components/Button'
-import StatusMessage from '@components/StatusMessage'
-import {
-  HOME_QUOTE_REVALIDATE_SECONDS,
-  MY_QUOTE_ID,
-  ROUTES,
-} from '@config/constants'
+import { HOME_QUOTE_REVALIDATE_SECONDS, ROUTES } from '@config/constants'
+import { HOME_QUOTE_ID } from '@config/home'
 import { fetchQuoteByIdOrNull } from '@services/services'
+import { isQuoteValidId } from '@utils/validation'
 
 export default async function HomePage() {
-  const quote = await fetchQuoteByIdOrNull(MY_QUOTE_ID, {
-    next: {
-      revalidate: HOME_QUOTE_REVALIDATE_SECONDS,
-    },
-  })
+  const quote = isQuoteValidId(HOME_QUOTE_ID)
+    ? await fetchQuoteByIdOrNull(HOME_QUOTE_ID, {
+        next: {
+          revalidate: HOME_QUOTE_REVALIDATE_SECONDS,
+        },
+      })
+    : null
 
-  if (!quote?.id) {
-    return (
-      <StatusMessage
-        text="Error while fetching quotes for the home page. Please try again later."
-        className="p-10"
-      />
-    )
-  }
+  const hasQuote = Boolean(quote?.id)
 
   return (
     <>
@@ -66,9 +58,11 @@ export default async function HomePage() {
             social networks and much more.
           </div>
         </div>
-        <div className="max-w-[500px]">
-          <Quote quote={quote} />
-        </div>
+        {hasQuote && (
+          <div className="max-w-[500px]">
+            <Quote quote={quote} />
+          </div>
+        )}
       </section>
       <section className="flex flex-col justify-center sm:flex-row md:mb-10">
         <Button href={ROUTES.RANDOM} text="Random Quotes" />
