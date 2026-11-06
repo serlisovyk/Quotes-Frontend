@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import { fetchQuoteIfExists } from '@/services/quotes'
-import EditQuotePage, { generateMetadata } from '../page'
+import QuotePage from './page'
 
 const mockNotFound = jest.fn(() => {
   throw new Error('NEXT_NOT_FOUND')
@@ -14,34 +14,41 @@ jest.mock('@/services/quotes', () => ({
   fetchQuoteIfExists: jest.fn(),
 }))
 
-jest.mock('@/actions/quote', () => ({
-  updateQuoteAction: jest.fn(),
+jest.mock('@/components/category-tags', () => ({ CategoryTags: () => <div /> }))
+jest.mock('@/components/delete-quote-button', () => ({
+  DeleteQuoteButton: () => <div />,
 }))
 
-jest.mock('@/components/quote-form', () => ({
-  QuoteForm: ({ buttonText }) => (
-    <form aria-label="Quote form">
-      <button type="submit">{buttonText}</button>
-    </form>
-  ),
-}))
+const renderPage = async (quote) => {
+  fetchQuoteIfExists.mockResolvedValue(quote)
 
-const renderWithId = (id) => EditQuotePage({ params: Promise.resolve({ id }) })
+  const page = await QuotePage({ params: Promise.resolve({ id: String(quote.id) }) })
 
-describe('Edit quote page', () => {
-  it('renders the form for an existing quote', async () => {
-    fetchQuoteIfExists.mockResolvedValue({
-      id: 7,
+  return render(page)
+}
+
+describe('Quote page author link', () => {
+  test.each([
+    ['A & B', '/search?author=A+%26+B'],
+    ['C#', '/search?author=C%23'],
+    ['x+y', '/search?author=x%2By'],
+    ['Albert Einstein', '/search?author=Albert+Einstein'],
+  ])('encodes the author %s', async (author, href) => {
+    const { getByRole } = await renderPage({
+      id: 1,
       text: 'Some text',
-      author: 'Author',
+      author,
       categories: [],
     })
 
-    render(await renderWithId('7'))
-
-    expect(screen.getByRole('form', { name: 'Quote form' })).toBeTruthy()
-    expect(fetchQuoteIfExists).toHaveBeenCalledWith('7', { cache: 'no-store' })
+    expect(getByRole('link', { name: `- ${author}` }).getAttribute('href')).toBe(
+      href,
+    )
   })
+})
+
+describe('Quote page not found and errors', () => {
+  const renderWithId = (id) => QuotePage({ params: Promise.resolve({ id }) })
 
   it.each(['abc', '0', '-5', '2147483648'])(
     'calls notFound for the invalid id "%s" without calling the API',
@@ -56,6 +63,7 @@ describe('Edit quote page', () => {
     fetchQuoteIfExists.mockResolvedValue(null)
 
     await expect(renderWithId('999999999')).rejects.toThrow('NEXT_NOT_FOUND')
+    expect(mockNotFound).toHaveBeenCalledTimes(1)
   })
 
   it('lets a failed request propagate to the error page', async () => {
@@ -63,11 +71,5 @@ describe('Edit quote page', () => {
 
     await expect(renderWithId('7')).rejects.toThrow('Network down')
     expect(mockNotFound).not.toHaveBeenCalled()
-  })
-
-  it('is not indexed', async () => {
-    const metadata = await generateMetadata({ params: Promise.resolve({ id: '7' }) })
-
-    expect(metadata.robots.index).toBe(false)
   })
 })

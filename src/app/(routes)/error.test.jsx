@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from '@testing-library/react'
-import ErrorPage from '../error'
+import ErrorPage from './error'
 
 const renderErrorPage = (reset = jest.fn()) => {
   render(<ErrorPage error={new Error('Network down')} reset={reset} />)

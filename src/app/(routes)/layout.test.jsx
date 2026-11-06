@@ -1,5 +1,5 @@
 import { renderToString } from 'react-dom/server'
-import RootLayout from '../layout'
+import RootLayout from './layout'
 
 jest.mock('next/font/local', () => () => ({ variable: 'font-variable' }))
 

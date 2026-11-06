@@ -1,4 +1,4 @@
-import { metadata } from '../page'
+import { metadata } from './page'
 
 jest.mock('@/actions/quote', () => ({
   createQuoteAction: jest.fn(),

@@ -14,13 +14,13 @@ import { ROUTES } from '@/constants'
 import './globals.css'
 
 const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
+  src: './fonts/geist-vf.woff',
   variable: '--font-geist-sans',
   weight: '100 900',
 })
 
 const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
+  src: './fonts/geist-mono-vf.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
 })
