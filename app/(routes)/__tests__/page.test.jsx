@@ -15,9 +15,9 @@ jest.mock('@/services/quotes', () => ({
   fetchQuoteByIdOrNull: (...args) => mockFetchQuoteByIdOrNull(...args),
 }))
 
-jest.mock('@components/Quote', () => ({ quote }) => (
-  <div data-testid="quote">{quote.text}</div>
-))
+jest.mock('@/components/quote', () => ({
+  Quote: ({ quote }) => <div data-testid="quote">{quote.text}</div>,
+}))
 
 const quote = { id: 7, text: 'A quote from the API', author: 'Author' }
 

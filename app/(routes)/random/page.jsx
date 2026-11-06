@@ -1,4 +1,4 @@
-import RandomQuotesRefreshButton from '@components/RandomQuotesRefreshButton'
+import { RandomQuotesRefreshButton } from '@/components/random-quotes-refresh-button'
 import { fetchRandomQuotesResult } from '@/services/quotes'
 import { ROUTES } from '@/constants'
 

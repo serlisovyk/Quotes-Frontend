@@ -8,23 +8,29 @@ jest.mock('@/config', () => ({
   SITE_URL: 'http://localhost:4000',
 }))
 
-jest.mock('@components/AppToasts', () => {
+jest.mock('@/components/app-toasts', () => {
   const pendingPromise = new Promise(() => {})
 
-  return function SuspendingAppToasts() {
-    throw pendingPromise
+  return {
+    AppToasts: function SuspendingAppToasts() {
+      throw pendingPromise
+    },
   }
 })
 
-jest.mock('@components/Header', () => {
-  return function Header() {
-    return <header>Header</header>
+jest.mock('@/components/header', () => {
+  return {
+    Header: function Header() {
+      return <header>Header</header>
+    },
   }
 })
 
-jest.mock('@components/Footer', () => {
-  return function Footer() {
-    return <footer>Footer</footer>
+jest.mock('@/components/footer', () => {
+  return {
+    Footer: function Footer() {
+      return <footer>Footer</footer>
+    },
   }
 })
 

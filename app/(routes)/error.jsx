@@ -1,7 +1,7 @@
 'use client'
 
-import Button from '@components/Button'
-import StatusMessage from '@components/StatusMessage'
+import { Button } from '@/components/button'
+import { StatusMessage } from '@/components/status-message'
 
 export default function ErrorPage({ reset }) {
   return (

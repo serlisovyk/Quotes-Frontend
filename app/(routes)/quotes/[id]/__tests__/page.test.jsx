@@ -14,8 +14,10 @@ jest.mock('@/services/quotes', () => ({
   fetchQuoteIfExists: jest.fn(),
 }))
 
-jest.mock('@components/CategoryTags', () => () => <div />)
-jest.mock('@components/DeleteQuoteButton', () => () => <div />)
+jest.mock('@/components/category-tags', () => ({ CategoryTags: () => <div /> }))
+jest.mock('@/components/delete-quote-button', () => ({
+  DeleteQuoteButton: () => <div />,
+}))
 
 const renderPage = async (quote) => {
   fetchQuoteIfExists.mockResolvedValue(quote)

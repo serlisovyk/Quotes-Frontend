@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import QuoteForm from '@components/QuoteForm'
+import { QuoteForm } from '@/components/quote-form'
 import { updateQuoteAction } from '@/actions/quote'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import {

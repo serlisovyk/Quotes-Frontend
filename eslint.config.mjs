@@ -134,7 +134,10 @@ export default defineConfig([
     },
   },
   {
-    files: ['app/_components/QuoteForm.jsx', 'app/_components/SearchForm.jsx'],
+    files: [
+      'src/components/quote-form/quote-form.jsx',
+      'src/components/search-form/search-form.jsx',
+    ],
     rules: {
       'react-hooks/set-state-in-effect': 'off',
     },

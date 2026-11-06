@@ -1,6 +1,6 @@
 import Image from 'next/image'
-import Quote from '@components/Quote'
-import Button from '@components/Button'
+import { Quote } from '@/components/quote'
+import { Button } from '@/components/button'
 import { fetchQuoteByIdOrNull } from '@/services/quotes'
 import { isQuoteValidId } from '@/utils/validation'
 import { HOME_QUOTE_ID } from '@/config'

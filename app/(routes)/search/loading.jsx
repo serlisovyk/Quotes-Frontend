@@ -1,1 +1,3 @@
-export { default } from '@components/LoadingStatus'
+import { LoadingStatus } from '@/components/loading-status'
+
+export default LoadingStatus

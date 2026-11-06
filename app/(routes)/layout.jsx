@@ -1,8 +1,8 @@
 import localFont from 'next/font/local'
 import { Suspense } from 'react'
-import AppToasts from '@components/AppToasts'
-import Header from '@components/Header'
-import Footer from '@components/Footer'
+import { AppToasts } from '@/components/app-toasts'
+import { Header } from '@/components/header'
+import { Footer } from '@/components/footer'
 import {
   SITE_DESCRIPTION,
   SITE_NAME,

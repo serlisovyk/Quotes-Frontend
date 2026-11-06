@@ -1,0 +1,31 @@
+import { CategoryTag } from '@/components/category-tag'
+import { getDisplayedCategories } from '@/utils/get-displayed-categories'
+import { MAX_VISIBLE_CATEGORIES } from '@/constants'
+
+export function CategoryTags({ categories, selectedCategory, isSingleQuotePage }) {
+  const displayedCategories = getDisplayedCategories(
+    categories,
+    selectedCategory,
+    isSingleQuotePage,
+  )
+
+  return (
+    <div
+      className={`${
+        isSingleQuotePage && 'justify-center gap-3'
+      } flex flex-wrap mt-2`}
+    >
+      {displayedCategories?.map((category) => (
+        <CategoryTag
+          key={category}
+          category={category}
+          selectedCategory={selectedCategory}
+          isSingleQuotePage={isSingleQuotePage}
+        />
+      ))}
+      {!isSingleQuotePage && categories.length > MAX_VISIBLE_CATEGORIES && (
+        <span className="text-3xl">...</span>
+      )}
+    </div>
+  )
+}

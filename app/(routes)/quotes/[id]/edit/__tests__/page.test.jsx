@@ -18,11 +18,13 @@ jest.mock('@/actions/quote', () => ({
   updateQuoteAction: jest.fn(),
 }))
 
-jest.mock('@components/QuoteForm', () => ({ buttonText }) => (
-  <form aria-label="Quote form">
-    <button type="submit">{buttonText}</button>
-  </form>
-))
+jest.mock('@/components/quote-form', () => ({
+  QuoteForm: ({ buttonText }) => (
+    <form aria-label="Quote form">
+      <button type="submit">{buttonText}</button>
+    </form>
+  ),
+}))
 
 const renderWithId = (id) => EditQuotePage({ params: Promise.resolve({ id }) })
 
