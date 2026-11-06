@@ -28,7 +28,7 @@ The route group holds the pages and the root layout; it does not change the URLs
 
 - `layout.jsx` — root layout: fonts (`fonts/`), site metadata, skip link, `AppToasts`, `Header`, `<main>`, `Footer`.
 - `globals.css` — Tailwind import, the light and dark `--background` and `--foreground` colors.
-- `page.jsx` — `/`: the home page; one fixed quote (`MY_QUOTE_ID`), revalidated hourly.
+- `page.jsx` — `/`: the home page; the card is quote `HOME_QUOTE_ID`, revalidated hourly, left out when missing.
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
 - `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete; an invalid or missing id shows a message.
@@ -51,8 +51,8 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
   - `quoteActionState.js`, `quoteForm.js` — the shapes of form values and action state.
   - `escapeRegExp.js` — escapes RegExp special characters in user text.
   - `queryString.js` — search params to and from a query string. `utils.js` — endpoint path, text highlight, categories.
-- `_config/` — `constants.js` (routes, limits, cache seconds, menu, highlight classes), `inputFields.js` (form and
-  search field definitions), `site.js` (site name, description, `SITE_URL`, skip-link classes).
+- `_config/` — `constants.js` (routes, limits, cache seconds, menu, highlight classes), `home.js` (`HOME_QUOTE_ID`),
+  `inputFields.js` (form and search field definitions), `site.js` (site name, description, `SITE_URL`, skip-link classes).
 - `_components/` — one file per component, default export, PascalCase; tests in `__tests__/`.
   - Client components (`'use client'`): `AppToasts`, `Header`, `MenuItems`, `InputField`, `QuoteForm`, `SearchForm`,
     `DeleteQuoteButton`, `RandomQuotesRefreshButton`.
@@ -65,6 +65,7 @@ The underscore keeps them out of routing. Layers: `ai/rules/architecture.md`.
 Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the production-like set.
 
 - `API_URL` — backend base URL. Server-only: read in `_services/fetcher.js`, never sent to the browser.
+- `HOME_QUOTE_ID` — id of the quote on the home page. Server-only, optional: read in `_config/home.js`.
 - `SITE_URL` — public frontend URL for metadata, `robots.js` and `sitemap.js`.
 - `PORT` — port of the Next.js server (4000). `HOSTNAME` — `0.0.0.0` in Docker. `NODE_ENV` — mode.
 - `CHOKIDAR_USEPOLLING`, `WATCHPACK_POLLING` — file-watcher polling for Docker dev mode.

@@ -32,7 +32,7 @@ Branch `my-237-home-quote-env`. Linear issue MY-237, milestone Баги и бе�
 ## Tests (written first, red)
 
 `app/(routes)/__tests__/page.test.jsx`, the async page rendered with `@services/services` mocked and the
-variable set per case: a valid id fetches that id and shows the card; unset, invalid (`abc`, `0`,
+config value `HOME_QUOTE_ID` mocked per case (`@config/home`; resetting modules to set the env would load a second React): a valid id fetches that id and shows the card; unset, invalid (`abc`, `0`,
 `2147483648`), `null` quote (what `fetchQuoteByIdOrNull` returns for a missing quote and for an API error) and a quote
 without an id each render the hero and both buttons, no card, no
 error text; the service is not called for an unset or invalid id.

@@ -116,6 +116,7 @@ The frontend service reads variables from `.env`.
 - `HOSTNAME`: host for the Next.js server. Use `0.0.0.0` in Docker.
 - `SITE_URL`: public site base URL used for metadata, robots, and sitemap.
 - `API_URL`: server-side backend API base URL.
+- `HOME_QUOTE_ID`: server-side id of the quote on the home page. Optional: without it, or with an invalid id or a missing quote, the home page has no quote card.
 - `CHOKIDAR_USEPOLLING`: polling file watcher for Docker dev mode.
 - `WATCHPACK_POLLING`: webpack polling watcher for Docker dev mode.
 
