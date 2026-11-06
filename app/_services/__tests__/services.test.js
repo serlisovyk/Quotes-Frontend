@@ -187,3 +187,96 @@ describe('Services result helpers', () => {
     )
   })
 })
+
+describe('fetchQuoteIfExists', () => {
+  beforeEach(() => {
+    global.fetch = jest.fn()
+  })
+
+  afterEach(() => {
+    delete global.fetch
+    delete process.env.API_URL
+    jest.clearAllMocks()
+  })
+
+  test('returns the quote on success', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, body: { id: 1, text: 'Stay sharp' } }),
+    )
+
+    const { fetchQuoteIfExists } = await importFreshServices()
+
+    await expect(fetchQuoteIfExists(1)).resolves.toEqual({
+      id: 1,
+      text: 'Stay sharp',
+    })
+  })
+
+  test('returns null when the API answers 404', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: false,
+        status: 404,
+        body: { error: { message: 'Quote not found' } },
+      }),
+    )
+
+    const { fetchQuoteIfExists } = await importFreshServices()
+
+    await expect(fetchQuoteIfExists(999)).resolves.toBeNull()
+  })
+
+  test('rethrows a server error', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: false,
+        status: 500,
+        body: { error: { message: 'Boom' } },
+      }),
+    )
+
+    const { fetchQuoteIfExists } = await importFreshServices()
+
+    await expect(fetchQuoteIfExists(1)).rejects.toMatchObject({
+      name: 'ApiError',
+      status: 500,
+    })
+  })
+
+  test('rethrows a network error', async () => {
+    global.fetch.mockRejectedValue(new TypeError('fetch failed'))
+
+    const { fetchQuoteIfExists } = await importFreshServices()
+
+    await expect(fetchQuoteIfExists(1)).rejects.toThrow('fetch failed')
+  })
+
+  test('passes the fetch options through', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, body: { id: 1, text: 'Stay sharp' } }),
+    )
+
+    const { fetchQuoteIfExists } = await importFreshServices()
+    await fetchQuoteIfExists(1, { cache: 'no-store' })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/1`,
+      expect.objectContaining({ cache: 'no-store' }),
+    )
+  })
+})
+
+describe('fetchQuoteByIdOrNull', () => {
+  afterEach(() => {
+    delete global.fetch
+    delete process.env.API_URL
+  })
+
+  test('still returns null for any failure', async () => {
+    global.fetch = jest.fn().mockRejectedValue(new TypeError('fetch failed'))
+
+    const { fetchQuoteByIdOrNull } = await importFreshServices()
+
+    await expect(fetchQuoteByIdOrNull(1)).resolves.toBeNull()
+  })
+})
