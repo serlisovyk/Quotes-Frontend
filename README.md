@@ -120,6 +120,7 @@ Production example is available in `.env.production.sample`.
 ## Project Structure
 
 ```text
+ai                  # Agent docs: map, rules, workflow, decisions
 app
 ├── _actions        # Server Actions for quote mutations
 ├── _components     # Shared UI components
