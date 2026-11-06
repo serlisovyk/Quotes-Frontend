@@ -15,9 +15,5 @@ export default function sitemap() {
       url: `${SITE_URL}${ROUTES.SEARCH}`,
       lastModified: new Date(),
     },
-    {
-      url: `${SITE_URL}${ROUTES.CREATE}`,
-      lastModified: new Date(),
-    },
   ]
 }

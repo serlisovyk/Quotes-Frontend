@@ -9,6 +9,9 @@ export const metadata = {
   alternates: {
     canonical: ROUTES.CREATE,
   },
+  robots: {
+    index: false,
+  },
 }
 
 export default function CreateQuotePage() {
