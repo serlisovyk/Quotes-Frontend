@@ -1,9 +1,9 @@
+import { escapeRegExp } from '@utils/escapeRegExp'
 import {
   MAX_VISIBLE_CATEGORIES,
   QUOTES_API_ENDPOINT,
   HIGHLIGHT_STYLES,
-} from '@config/constants'
-import { escapeRegExp } from '@utils/escapeRegExp'
+} from '@/constants'
 
 export const getSingleQuoteApiEndpoint = (id) => `${QUOTES_API_ENDPOINT}/${id}`
 

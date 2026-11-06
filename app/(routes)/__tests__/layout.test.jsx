@@ -3,8 +3,8 @@ import RootLayout from '../layout'
 
 jest.mock('next/font/local', () => () => ({ variable: 'font-variable' }))
 
-jest.mock('@config/site', () => ({
-  ...jest.requireActual('@config/site'),
+jest.mock('@/config', () => ({
+  ...jest.requireActual('@/config'),
   SITE_URL: 'http://localhost:4000',
 }))
 

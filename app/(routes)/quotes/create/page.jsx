@@ -1,7 +1,7 @@
 import QuoteForm from '@components/QuoteForm'
 import { createQuoteAction } from '@actions/quoteActions'
-import { INITIAL_FORM_VALUES, ROUTES } from '@config/constants'
 import { createInitialQuoteFormState } from '@utils/quoteForm'
+import { INITIAL_FORM_VALUES, ROUTES } from '@/constants'
 
 export const metadata = {
   title: 'Create Quote',

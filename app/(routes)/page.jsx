@@ -1,11 +1,10 @@
 import Image from 'next/image'
-import churchillImage from '@public/churchill.jpg'
 import Quote from '@components/Quote'
 import Button from '@components/Button'
-import { HOME_QUOTE_REVALIDATE_SECONDS, ROUTES } from '@config/constants'
-import { HOME_QUOTE_ID } from '@config/home'
 import { fetchQuoteByIdOrNull } from '@services/services'
 import { isQuoteValidId } from '@utils/validation'
+import { HOME_QUOTE_ID } from '@/config'
+import { HOME_QUOTE_REVALIDATE_SECONDS, ROUTES } from '@/constants'
 
 export default async function HomePage() {
   const quote = isQuoteValidId(HOME_QUOTE_ID)
@@ -30,7 +29,7 @@ export default async function HomePage() {
         </div>
         <div>
           <Image
-            src={churchillImage}
+            src="/churchill.jpg"
             alt="Portrait of Winston Churchill"
             width={500}
             height={500}

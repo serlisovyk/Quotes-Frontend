@@ -1,6 +1,6 @@
 import Link from 'next/link'
-import { DEFAULT_SEARCH_LIMIT, DEFAULT_SEARCH_OFFSET } from '@config/constants'
 import { createSearchQueryString } from '@utils/queryString'
+import { DEFAULT_SEARCH_LIMIT, DEFAULT_SEARCH_OFFSET } from '@/constants'
 
 const baseClasses =
   'inline-flex min-w-12 justify-center rounded-lg px-4 py-3 text-xl transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-opacity-50'

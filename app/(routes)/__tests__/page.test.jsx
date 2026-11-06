@@ -5,7 +5,7 @@ import HomePage from '../page'
 const mockFetchQuoteByIdOrNull = jest.fn()
 const mockHome = { homeQuoteId: undefined }
 
-jest.mock('@config/home', () => ({
+jest.mock('@/config', () => ({
   get HOME_QUOTE_ID() {
     return mockHome.homeQuoteId
   },

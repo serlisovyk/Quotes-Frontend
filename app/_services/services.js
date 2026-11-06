@@ -7,7 +7,7 @@ import {
   QUOTE_DETAILS_REVALIDATE_SECONDS,
   QUOTES_API_ENDPOINT,
   RANDOM_QUOTES_API_ENDPOINT,
-} from '@config/constants'
+} from '@/constants'
 import { getSingleQuoteApiEndpoint } from '@utils/utils'
 
 export const QUOTE_DETAILS_FETCH_OPTIONS = {

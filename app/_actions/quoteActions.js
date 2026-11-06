@@ -2,7 +2,7 @@
 
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { ROUTES } from '@config/constants'
+import { ROUTES } from '@/constants'
 import { deleteQuote, patchQuote, postQuote } from '@services/services'
 import {
   createApiErrorState,

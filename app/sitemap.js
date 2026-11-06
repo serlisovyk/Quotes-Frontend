@@ -1,5 +1,5 @@
-import { ROUTES } from '@config/constants'
-import { SITE_URL } from '@config/site'
+import { SITE_URL } from '@/config'
+import { ROUTES } from '@/constants'
 
 export default function sitemap() {
   return [

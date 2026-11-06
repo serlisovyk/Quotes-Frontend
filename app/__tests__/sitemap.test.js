@@ -1,6 +1,6 @@
 import sitemap from '../sitemap'
 
-jest.mock('@config/site', () => ({
+jest.mock('@/config', () => ({
   SITE_URL: 'http://localhost:4000',
 }))
 

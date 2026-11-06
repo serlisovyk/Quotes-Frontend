@@ -1,4 +1,4 @@
-import { SITE_URL } from '@config/site'
+import { SITE_URL } from '@/config'
 
 export default function robots() {
   return {

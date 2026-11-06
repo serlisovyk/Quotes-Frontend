@@ -3,14 +3,14 @@ import { Suspense } from 'react'
 import AppToasts from '@components/AppToasts'
 import Header from '@components/Header'
 import Footer from '@components/Footer'
-import { ROUTES } from '@config/constants'
 import {
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_OG_IMAGE,
   SITE_URL,
   SKIP_LINK_CLASS_NAME,
-} from '@config/site'
+} from '@/config'
+import { ROUTES } from '@/constants'
 import './globals.css'
 
 const geistSans = localFont({
@@ -60,9 +60,9 @@ export const metadata = {
     follow: true,
   },
   icons: {
-    icon: '/navIcon.png',
-    shortcut: '/navIcon.png',
-    apple: '/navIcon.png',
+    icon: '/nav-icon.png',
+    shortcut: '/nav-icon.png',
+    apple: '/nav-icon.png',
   },
 }
 

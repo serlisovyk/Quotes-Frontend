@@ -1,6 +1,6 @@
 import RandomQuotesRefreshButton from '@components/RandomQuotesRefreshButton'
-import { ROUTES } from '@config/constants'
 import { fetchRandomQuotesResult } from '@services/services'
+import { ROUTES } from '@/constants'
 
 export const dynamic = 'force-dynamic'
 

@@ -1,6 +1,6 @@
 import { fireEvent, render, screen } from '@testing-library/react'
 import SearchForm from '@components/SearchForm'
-import { ROUTES } from '@config/constants'
+import { ROUTES } from '@/constants'
 
 const mockPush = jest.fn()
 

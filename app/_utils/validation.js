@@ -1,8 +1,4 @@
-import {
-  CATEGORY_NAME_REGEX,
-  MAX_ENTITY_ID,
-  MAX_SEARCH_LIMIT,
-} from '@config/constants'
+import { CATEGORY_NAME_REGEX, MAX_ENTITY_ID, MAX_SEARCH_LIMIT } from '@/constants'
 
 export function getQuoteFormValidationErrors(values) {
   const errors = {}

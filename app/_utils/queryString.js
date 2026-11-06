@@ -1,4 +1,4 @@
-import { ALLOWED_SEARCH_PARAM_NAMES } from '@config/constants'
+import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 
 export const createSearchQueryString = (queryParams = {}) => {
   const filteredParams = Object.fromEntries(

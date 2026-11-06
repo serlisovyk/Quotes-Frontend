@@ -1,6 +1,6 @@
 import Button from '@components/Button'
 import StatusMessage from '@components/StatusMessage'
-import { ROUTES } from '@config/constants'
+import { ROUTES } from '@/constants'
 
 export default function NotFound() {
   return (

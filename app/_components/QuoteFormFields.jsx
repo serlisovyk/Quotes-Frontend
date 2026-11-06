@@ -1,5 +1,5 @@
 import InputField from '@components/InputField'
-import { createQuoteInputFields } from '@config/inputFields'
+import { createQuoteInputFields } from '@/config'
 
 export default function QuoteFormFields({ values, setValues, validationErrors }) {
   const quoteInputFields = createQuoteInputFields({

@@ -1,6 +1,6 @@
 import CategoryTag from '@components/CategoryTag'
 import { getDisplayedCategories } from '@utils/utils'
-import { MAX_VISIBLE_CATEGORIES } from '@config/constants'
+import { MAX_VISIBLE_CATEGORIES } from '@/constants'
 
 export default function CategoryTags({
   categories,

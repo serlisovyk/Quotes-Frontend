@@ -2,12 +2,12 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { menuItems } from '@config/constants'
+import { MENU_ITEMS } from '@/constants'
 
 export default function MenuItems({ closeMenu = null }) {
   const pathname = usePathname()
 
-  return menuItems.map(({ text, href }) => {
+  return MENU_ITEMS.map(({ text, href }) => {
     const isActive = pathname === href
 
     return (

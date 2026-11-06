@@ -1,9 +1,9 @@
-import { ALLOWED_SEARCH_PARAM_NAMES } from '@config/constants'
 import {
   createSearchQueryString,
   createSearchValuesFromQueryString,
   createSearchValuesFromSearchParamsObject,
 } from '@utils/queryString'
+import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 
 describe('createSearchQueryString utility function', () => {
   test('should return a valid query string with allowed params', () => {

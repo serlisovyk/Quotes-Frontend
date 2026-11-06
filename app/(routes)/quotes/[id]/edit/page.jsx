@@ -1,10 +1,10 @@
 import { notFound } from 'next/navigation'
 import QuoteForm from '@components/QuoteForm'
 import { updateQuoteAction } from '@actions/quoteActions'
-import { ROUTES } from '@config/constants'
 import { fetchQuoteIfExists } from '@services/services'
 import { createInitialQuoteFormState, createQuoteFormValues } from '@utils/quoteForm'
 import { isQuoteValidId } from '@utils/validation'
+import { ROUTES } from '@/constants'
 
 export const dynamic = 'force-dynamic'
 

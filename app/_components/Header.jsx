@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState } from 'react'
-import navIcon from '@public/navIcon.png'
 import BurgerButton from '@components/BurgerButton'
 import MenuItems from '@components/MenuItems'
 
@@ -27,7 +26,9 @@ export default function Header() {
           >
             <Image
               className="-m-2 w-16 sm:ml-5"
-              src={navIcon}
+              src="/nav-icon.png"
+              width={200}
+              height={200}
               alt="Quotes App Icon"
               priority
             />
