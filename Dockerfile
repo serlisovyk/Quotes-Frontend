@@ -12,9 +12,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Read at build time: site metadata, and the home page, which is prerendered with its quote.
-# The builder stage is not shipped, so none of these ends up in the final image;
-# API_URL is passed again at run time (env_file or --env-file).
 ARG SITE_URL
 ARG HOME_QUOTE_ID
 ARG API_URL

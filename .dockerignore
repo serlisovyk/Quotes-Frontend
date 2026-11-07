@@ -3,7 +3,6 @@ node_modules
 coverage
 npm-debug.log
 
-# Env files never enter an image: build-time values are build arguments, the rest is set at run time.
 .env*
 !.env*.sample
 
@@ -17,7 +16,6 @@ ai
 Dockerfile*
 docker-compose*.yml
 
-# Tests are not part of the build.
 src/tests
 **/*.test.js
 **/*.test.jsx
