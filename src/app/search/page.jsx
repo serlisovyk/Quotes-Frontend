@@ -3,6 +3,7 @@ import { SearchForm } from '@/components/search-form'
 import { Pagination } from '@/components/pagination'
 import { StatusMessage } from '@/components/status-message'
 import { fetchQuotesResult } from '@/services/quotes'
+import { alignQueryParams } from '@/utils/pagination'
 import { createSearchValuesFromSearchParamsObject } from '@/utils/query-string'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 
@@ -18,7 +19,9 @@ export const metadata = {
 
 export default async function SearchQuotesPage({ searchParams }) {
   const resolvedSearchParams = await searchParams
-  const queryParams = createSearchValuesFromSearchParamsObject(resolvedSearchParams)
+  const requestedParams =
+    createSearchValuesFromSearchParamsObject(resolvedSearchParams)
+  const queryParams = alignQueryParams(requestedParams)
   const searchValues = { ...INITIAL_SEARCH_VALUES, ...queryParams }
   const searchSubmitted = Object.keys(queryParams).length > 0
   const { quotes, total, hasError } = searchSubmitted

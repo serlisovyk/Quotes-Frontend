@@ -1,1 +1,6 @@
-export { createPageHref, getPaginationPages } from './pagination.util.js'
+export {
+  alignOffset,
+  alignQueryParams,
+  createPageHref,
+  getPaginationPages,
+} from './pagination.util.js'

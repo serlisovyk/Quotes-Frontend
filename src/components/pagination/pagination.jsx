@@ -1,14 +1,10 @@
 import { PaginationLink } from '@/components/pagination-link'
-import { createPageHref, getPaginationPages } from '@/utils/pagination'
-import {
-  DEFAULT_SEARCH_LIMIT,
-  DEFAULT_SEARCH_OFFSET,
-  PAGINATION_ELLIPSIS,
-} from '@/constants'
+import { alignOffset, createPageHref, getPaginationPages } from '@/utils/pagination'
+import { DEFAULT_SEARCH_LIMIT, PAGINATION_ELLIPSIS } from '@/constants'
 
 export function Pagination({ total, queryParams }) {
   const limit = Number(queryParams.limit) || DEFAULT_SEARCH_LIMIT
-  const offset = Number(queryParams.offset) || DEFAULT_SEARCH_OFFSET
+  const offset = alignOffset(queryParams.offset, limit)
 
   if (total <= limit) return null
 

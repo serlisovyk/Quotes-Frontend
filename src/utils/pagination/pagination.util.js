@@ -1,5 +1,7 @@
 import { createSearchQueryString } from '@/utils/query-string'
 import {
+  DEFAULT_SEARCH_LIMIT,
+  DEFAULT_SEARCH_OFFSET,
   PAGINATION_ELLIPSIS,
   PAGINATION_MAX_LISTED_PAGES,
   PAGINATION_SIBLING_PAGES,
@@ -24,6 +26,24 @@ export function getPaginationPages(totalPages, currentPage) {
     ...(hasGapAfter ? [PAGINATION_ELLIPSIS] : []),
     totalPages,
   ]
+}
+
+export function alignOffset(offset, limit) {
+  const numericOffset = Number(offset)
+  const isOffsetUsable = Number.isFinite(numericOffset) && numericOffset > 0
+
+  if (!isOffsetUsable) return DEFAULT_SEARCH_OFFSET
+
+  return Math.floor(numericOffset / limit) * limit
+}
+
+export function alignQueryParams(queryParams) {
+  if (!queryParams.offset) return queryParams
+
+  const limit = Number(queryParams.limit) || DEFAULT_SEARCH_LIMIT
+  const offset = String(alignOffset(queryParams.offset, limit))
+
+  return { ...queryParams, offset }
 }
 
 export function createPageHref(queryParams, page, limit) {
