@@ -49,7 +49,9 @@ describe('Delete Quote Button', () => {
 
     await user.click(screen.getByRole('button', { name: 'Delete' }))
 
-    expect(await screen.findByText('Could not delete the quote')).toBeVisible()
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Could not delete the quote',
+    )
     expect(screen.getByRole('button', { name: 'Delete' })).toBeEnabled()
   })
 })

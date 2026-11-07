@@ -68,6 +68,37 @@ describe('Quote Form', () => {
     expect(action).toHaveBeenCalledTimes(1)
   })
 
+  test('gives every field a visible label', () => {
+    renderQuoteForm()
+
+    for (const label of ['Quote text', 'Author', 'Categories (comma-separated)']) {
+      expect(screen.getByText(label, { selector: 'label' })).toBeVisible()
+      expect(screen.getByLabelText(label)).toBeVisible()
+    }
+  })
+
+  test('marks the field invalid and links its error after a failed submit', async () => {
+    renderQuoteForm({ action: createFailingAction() })
+
+    await submitForm()
+
+    const textField = await screen.findByLabelText('Quote text')
+
+    expect(textField).toBeInvalid()
+    expect(textField).toHaveAccessibleDescription('Text is too short')
+    expect(screen.getByLabelText('Author')).toBeValid()
+  })
+
+  test('announces the form error as an alert', async () => {
+    renderQuoteForm({ action: createFailingAction() })
+
+    await submitForm()
+
+    expect(await screen.findByRole('alert')).toHaveTextContent(
+      'Could not save the quote',
+    )
+  })
+
   test('clears the errors and keeps the typed values when the user types', async () => {
     renderQuoteForm({ action: createFailingAction() })
     await submitForm()

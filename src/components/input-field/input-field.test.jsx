@@ -4,13 +4,28 @@ import userEvent from '@testing-library/user-event'
 import { InputField } from './input-field.jsx'
 
 const renderField = (props = {}) =>
-  render(<InputField id="author" placeholder="Author" {...props} />)
+  render(<InputField id="author" label="Author" {...props} />)
 
 describe('Input Field', () => {
-  test('labels the input with its placeholder and names it after the id', () => {
+  test('labels the input with a visible label and names it after the id', () => {
     renderField()
 
     expect(screen.getByLabelText('Author')).toHaveAttribute('name', 'author')
+    expect(screen.getByText('Author', { selector: 'label' })).toBeVisible()
+  })
+
+  test('keeps the label as the accessible name when a placeholder shows an example', () => {
+    renderField({ placeholder: 'e.g. Churchill' })
+
+    const input = screen.getByRole('textbox', { name: 'Author' })
+
+    expect(input).toHaveAttribute('placeholder', 'e.g. Churchill')
+  })
+
+  test('has no placeholder unless one is given', () => {
+    renderField()
+
+    expect(screen.getByLabelText('Author')).not.toHaveAttribute('placeholder')
   })
 
   test('uses the name it is given instead of the id', () => {
@@ -115,7 +130,7 @@ describe('Input Field', () => {
   test('passes the number attributes to the input', () => {
     renderField({
       id: 'limit',
-      placeholder: 'Limit',
+      label: 'Limit',
       type: 'number',
       min: 1,
       max: 9,
