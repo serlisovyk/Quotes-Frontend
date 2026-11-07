@@ -9,24 +9,16 @@ import {
   subscribeToStoredTheme,
 } from '@/utils/theme-storage'
 
-function getServerTheme() {
-  return THEMES.SYSTEM
-}
-
-function getServerIsSystemDark() {
-  return false
-}
-
 export function useTheme() {
   const theme = useSyncExternalStore(
     subscribeToStoredTheme,
     readStoredTheme,
-    getServerTheme,
+    () => THEMES.SYSTEM,
   )
   const isSystemDark = useSyncExternalStore(
     subscribeToSystemScheme,
     getIsSystemDark,
-    getServerIsSystemDark,
+    () => false,
   )
 
   const resolvedTheme = resolveTheme(theme, isSystemDark)
