@@ -2,7 +2,8 @@
 
 import { redirect } from 'next/navigation'
 import { revalidatePath } from 'next/cache'
-import { ROUTES } from '@/constants'
+import { IS_READ_ONLY } from '@/config'
+import { READ_ONLY_MESSAGE, ROUTES } from '@/constants'
 import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
 import {
   createApiErrorState,
@@ -14,6 +15,8 @@ import { createQuotePayload, getQuoteFormValidationErrors } from '@/utils/valida
 
 export async function createQuoteAction(_previousState, formData) {
   const values = createQuoteFormValuesFromFormData(formData)
+
+  if (IS_READ_ONLY) return createQuoteActionState(values, {}, READ_ONLY_MESSAGE)
   const errors = getQuoteFormValidationErrors(values)
 
   if (Object.keys(errors).length) {
@@ -37,6 +40,8 @@ export async function createQuoteAction(_previousState, formData) {
 
 export async function updateQuoteAction(id, _previousState, formData) {
   const values = createQuoteFormValuesFromFormData(formData)
+
+  if (IS_READ_ONLY) return createQuoteActionState(values, {}, READ_ONLY_MESSAGE)
   const errors = getQuoteFormValidationErrors(values)
 
   if (Object.keys(errors).length) {
@@ -58,6 +63,8 @@ export async function updateQuoteAction(id, _previousState, formData) {
 }
 
 export async function deleteQuoteAction(id) {
+  if (IS_READ_ONLY) return { error: READ_ONLY_MESSAGE }
+
   try {
     await deleteQuote(id)
   } catch (error) {
