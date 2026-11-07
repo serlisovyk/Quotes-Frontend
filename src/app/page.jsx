@@ -45,20 +45,19 @@ export default async function HomePage() {
       <section className="flex flex-col items-center justify-center gap-5 pt-[40px] pb-[20px] md:gap-10 md:pt-[70px] lg:flex-row lg:gap-20 lg:pt-[150px] lg:pb-[40px]">
         <div className="max-w-xl text-xl text-muted">
           <div className="mb-2 md:mb-5">
-            These are the words of a politician, soldier, journalist, and true leader
-            - one who traversed a long road of trials. His words and steely will
+            These are the words of a politician, soldier, journalist and true leader:
+            a man who walked a long road of trials. His words and steely will
             reshaped the course of history. He proved that a single resolute voice,
             tempered in adversity, can ignite an entire nation.
           </div>
           <div className="mb-2 md:mb-5">
             It was these words by Winston Churchill that inspired me to create this
-            large and interesting project around searching, creating, and editing
-            quotes.
+            project for searching, adding and editing quotes.
           </div>
           <div>
-            This project is not just a collection of quotes. It is a place where
-            everyone can find inspiration, improve their English, and find quotes for
-            social networks and much more.
+            This project is more than a collection of quotes. It is a place where
+            everyone can find inspiration, practice their English, and pick quotes
+            for social media posts and much more.
           </div>
         </div>
         {hasQuote && (
