@@ -59,6 +59,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - `validation`, `query-string`, `quote-action-state`, `quote-form`, `escape-reg-exp`, `get-single-quote-api-endpoint`,
     `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages and offsets.
   - `category-token`, `get-next-option-index` — the category being typed after the last comma, the active option of a combobox.
+  - `is-same-category` — the case-insensitive category compare behind the selected tag.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
   - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
