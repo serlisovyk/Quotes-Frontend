@@ -1,5 +1,5 @@
 import { useEffect, useSyncExternalStore } from 'react'
-import { THEMES } from '@/constants'
+import { HEAD_OBSERVER_OPTIONS, THEMES } from '@/constants'
 import { applyTheme } from '@/utils/apply-theme'
 import { resolveTheme } from '@/utils/resolve-theme'
 import { getIsSystemDark, subscribeToSystemScheme } from '@/utils/system-scheme'
@@ -9,16 +9,13 @@ import {
   subscribeToStoredTheme,
 } from '@/utils/theme-storage'
 
-const HEAD_OBSERVER_OPTIONS = {
-  childList: true,
-  subtree: true,
-  attributes: true,
-  attributeFilter: ['content'],
+function getServerTheme() {
+  return THEMES.SYSTEM
 }
 
-const getServerTheme = () => THEMES.SYSTEM
-
-const getServerIsSystemDark = () => false
+function getServerIsSystemDark() {
+  return false
+}
 
 export function useTheme() {
   const theme = useSyncExternalStore(

@@ -25,6 +25,13 @@ export const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
 export const LIGHT_SCHEME_QUERY = '(prefers-color-scheme: light)'
 
+export const HEAD_OBSERVER_OPTIONS = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['content'],
+}
+
 export const THEME_COLOR_META_SELECTOR = 'meta[name="theme-color"]'
 
 export const THEME_ICON_PATHS = {

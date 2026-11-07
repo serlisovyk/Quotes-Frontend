@@ -11,7 +11,7 @@ export function readStoredTheme() {
   }
 }
 
-const writeStoredTheme = (theme) => {
+function writeStoredTheme(theme) {
   try {
     localStorage.setItem(THEME_STORAGE_KEY, theme)
   } catch {
