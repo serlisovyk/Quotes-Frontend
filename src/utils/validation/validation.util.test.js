@@ -3,6 +3,7 @@ import {
   createQuotePayload,
   getQuoteFormValidationErrors,
   getSearchInputValidationMessage,
+  getSearchValidationErrors,
   isQuoteValidId,
 } from './validation.util.js'
 
@@ -94,6 +95,35 @@ describe('getQuoteFormValidationErrors utility function', () => {
     expect(result.categories).toBe(
       'Invalid categories: Bad, no_pe. Category names can only contain lowercase letters, numbers and dashes.',
     )
+  })
+})
+
+describe('getSearchValidationErrors utility function', () => {
+  test('returns no errors for valid and empty values', () => {
+    const result = getSearchValidationErrors({
+      text: 'ab',
+      author: '',
+      category: 'valid-category',
+      limit: '10',
+      offset: '0',
+    })
+
+    expect(result).toEqual({})
+  })
+
+  test('returns the message of every invalid field by its name', () => {
+    const result = getSearchValidationErrors({
+      text: 'life',
+      category: 'Bad Category',
+      limit: '100',
+      offset: '-1',
+    })
+
+    expect(result).toEqual({
+      category: 'Category can only contain lowercase letters, numbers, and dashes.',
+      limit: 'Limit must be in range 1..50.',
+      offset: 'Offset must be a positive integer or zero.',
+    })
   })
 })
 
