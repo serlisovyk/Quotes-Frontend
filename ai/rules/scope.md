@@ -13,7 +13,7 @@ template.
 - Authentication, analytics
 - A service worker or PWA, i18n
 - A second package manager's lockfile
-- Client-side calls to the backend API
+- Client-side calls to the backend API (the browser reads only our own `/api/categories`)
 
 ## Dependencies
 

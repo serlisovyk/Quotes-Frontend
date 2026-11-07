@@ -61,7 +61,8 @@ has one job (decision `naming-like-backend`):
 ## Boundaries
 
 - Secrets and server-only values never reach a client component.
-- No client-side data fetching and no client-side server-state library.
+- No client-side data fetching and no client-side server-state library, except the category suggestions: a
+  client service over our own Route Handler (decision `category-suggestions-route-handler`).
 - No global mutable state: state a page needs lives in the URL (search params) or in the form's own
   state.
 - Do not rename existing exports or routes only for cosmetic reasons.

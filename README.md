@@ -27,7 +27,7 @@ https://quotes-backend-eight.vercel.app/
 ## Features
 
 - Random quotes page with manual refresh.
-- Search by text, author, category, limit, and offset.
+- Search by text, author, category (with suggestions from the API) and page size, with pagination.
 - Quote details page.
 - Create, edit, and delete quote flows.
 - Server Actions for mutations.

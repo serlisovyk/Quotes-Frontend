@@ -57,6 +57,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [`API_URL` is server-only](2026-11-06-api-url-server-only.md)
 - [No `loading.jsx` above a route that calls `notFound()`](2026-11-06-no-loading-above-not-found.md)
 - [Root layout at `src/app`, not in a route group](2026-11-07-root-layout-at-app-root.md)
+- [Category suggestions through a Route Handler](2026-11-07-category-suggestions-route-handler.md)
 
 ### UI and tests
 

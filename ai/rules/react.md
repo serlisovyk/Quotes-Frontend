@@ -9,7 +9,8 @@ Why: decisions `naming-like-backend` and `native-next-caching`. Layers, fetching
   or hooks such as `useRouter`, `usePathname`, `useActionState`.
 - Keep the client boundary low: a page stays a server component and renders a small client component for
   the interactive part (the form, the delete button, the search form).
-- A client component never imports a service (`server-only` fails the build); props passed from a server
+- A client component never imports a backend service (`server-only` fails the build); the only service a
+  client uses is `category-suggestions`, which calls our own route. Props passed from a server
   component to a client one are plain serializable data.
 
 ## Components

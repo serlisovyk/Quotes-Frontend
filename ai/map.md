@@ -32,6 +32,7 @@ A test sits next to its route file (`page.test.jsx`).
 - `page.jsx` — `/`: the home page; the card is quote `HOME_QUOTE_ID`, revalidated hourly, left out when missing.
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
+- `api/categories/route.js` — `GET /api/categories?name=`: category suggestions for the forms over `fetchCategoriesResult`.
 - `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete; an invalid or missing id is a 404 (`notFound()`).
 - `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page.
 - `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
@@ -45,29 +46,32 @@ A test sits next to its route file (`page.test.jsx`).
 Every module has a folder of its own with an `index.js` barrel and its test beside it; `constants/` and `config/` are flat folders with
 one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
 
-- `services/` — the only code that calls the backend; every file imports `server-only`.
+- `services/` — the only code that calls the backend; every file imports `server-only`, except `category-suggestions`.
   - `fetcher/` — `fetcher.get`, `post`, `patch`, `delete` over `fetch` and `API_URL`; throws `ApiError` on a bad response.
   - `quotes/` — the endpoint functions (`fetchQuotesResult`, `fetchRandomQuotesResult`, `fetchQuoteById`, `fetchQuoteIfExists`,
     `postQuote`, `patchQuote`, `deleteQuote`) and their cache options.
   - `categories/` — `fetchCategories`, `fetchCategoriesResult` (`GET /categories`, uncached).
+  - `category-suggestions/` — the one client-safe service (no `server-only`): the browser reads `/api/categories`.
 - `errors/api/` — the `ApiError` class.
 - `actions/quote/` — Server Actions `createQuoteAction`, `updateQuoteAction`, `deleteQuoteAction`.
 - `utils/` — pure helpers, one folder each.
   - `validation`, `query-string`, `quote-action-state`, `quote-form`, `escape-reg-exp`, `get-single-quote-api-endpoint`,
-    `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages.
+    `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages and offsets.
+  - `category-token`, `get-next-option-index` — the category being typed after the last comma, the active option of a combobox.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
   - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
-- `constants/` — one file per domain (`api`, `menu`, `quotes`, `routes`, `search`, `validation`, `toast`, `theme`, class variants).
+- `constants/` — one file per domain (`api`, `combobox`, `menu`, `quotes`, `routes`, `search`, `validation`, `toast`, `theme`, class variants).
 - `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
-  - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `quote-form`, `search-form`,
-    `delete-quote-button`, `random-quotes-refresh-button`.
-  - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
+  - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `select-field`,
+    `category-field`, `quote-form`, `search-form`, `delete-quote-button`, `random-quotes-refresh-button`.
+  - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `category-suggestions`, `form-field`, `quote-form-fields`,
     `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`, `theme-icon`.
 - `hooks/` — one folder each, `use-<name>/use-<name>.js`.
   - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog).
+  - `use-category-field` (combobox state and keys), `use-category-suggestions` (debounced, cancellable lookup).
   - `use-theme` (choice, resolved theme, `data-theme`, `theme-color`).
 - `tests/` — shared test code, each in a folder with a barrel.
   - `mocks/` (`server-only`), `utils/` (none yet).
@@ -96,4 +100,4 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 - TypeScript, a state-management or server-state library (native Next.js caching instead), a UI kit.
 - Authentication, a database or any backend code: the data comes from the backend API only.
 - Middleware files; form and list errors and empty states are rendered inline, only a failed page load reaches `error.jsx`.
-- Client-side API calls: the browser never sees `API_URL`.
+- Client-side API calls except the category suggestions (`/api/categories`): the browser never sees `API_URL`.
