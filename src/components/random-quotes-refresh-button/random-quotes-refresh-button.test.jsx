@@ -23,6 +23,10 @@ vi.mock('@/components/quotes', () => ({
   Quotes: ({ quotes }) => <ul aria-label="Quotes">{quotes.length}</ul>,
 }))
 
+vi.mock('@/components/loader', () => ({
+  Loader: () => <div data-testid="loader" />,
+}))
+
 const quotes = [{ id: 1, text: 'Stay sharp', author: 'Someone', categories: [] }]
 
 const renderButton = (props = {}) =>
@@ -55,12 +59,29 @@ describe('Random Quotes Refresh Button', () => {
     expect(mockRefresh).toHaveBeenCalledTimes(1)
   })
 
-  test('shows the loader and disables the button while refreshing', () => {
+  test('keeps the quotes and shows the loader while refreshing', () => {
     mockTransition.isPending = true
     const { container } = renderButton()
 
     expect(screen.getByRole('button', { name: 'Loading...' })).toBeDisabled()
-    expect(screen.queryByLabelText('Quotes')).not.toBeInTheDocument()
+    expect(screen.getByLabelText('Quotes')).toBeVisible()
+    expect(screen.getByTestId('loader')).toBeInTheDocument()
     expect(container.querySelector('[aria-busy="true"]')).toBeInTheDocument()
+  })
+
+  test('keeps the error message while refreshing', () => {
+    mockTransition.isPending = true
+    renderButton({ quotes: [], hasError: true })
+
+    expect(screen.getByText('Error while fetching random quotes')).toBeVisible()
+    expect(screen.getByTestId('loader')).toBeInTheDocument()
+  })
+
+  test('shows no loader and is not busy when idle', () => {
+    mockTransition.isPending = false
+    const { container } = renderButton()
+
+    expect(screen.queryByTestId('loader')).not.toBeInTheDocument()
+    expect(container.querySelector('[aria-busy="true"]')).not.toBeInTheDocument()
   })
 })
