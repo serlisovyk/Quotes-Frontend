@@ -3,5 +3,6 @@ export const ROUTES = {
   QUOTES: '/quotes',
   RANDOM: '/random',
   SEARCH: '/search',
+  FAVORITES: '/favorites',
   CREATE: '/quotes/create',
 }

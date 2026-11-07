@@ -4,6 +4,7 @@ export const MENU_ITEMS = [
   { href: ROUTES.HOME, text: 'Home' },
   { href: ROUTES.RANDOM, text: 'Random' },
   { href: ROUTES.SEARCH, text: 'Search' },
+  { href: ROUTES.FAVORITES, text: 'Favorites' },
   { href: ROUTES.CREATE, text: 'Create New', isWrite: true },
 ]
 
