@@ -28,7 +28,7 @@ https://quotes-backend-eight.vercel.app/
 
 - Random quotes page with manual refresh.
 - Search by text, author, category (with suggestions from the API) and page size, with pagination.
-- Quote details page.
+- Quote details page, with copy and share of a quote on every card.
 - Create, edit, and delete quote flows, or a read-only mode (`READ_ONLY=true`).
 - Server Actions for mutations.
 - Native Next.js server-side data fetching and cache invalidation.

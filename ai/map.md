@@ -35,7 +35,7 @@ A test sits next to its route file (`page.test.jsx`).
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
 - `api/categories/route.js` — `GET /api/categories?name=`: category suggestions for the forms over `fetchCategoriesResult`.
-- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete (not in read-only mode); an invalid or missing id is a 404 (`notFound()`).
+- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with copy and share, Edit and Delete (not in read-only mode); an invalid or missing id is a 404 (`notFound()`).
 - `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page and in read-only mode.
 - `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`; 404 in read-only mode.
 - `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
@@ -62,6 +62,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages and offsets.
   - `category-token`, `get-next-option-index` — the category being typed after the last comma, the active option of a combobox.
   - `is-same-category` — the case-insensitive category compare behind the selected tag.
+  - `format-quote-text`, `create-quote-share-data` — the copied `"text" — author` and the share payload (title, text, link).
   - `parse-read-only` — `READ_ONLY` to a boolean: only `true`, trimmed, any case.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
@@ -72,12 +73,12 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `select-field`,
-    `category-field`, `quote-form`, `search-form`, `delete-quote-button`, `random-quotes-refresh-button`.
+    `category-field`, `quote-form`, `search-form`, `delete-quote-button`, `random-quotes-refresh-button`, `quote-actions`.
   - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `error-screen`, `category-tag`, `category-tags`, `category-suggestions`,
     `form-field`, `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner),
-    `footer`, `theme-icon`.
+    `footer`, `theme-icon`, `quote-action-button`, `quote-action-icon`.
 - `hooks/` — one folder each, `use-<name>/use-<name>.js`.
-  - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog), `use-delete-quote-button` (the delete confirmation dialog).
+  - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog), `use-delete-quote-button` (the delete confirmation dialog), `use-quote-actions` (copy and share).
   - `use-category-field` (combobox state and keys), `use-category-suggestions` (debounced, cancellable lookup).
   - `use-theme` (choice, resolved theme, `data-theme`, `theme-color`).
   - `use-error-logging` (writes a page error to the console).

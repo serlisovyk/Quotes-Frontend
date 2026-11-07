@@ -70,6 +70,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Theme: light, dark or system, set before the first paint](2026-11-07-theme-three-states.md)
 - [Visible field labels and a native `<dialog>` for the mobile menu](2026-11-07-accessible-forms-and-menu.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
+- [Clipboard and share feedback is a toast, failures included](2026-11-07-clipboard-feedback-by-toast.md)
 - [Vitest, Testing Library and TDD](2026-11-07-vitest.md)
 - [Coverage over all of `src/`, thresholds that only go up](2026-11-07-coverage-ratchet.md)
 - [No end-to-end tests](2026-11-06-no-e2e-tests.md)
