@@ -62,10 +62,6 @@ export const metadata = {
     description: SITE_DESCRIPTION,
     images: [SITE_OG_IMAGE],
   },
-  robots: {
-    index: true,
-    follow: true,
-  },
   icons: {
     icon: '/nav-icon.png',
     shortcut: '/nav-icon.png',
