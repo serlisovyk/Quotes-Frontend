@@ -62,6 +62,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 
 - [Tailwind CSS with role-named colour tokens](2026-11-07-color-tokens.md)
 - [Theme: light, dark or system, set before the first paint](2026-11-07-theme-three-states.md)
+- [Visible field labels and a native `<dialog>` for the mobile menu](2026-11-07-accessible-forms-and-menu.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
 - [Vitest, Testing Library and TDD](2026-11-07-vitest.md)
 - [Coverage over all of `src/`, thresholds that only go up](2026-11-07-coverage-ratchet.md)

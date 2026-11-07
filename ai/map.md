@@ -64,10 +64,10 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
 - `components/` — one folder per component, named export, no suffix.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `quote-form`, `search-form`,
     `delete-quote-button`, `random-quotes-refresh-button`.
-  - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
+  - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
     `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`, `theme-icon`.
-- `hooks/` — `use-quote-form`, `use-search-form` (the two forms), `use-theme` (choice, resolved theme, `data-theme`, `theme-color`); a hook is `use-<name>/use-<name>.js`.
-- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom, `matchMedia`) and `utils/` (none yet), each in a folder with a barrel.
+- `hooks/` — `use-quote-form`, `use-search-form` (the two forms), `use-theme` (choice, resolved theme, `data-theme`, `theme-color`), `use-mobile-menu` (the menu dialog); a hook is `use-<name>/use-<name>.js`.
+- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom, `matchMedia`, the `<dialog>` methods jsdom lacks) and `utils/` (none yet), each in a folder with a barrel.
 
 ## Environment
 

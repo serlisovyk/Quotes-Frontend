@@ -21,9 +21,11 @@ approval.
 
 ## Accessibility
 
-- Controls are real elements (`<button>`, `<input>`, `<form>`, `Link`) with an accessible name; a
-  placeholder is not a label.
-- Everything works from the keyboard, the focus indicator is visible, and after an action the focus lands
+- Controls are real elements (`<button>`, `<input>`, `<form>`, `Link`) with an accessible name; a field has a
+  visible label above it (a placeholder is not a label); a modal menu is a `<dialog>`; one `h1` per page, no
+  skipped heading levels.
+- Everything works from the keyboard, the focus ring is visible on `focus-visible` of every control in both
+  themes, and after an action the focus lands
   somewhere meaningful.
 - Text contrast is at least 4.5:1, controls and borders at least 3:1, in light **and** dark color schemes
   and in every state, hover and disabled included.
