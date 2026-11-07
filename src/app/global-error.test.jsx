@@ -42,7 +42,7 @@ describe('Global Error', () => {
     },
   )
 
-  test('falls back to the light theme when nothing is saved', () => {
+  test('follows the system scheme when nothing is saved', () => {
     renderGlobalError()
 
     expect(document.documentElement).toHaveAttribute('data-theme', THEMES.LIGHT)

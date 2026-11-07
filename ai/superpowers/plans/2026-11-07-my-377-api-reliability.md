@@ -26,9 +26,11 @@ Baseline: 527 tests.
 - **Error screens:** the markup of `error.jsx` moves to a small component `ErrorScreen`, used by `error.jsx`
   and `global-error.jsx`; the logging is a hook `useErrorLogging(error)` (an effect that writes to the
   console), used by both.
-- **`global-error.jsx` theme:** it renders its own `<html>`, so it includes the same theme head script as
-  the root layout (user's choice, light by default) and imports `globals.css`; the colours are the usual
-  role tokens. No fonts: the site's utility stack is the system one.
+- **`global-error.jsx` theme:** it renders its own `<html>` and imports `globals.css`; the colours are the
+  usual role tokens. The head script cannot be used: a script React inserts while client-rendering the
+  page never runs. `useTheme` sets `data-theme` after hydration instead (the saved choice, else the
+  system scheme), so a dark page may flash light for a moment. No fonts: the site's stack is the
+  system one.
 - **Decision record** `2026-11-07-api-timeout-and-error-logging`: the 8 s value and no external tracker.
 
 ## Order (each behavior: failing `test:` commit, then `fix:`/`feat:`, then `refactor:`)

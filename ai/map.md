@@ -40,7 +40,7 @@ A test sits next to its route file (`page.test.jsx`).
 - `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
 - `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
 - `error.jsx` — a failed page load (network error, 5xx, timeout): `ErrorScreen`, logs the error.
-- `global-error.jsx` — an error in the root layout: its own `<html>` and theme script, `ErrorScreen`, logs the error.
+- `global-error.jsx` — an error in the root layout: its own `<html>`, the saved theme via `useTheme`, `ErrorScreen`, logs the error.
 - `random/loading.jsx`, `search/loading.jsx` — the spinner while the page loads; quote pages have none (a 404 stays 404).
 - `robots.js`, `sitemap.js` — metadata routes (the sitemap lists home, random and search).
 

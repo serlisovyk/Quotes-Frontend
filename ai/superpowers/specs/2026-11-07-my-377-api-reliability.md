@@ -18,7 +18,7 @@
   there is one) to the console once per error.
 - **Error in the root layout.** A new `global-error.jsx` shows a full page of its own (`<html>`, `<body>`):
   the same heading, text and "Try again" button as `error.jsx`, in the site's colours, light or dark as
-  the user chose (the head script runs there too; light when it cannot). It logs the error like
+  the user chose (applied by `useTheme`; the system scheme when nothing is saved). It logs the error like
   `error.jsx`. "Try again" calls `reset`.
 
 ## Out of scope
