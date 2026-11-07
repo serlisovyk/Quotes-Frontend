@@ -133,7 +133,7 @@ git switch my-<n>-<slug>
 git rebase main            # re-run the checks if the rebase brought in new commits
 git switch main
 git merge --ff-only my-<n>-<slug>
-npm run format:check && npm run lint && npm test && npm run build
+npm run format:check && npm run lint && npm run test:coverage && npm run build
 git push origin main
 git branch -d my-<n>-<slug>
 ```

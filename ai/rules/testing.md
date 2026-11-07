@@ -63,12 +63,19 @@ The project keeps an automated suite: Vitest with Testing Library in jsdom (deci
 
 - Query as a user does: `getByRole` with `name`, then `getByLabelText`, then `getByText`; `getByTestId` is
   the last resort and needs a reason.
-- Interact with `fireEvent` (no other event library is installed), and assert the visible result or the accessible state (`aria-invalid`,
-  `aria-expanded`, `role="alert"`), not the implementation.
+- Interact with `userEvent` from `@testing-library/user-event` (`const user = userEvent.setup()`, then
+  `await user.click(...)`), not `fireEvent`; a test you touch moves to it, an untouched one stays.
+- Assert the visible result or the accessible state with the jest-dom matchers (`toBeVisible`,
+  `toBeDisabled`, `toHaveAttribute('aria-expanded', 'true')`, `toBeInvalid`), not the implementation. The
+  matchers come from the setup file; no import is needed.
 - Use `findBy*` or `waitFor` for what appears later; never a fixed timeout.
 
 ## Coverage
 
-- Coverage only grows: a change does not lower it, and a new module arrives with its tests.
+- `npm run test:coverage` measures all of `src/`, not only what a test imports; only barrels, `tests/`,
+  test files and `robots.js` are left out (decision `coverage-ratchet`). CI runs it and fails below the
+  thresholds in `vitest.config.js`.
+- Coverage only grows: a change does not lower it, and a new module arrives with its tests. When the
+  measured value rises, raise the thresholds with it; never lower one.
 - A test is changed only when the behavior it describes changed on purpose; none is deleted or skipped to
   make a change pass.

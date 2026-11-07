@@ -63,6 +63,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Tailwind CSS for styling](2026-11-06-tailwind-css.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
 - [Vitest, Testing Library and TDD](2026-11-07-vitest.md)
+- [Coverage over all of `src/`, thresholds that only go up](2026-11-07-coverage-ratchet.md)
 - [No end-to-end tests](2026-11-06-no-e2e-tests.md)
 
 ### Superseded

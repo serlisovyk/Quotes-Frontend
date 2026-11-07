@@ -97,8 +97,8 @@ If a change materially reshapes a pattern, update the matching skill in the same
   also fails `API_URL` and the global `fetch` outside `src/services`.
 - Pre-commit: Husky runs lint-staged (`eslint --fix` and `prettier --write` on staged files); fix what
   it reports.
-- CI: GitHub Actions (`.github/workflows/ci.yml`) on every push runs lint, format check, tests and
-  build, the build with `API_URL` and `SITE_URL` from GitHub Secrets.
+- CI: GitHub Actions (`.github/workflows/ci.yml`) on every push runs lint, format check, tests with
+  coverage (`npm run test:coverage`, thresholds in `vitest.config.js`) and build, the build with `API_URL` and `SITE_URL` from GitHub Secrets.
 - Environment: server-only `API_URL`; the rest is in `ai/map.md`.
 
 ## Commands
@@ -109,6 +109,7 @@ npm run dev          # dev server on port 4000
 npm run build        # production build
 npm run start        # serve the production build
 npm run test:watch   # Vitest in watch mode
+npm run test:coverage # tests with the coverage report and thresholds
 npm run lint:fix     # ESLint with --fix
 npm run format       # apply Prettier
 ```
@@ -128,7 +129,7 @@ Run before handing over any change:
 ```bash
 npm run format:check
 npm run lint
-npm test
+npm run test:coverage
 npm run build
 ```
 

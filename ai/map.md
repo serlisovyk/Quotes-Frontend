@@ -8,12 +8,12 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `public/` — files served as they are: `churchill.jpg` (home page photo), `nav-icon.png` (logo, favicon, link preview).
 - `next.config.mjs` — `output: 'standalone'` (the `Dockerfile` needs it), React Compiler, strict mode, `agentRules: false`.
 - `jsconfig.json` — the one path alias, `@/*` → `src/*`.
-- `vitest.config.js` — Vitest: jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`, `src/tests/setup` cleans up Testing Library.
+- `vitest.config.js` — Vitest: jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`, `src/tests/setup` cleans up Testing Library and adds the jest-dom matchers; coverage (v8, all of `src/`) with thresholds, report in `coverage/` (ignored).
 - `eslint.config.mjs` — flat config: `core-web-vitals`, `API_URL` and `fetch` limited to `src/services`, the naming scheme, Prettier.
 - `.husky/pre-commit`, `.lintstagedrc.json` — the pre-commit hook: lint-staged runs ESLint and Prettier on staged files, in chunks.
-- `.github/workflows/ci.yml` — CI on every push: lint, format check, tests, build; the build needs the secrets `API_URL`, `SITE_URL`.
+- `.github/workflows/ci.yml` — CI on every push: lint, format check, tests with coverage, build; the build needs the secrets `API_URL`, `SITE_URL`.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
-- `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `prepare` (installs the hook), `test`, `test:watch`.
+- `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `prepare` (installs the hook), `test`, `test:watch`, `test:coverage`.
 - `package-lock.json` — the lockfile (npm).
 - `.env.sample`, `.env.production.sample` — tracked templates of the environment; `.env*` is otherwise ignored.
 - `Dockerfile`, `Dockerfile.dev`, `docker-compose.yml`, `docker-compose.dev.yml`, `.dockerignore` — see Docker.
@@ -65,7 +65,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
     `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`.
 - `hooks/` — `use-quote-form`, `use-search-form`: the state and handlers of the two forms; a hook is `use-<name>/use-<name>.js`.
-- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup file) and `utils/` (none yet), each in a folder with a barrel.
+- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom) and `utils/` (none yet), each in a folder with a barrel.
 
 ## Environment
 

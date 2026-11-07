@@ -84,10 +84,11 @@ http://localhost:4000
 - `npm run prepare`: install the Husky pre-commit hook (runs on `npm install`).
 - `npm test`: run tests.
 - `npm run test:watch`: run tests in watch mode.
+- `npm run test:coverage`: run tests with the coverage report (`coverage/`) and thresholds.
 
 ## CI
 
-GitHub Actions runs lint, format check, tests, and build on every push. The build uses the real backend, so it needs the repository secrets `API_URL` and `SITE_URL`. The pre-commit hook (Husky and lint-staged) runs ESLint and Prettier on staged files.
+GitHub Actions runs lint, format check, tests with coverage thresholds, and build on every push. The build uses the real backend, so it needs the repository secrets `API_URL` and `SITE_URL`. The pre-commit hook (Husky and lint-staged) runs ESLint and Prettier on staged files.
 
 ## Docker
 

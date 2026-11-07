@@ -39,7 +39,8 @@ approval.
 - New or changed behavior in a service, the fetcher, an action, a util, a hook, a component or a page with
   logic has a Vitest test next to the module that fails without the change; tests query by role or
   accessible name, as a user would.
-- `npm test` is green, coverage did not drop, and no test was deleted or skipped to make it pass.
+- `npm test` and `npm run test:coverage` are green, coverage did not drop, and no test was deleted or
+  skipped to make it pass.
 
 ## Docs (in the same change, within `ai/rules/docs.md`)
 
