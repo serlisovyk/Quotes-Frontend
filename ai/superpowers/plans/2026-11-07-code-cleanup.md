@@ -18,9 +18,12 @@ content of those two files and never moves anything in `src/app`.
   branch of `createApiError` goes. The `Some error occurred` text becomes `DEFAULT_ERROR_MESSAGE`.
 - **Validation constants** live in `constants/validation.constant.js` (limits, `VALIDATION_MESSAGE`);
   `CATEGORY_NAME_REGEX` and `MAX_ENTITY_ID` stay in `quotes.constant.js`.
-- **No effect for state.** `QuoteForm` keeps the user's edit together with the action state it was made on and
-  shows the edit only while that state is current; `SearchForm` does the same with `initialSearchValues`.
-  A `key` on the page would remount the form and drop the focus of the Search button, so no `key`.
+- **No effect for state, and hooks.** The state and handlers of both forms live in `useQuoteForm` and
+  `useSearchForm` (`ai/rules/react.md`). Each keeps the previous action state or initial values in state and
+  resets during render when they change (React's "adjusting state when a prop changes"). A `key` on the page
+  would remount the form and drop the focus of the Search button, so no `key`.
+- **One wording** of the category rule in the form and the search, the backend's `INVALID_CATEGORY_NAME`.
+- **Polling:** the removal is also recorded in `ai/decisions/2026-11-07-no-polling-env-vars.md`.
 - **Polling:** Next 16 runs `next dev` on Turbopack. Neither `CHOKIDAR_USEPOLLING` nor `WATCHPACK_POLLING`
   is read there (neither string is in the Next SWC binary; `WATCHPACK_POLLING` only reaches the webpack
   watcher), and the Next 16 development guide names `watchOptions.pollIntervalMs` in `next.config` as the
