@@ -1,10 +1,9 @@
-import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { AuthorLink } from '@/components/author-link'
 import { Button } from '@/components/button'
 import { CategoryTags } from '@/components/category-tags'
 import { DeleteQuoteButton } from '@/components/delete-quote-button'
 import { fetchQuoteIfExists } from '@/services/quotes'
-import { createSearchQueryString } from '@/utils/query-string'
 import { isQuoteValidId } from '@/utils/validation'
 import { BUTTON_GROUP_CLASSES, ROUTES } from '@/constants'
 
@@ -36,14 +35,7 @@ export default async function QuotePage({ params }) {
           {quote.text}
         </h1>
         <p className="text-2xl text-center text-muted mb-10">
-          <Link
-            href={`${ROUTES.SEARCH}?${createSearchQueryString({ author: quote.author })}`}
-          >
-            -{' '}
-            <span className="hover:underline hover:text-link-hover">
-              {quote.author}
-            </span>
-          </Link>
+          <AuthorLink author={quote.author} />
         </p>
         <CategoryTags categories={quote.categories} isSingleQuotePage />
       </div>

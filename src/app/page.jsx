@@ -25,11 +25,11 @@ export default async function HomePage() {
     <>
       <section className="flex flex-col md:flex-row items-center justify-center gap-5 py-[16px] md:gap-10 md:py-[30px] lg:gap-20 lg:py-[50px]">
         <div className="max-w-lg md:max-w-[350px] lg:max-w-lg">
-          <div className="text-2xl font-bold italic text-accent-text lg:text-4xl">
+          <h1 className="text-2xl font-bold italic text-accent-text lg:text-4xl">
             Success is not final, failure is not fatal: it is the courage to continue
             that counts. <br />
             <span className="text-accent-text">&nbsp;- Winston Churchill</span>
-          </div>
+          </h1>
         </div>
         <div>
           <Image

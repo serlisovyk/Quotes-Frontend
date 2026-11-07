@@ -10,7 +10,7 @@ Branch `my-240-accessibility`. Spec: `ai/superpowers/specs/2026-11-07-my-240-acc
 
 ## Decisions made in this plan
 
-- **Author link name:** the dash gets `aria-hidden`, a `sr-only` "Quotes by " precedes the author, so the
+- **Author link name:** the dash gets `aria-hidden` and the link an `aria-label` "Quotes by <author>" (a `sr-only` prefix loses its space in the computed name), so the
   name is "Quotes by <author>" and contains the visible text. The markup repeated in `Quote` and the quote
   page moves into one `AuthorLink` component (real duplication).
 - **Home `h1`:** the hero quote block becomes the `h1` (already bold, same classes), so the look stays.

@@ -1,5 +1,5 @@
 export const BUTTON_BASE_CLASSES =
-  'inline-flex cursor-pointer px-6 py-3 text-xl rounded-lg transition-colors duration-fast focus:outline-none focus:ring-2 focus:ring-focus disabled:opacity-50 disabled:cursor-not-allowed'
+  'inline-flex cursor-pointer px-6 py-3 text-xl rounded-lg transition-colors duration-fast focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none disabled:opacity-50 disabled:cursor-not-allowed'
 
 export const BUTTON_VARIANT_CLASSES = {
   primary: 'bg-accent text-on-solid hover:bg-accent-hover',
