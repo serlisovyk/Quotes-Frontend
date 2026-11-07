@@ -44,6 +44,14 @@ describe('Pagination', () => {
     expect(screen.queryByRole('link', { name: 'Next' })).toBeNull()
   })
 
+  test('does not style the current page as disabled', () => {
+    renderPagination(30, { text: 'life' })
+
+    expect(screen.getByText('1')).toHaveClass('bg-accent', 'font-bold')
+    expect(screen.getByText('1')).not.toHaveClass('cursor-not-allowed')
+    expect(screen.getByText('Prev')).toHaveClass('cursor-not-allowed')
+  })
+
   test('shortens a long list of pages with separators', () => {
     renderPagination(200, { offset: '90' })
 

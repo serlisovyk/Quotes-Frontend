@@ -32,4 +32,15 @@ describe('Pagination Link', () => {
     expect(screen.queryByRole('link')).toBeNull()
     expect(screen.getByText('Prev').getAttribute('aria-disabled')).toBe('true')
   })
+
+  test('looks active, not disabled, when it is both', () => {
+    render(
+      <PaginationLink href="/search?offset=0" isActive isDisabled>
+        1
+      </PaginationLink>,
+    )
+
+    expect(screen.getByText('1')).toHaveClass('bg-accent')
+    expect(screen.getByText('1')).not.toHaveClass('cursor-not-allowed')
+  })
 })
