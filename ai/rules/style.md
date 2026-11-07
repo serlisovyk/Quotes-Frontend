@@ -76,10 +76,15 @@ workspace code style standard plus this project's naming (decision `naming-like-
 - Style with utility classes in `className`; a stylesheet rule goes into `globals.css` only for what
   utilities cannot express. No inline `style`, CSS Modules or CSS-in-JS.
 - **Colours only through tokens:** role-named theme variables in `globals.css` (`@theme`: `--color-page`,
-  `--color-surface`, `--color-text-muted`, `--color-danger`), each with a light and a dark value. Components
-  use the role utilities (`bg-surface`, `text-danger`), never a raw palette colour (`bg-violet-900`) or a
-  hex value. A new colour gets both values and a contrast check in both schemes.
-- Spacing, radii, font sizes and durations come from Tailwind's scales or the theme; no arbitrary value
+  `--color-surface`, `--color-muted`, `--color-danger-text`), the light value in `@theme`, the dark one in the
+  `dark` block below it. Components use the role utilities (`bg-surface`, `text-muted`), never a raw palette
+  colour (`bg-violet-900`), a hex value or a `dark:` variant: the theme switches the tokens. A token exists for a
+  palette role or a value used in two places; a new colour gets both values and a contrast check (4.5:1 text,
+  3:1 controls) in both schemes.
+- **The theme** is `data-theme` on `<html>` (`light` or `dark`), set by the head script and `useTheme`; the
+  `dark` variant is keyed to it. `THEME_COLORS` (browser bar) must equal the `--color-panel` values.
+- Spacing, radii and font sizes come from Tailwind's scales; durations from the theme tokens
+  (`duration-fast`, `duration-base`, `duration-slow`), zeroed once under reduced motion; no arbitrary value
   (`w-[137px]`) when a scale step fits.
 - Mobile first: base classes are the narrowest layout, `sm:`, `md:`, `lg:` add width. Check 390 px.
 - A class string longer than a line or two, or shared by components, is a variant map inside the

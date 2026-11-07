@@ -27,8 +27,8 @@ Navigation only: where things live and who owns what. How it works is in the cod
 Only Next.js route files live here; the root layout sits at this level, not in a route group, so an unknown URL gets the 404 page (`ai/decisions/`).
 A test sits next to its route file (`page.test.jsx`).
 
-- `layout.jsx` — root layout: fonts (`fonts/`), site metadata, skip link, `AppToasts`, `Header`, `<main>`, `Footer`.
-- `globals.css` — Tailwind import, the light and dark `--background` and `--foreground` colors.
+- `layout.jsx` — root layout: fonts (`fonts/`), site metadata, `themeColor` per scheme, the theme head script, skip link, `AppToasts`, `Header`, `<main>`, `Footer`.
+- `globals.css` — Tailwind import, the `dark` variant on `data-theme`, the colour and duration tokens (light values in `@theme`, dark in one block), reduced motion.
 - `page.jsx` — `/`: the home page; the card is quote `HOME_QUOTE_ID`, revalidated hourly, left out when missing.
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
@@ -56,16 +56,17 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
-- `constants/` — one file per domain (`api`, `menu`, `quotes`, `routes`, `search`, `validation`, `toast`, class variants).
+  - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
+- `constants/` — one file per domain (`api`, `menu`, `quotes`, `routes`, `search`, `validation`, `toast`, `theme`, class variants).
 - `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
-  - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `input-field`, `quote-form`, `search-form`,
+  - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `quote-form`, `search-form`,
     `delete-quote-button`, `random-quotes-refresh-button`.
   - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
-    `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`.
-- `hooks/` — `use-quote-form`, `use-search-form`: the state and handlers of the two forms; a hook is `use-<name>/use-<name>.js`.
-- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom) and `utils/` (none yet), each in a folder with a barrel.
+    `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`, `theme-icon`.
+- `hooks/` — `use-quote-form`, `use-search-form` (the two forms), `use-theme` (choice, resolved theme, `data-theme`, `theme-color`); a hook is `use-<name>/use-<name>.js`.
+- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom, `matchMedia`) and `utils/` (none yet), each in a folder with a barrel.
 
 ## Environment
 

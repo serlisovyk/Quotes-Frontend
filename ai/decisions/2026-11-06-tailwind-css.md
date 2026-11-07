@@ -1,6 +1,6 @@
 # Tailwind CSS for styling
 
-Date: 2026-11-06 · Status: accepted
+Date: 2026-11-06 · Status: superseded by [2026-11-07-color-tokens.md](2026-11-07-color-tokens.md)
 
 ## Context
 

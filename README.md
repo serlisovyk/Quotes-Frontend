@@ -34,6 +34,7 @@ https://quotes-backend-eight.vercel.app/
 - Native Next.js server-side data fetching and cache invalidation.
 - Inline error states and success toasts.
 - Metadata, favicon, sitemap, and robots configuration.
+- Light, dark and system theme, set before the first paint.
 - Unit and component tests with Vitest and Testing Library.
 
 ## Getting Started

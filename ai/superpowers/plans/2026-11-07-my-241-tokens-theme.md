@@ -29,6 +29,9 @@ Branch `my-241-tokens-theme`. Linear MY-241, milestone Рефакторинг. S
 - **The hook has no state of its own:** the choice is read with `useSyncExternalStore` from storage
   (plus a `storage` event and an in-page listener), the OS preference from `matchMedia`; an effect writes
   `data-theme` and `theme-color`. Header and toasts both call it.
+- **Next replaces the `theme-color` metas on a client navigation**, so the hook watches `<head>` with a
+  `MutationObserver` and re-applies (found in the browser; `applyTheme` writes only what differs, so the
+  observer does not loop). A `matchMedia` stub in the Vitest setup files stands in for jsdom.
 - **`theme-color`** is the header colour (`panel`), not the page colour: white and `#1f2937`.
 - **Token set** (light / dark): `page`, `body`, `muted`, `panel`, `surface`, `surface-hover`, `line`,
   `accent`, `accent-hover`, `accent-text`, `secondary`, `secondary-hover`, `danger`, `danger-hover`,
@@ -60,6 +63,7 @@ Branch `my-241-tokens-theme`. Linear MY-241, milestone Рефакторинг. S
 
 ## Verification
 
-The four checks plus `test:coverage` (thresholds raised if coverage rises); the greps for raw palette
+Coverage stays at the 99 thresholds (measured 100 on every metric, so there is no integer below it to raise
+them to). The four checks plus `test:coverage` (thresholds raised if coverage rises); the greps for raw palette
 classes and `dark:`; the browser per `AGENTS.md` in both themes, system following the OS, keyboard, no
 flash on reload, the `theme-color` meta, 390 px.

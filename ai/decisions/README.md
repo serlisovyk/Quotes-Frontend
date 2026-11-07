@@ -60,7 +60,8 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 
 ### UI and tests
 
-- [Tailwind CSS for styling](2026-11-06-tailwind-css.md)
+- [Tailwind CSS with role-named colour tokens](2026-11-07-color-tokens.md)
+- [Theme: light, dark or system, set before the first paint](2026-11-07-theme-three-states.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
 - [Vitest, Testing Library and TDD](2026-11-07-vitest.md)
 - [Coverage over all of `src/`, thresholds that only go up](2026-11-07-coverage-ratchet.md)
@@ -68,6 +69,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 
 ### Superseded
 
+- [Tailwind CSS for styling](2026-11-06-tailwind-css.md): by `color-tokens`
 - [Structure and naming conventions](2026-11-06-structure-and-naming.md): by `naming-like-backend`
 - [Jest and Testing Library stay](2026-11-06-jest-and-testing-library.md): by `tests-jest-tdd`
 - [Jest, Testing Library and TDD](2026-11-06-tests-jest-tdd.md): by `vitest`
