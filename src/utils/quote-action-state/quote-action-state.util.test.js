@@ -1,5 +1,8 @@
 import { describe, expect, test } from 'vitest'
-import { TOO_MANY_REQUESTS_MESSAGE } from '@/constants'
+import {
+  SERVER_NOT_RESPONDING_MESSAGE,
+  TOO_MANY_REQUESTS_MESSAGE,
+} from '@/constants'
 import {
   createApiErrorState,
   createDeleteApiErrorState,
@@ -84,6 +87,24 @@ describe('quoteActionState utilities', () => {
       values,
       errors: {},
       formError: TOO_MANY_REQUESTS_MESSAGE,
+    })
+  })
+
+  test('tells a form that the server is not responding after a timeout', () => {
+    const values = { text: 'Quote text', author: 'Author', categories: '' }
+    const error = new DOMException(
+      'The operation was aborted due to timeout',
+      'TimeoutError',
+    )
+
+    expect(createApiErrorState(error, values).formError).toBe(
+      SERVER_NOT_RESPONDING_MESSAGE,
+    )
+  })
+
+  test('tells a delete that the server is not responding after a network failure', () => {
+    expect(createDeleteApiErrorState(new TypeError('fetch failed'))).toEqual({
+      error: SERVER_NOT_RESPONDING_MESSAGE,
     })
   })
 

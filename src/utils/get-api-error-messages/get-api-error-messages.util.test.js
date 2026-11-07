@@ -1,5 +1,9 @@
 import { describe, expect, test } from 'vitest'
-import { DEFAULT_ERROR_MESSAGE, TOO_MANY_REQUESTS_MESSAGE } from '@/constants'
+import {
+  DEFAULT_ERROR_MESSAGE,
+  SERVER_NOT_RESPONDING_MESSAGE,
+  TOO_MANY_REQUESTS_MESSAGE,
+} from '@/constants'
 import { getApiErrorMessages } from './get-api-error-messages.util.js'
 
 describe('Get Api Error Messages', () => {
@@ -25,6 +29,23 @@ describe('Get Api Error Messages', () => {
     const error = { message: 'Slow down', status: 429, fields: { text: 'Bad' } }
 
     expect(getApiErrorMessages(error)).toEqual([TOO_MANY_REQUESTS_MESSAGE])
+  })
+
+  test.each([
+    [
+      'a timeout',
+      new DOMException('The operation was aborted due to timeout', 'TimeoutError'),
+    ],
+    ['an abort', new DOMException('This operation was aborted', 'AbortError')],
+    ['a network failure', new TypeError('fetch failed')],
+  ])('says the server is not responding after %s', (_label, error) => {
+    expect(getApiErrorMessages(error)).toEqual([SERVER_NOT_RESPONDING_MESSAGE])
+  })
+
+  test('keeps the message of an API error that has a status', () => {
+    const error = Object.assign(new Error('Bad gateway'), { status: 502 })
+
+    expect(getApiErrorMessages(error)).toEqual(['Bad gateway'])
   })
 
   test('keeps the error message for other statuses', () => {
