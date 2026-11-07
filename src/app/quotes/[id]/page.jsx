@@ -3,6 +3,7 @@ import { AuthorLink } from '@/components/author-link'
 import { Button } from '@/components/button'
 import { CategoryTags } from '@/components/category-tags'
 import { DeleteQuoteButton } from '@/components/delete-quote-button'
+import { IS_READ_ONLY } from '@/config'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import { isQuoteValidId } from '@/utils/validation'
 import { BUTTON_GROUP_CLASSES, ROUTES } from '@/constants'
@@ -39,10 +40,12 @@ export default async function QuotePage({ params }) {
         </p>
         <CategoryTags categories={quote.categories} isSingleQuotePage />
       </div>
-      <div className={`${BUTTON_GROUP_CLASSES} mb-6 items-start`}>
-        <Button href={`${ROUTES.QUOTES}/${quote.id}/edit`} text="Edit" />
-        <DeleteQuoteButton quoteId={quote.id} />
-      </div>
+      {!IS_READ_ONLY && (
+        <div className={`${BUTTON_GROUP_CLASSES} mb-6 items-start`}>
+          <Button href={`${ROUTES.QUOTES}/${quote.id}/edit`} text="Edit" />
+          <DeleteQuoteButton quoteId={quote.id} />
+        </div>
+      )}
     </div>
   )
 }

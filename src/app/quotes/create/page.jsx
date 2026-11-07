@@ -1,5 +1,7 @@
+import { notFound } from 'next/navigation'
 import { QuoteForm } from '@/components/quote-form'
 import { createQuoteAction } from '@/actions/quote'
+import { IS_READ_ONLY } from '@/config'
 import { createInitialQuoteFormState } from '@/utils/quote-form'
 import { INITIAL_FORM_VALUES, ROUTES } from '@/constants'
 
@@ -15,6 +17,8 @@ export const metadata = {
 }
 
 export default function CreateQuotePage() {
+  if (IS_READ_ONLY) notFound()
+
   return (
     <QuoteForm
       action={createQuoteAction}

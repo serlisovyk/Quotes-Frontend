@@ -1,6 +1,7 @@
 import { notFound } from 'next/navigation'
 import { QuoteForm } from '@/components/quote-form'
 import { updateQuoteAction } from '@/actions/quote'
+import { IS_READ_ONLY } from '@/config'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import {
   createInitialQuoteFormState,
@@ -27,6 +28,8 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function EditQuotePage({ params }) {
+  if (IS_READ_ONLY) notFound()
+
   const { id } = await params
 
   if (!isQuoteValidId(id)) notFound()

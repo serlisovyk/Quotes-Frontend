@@ -4,6 +4,7 @@ import { AppToasts } from '@/components/app-toasts'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import {
+  IS_READ_ONLY,
   SITE_DESCRIPTION,
   SITE_NAME,
   SITE_OG_IMAGE,
@@ -95,7 +96,7 @@ export default function RootLayout({ children }) {
           <AppToasts />
         </Suspense>
 
-        <Header />
+        <Header isReadOnly={IS_READ_ONLY} />
 
         <main id="main-content" className="container mx-auto flex-1 p-4">
           {children}
