@@ -44,8 +44,10 @@ jobs:
           --build-arg API_URL="$API_URL"
           --build-arg SITE_URL="$SITE_URL"
           --build-arg HOME_QUOTE_ID="$HOME_QUOTE_ID"
+          --build-arg READ_ONLY="$READ_ONLY"
           .
         env:
           API_URL: ${{ secrets.API_URL }}
           SITE_URL: ${{ secrets.SITE_URL }}
           HOME_QUOTE_ID: ${{ secrets.HOME_QUOTE_ID }}
+          READ_ONLY: ${{ secrets.READ_ONLY }}

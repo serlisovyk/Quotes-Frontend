@@ -62,6 +62,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Category suggestions through a Route Handler](2026-11-07-category-suggestions-route-handler.md)
 - [Security headers without a full CSP](2026-11-07-security-headers-without-csp.md)
 - [API request timeout and console-only error logging](2026-11-07-api-timeout-and-error-logging.md)
+- [Read-only mode by a server flag](2026-11-07-read-only-mode.md)
 
 ### UI and tests
 

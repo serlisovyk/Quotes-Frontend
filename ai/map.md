@@ -13,7 +13,7 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `eslint.config.mjs` — flat config: `core-web-vitals`, `API_URL` and `fetch` limited to `src/services`, the naming scheme, Prettier.
 - `.husky/pre-commit`, `.lintstagedrc.json` — the pre-commit hook: lint-staged runs ESLint and Prettier on staged files, in chunks.
 - `.github/workflows/ci.yml` — CI on every push: lint, format check, tests with coverage, build, and a `docker` job
-  that builds the image without publishing it; secrets `API_URL`, `SITE_URL`, optional `HOME_QUOTE_ID`.
+  that builds the image without publishing it; secrets `API_URL`, `SITE_URL`, optional `HOME_QUOTE_ID`, `READ_ONLY`.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
 - `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `prepare` (installs the hook), `test`, `test:watch`, `test:coverage`.
 - `package-lock.json` — the lockfile (npm).
@@ -35,9 +35,9 @@ A test sits next to its route file (`page.test.jsx`).
 - `random/page.jsx` — `/random`: a random set of quotes, dynamic and uncached.
 - `search/page.jsx` — `/search`: reads the query string, searches only when it has params, shows `Pagination`.
 - `api/categories/route.js` — `GET /api/categories?name=`: category suggestions for the forms over `fetchCategoriesResult`.
-- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete; an invalid or missing id is a 404 (`notFound()`).
-- `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page.
-- `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
+- `quotes/[id]/page.jsx` — `/quotes/:id`: one quote with Edit and Delete (not in read-only mode); an invalid or missing id is a 404 (`notFound()`).
+- `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page and in read-only mode.
+- `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`; 404 in read-only mode.
 - `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
 - `error.jsx` — a failed page load (network error, 5xx, timeout): `ErrorScreen`, logs the error.
 - `global-error.jsx` — an error in the root layout: its own `<html>`, the saved theme via `useTheme`, `ErrorScreen`, logs the error.
@@ -62,12 +62,13 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages and offsets.
   - `category-token`, `get-next-option-index` — the category being typed after the last comma, the active option of a combobox.
   - `is-same-category` — the case-insensitive category compare behind the selected tag.
+  - `parse-read-only` — `READ_ONLY` to a boolean: only `true`, trimmed, any case.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
   - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
 - `constants/` — one file per domain (`api`, `error-screen`, `combobox`, `menu`, `quotes`, `routes`, `search`, `security`, `validation`, `toast`, `theme`, `delete-dialog`,
   class variants).
-- `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
+- `config/` — `home.config.js` (`HOME_QUOTE_ID`), `read-only.config.js` (`IS_READ_ONLY`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `select-field`,
@@ -90,18 +91,19 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 
 - `API_URL` — backend base URL. Server-only: read in `services/fetcher`, never sent to the browser.
 - `HOME_QUOTE_ID` — id of the quote on the home page. Server-only, optional: read in `config/home.config.js`.
+- `READ_ONLY` — `true` turns read-only mode on. Server-only, optional: `config/read-only.config.js`; set it at build and at run time.
 - `SITE_URL` — public frontend URL for metadata, `robots.js` and `sitemap.js`.
 - `PORT` — port of the Next.js server (4000). `HOSTNAME` — `0.0.0.0` in Docker. `NODE_ENV` — mode.
 
 ## Docker
 
 - `Dockerfile` — multi-stage production image on `node:24-alpine` (`npm ci`, `npm run build`, runs the standalone `server.js` as a non-root user).
-  `ARG SITE_URL`, `HOME_QUOTE_ID`, `API_URL` feed the build.
+  `ARG SITE_URL`, `HOME_QUOTE_ID`, `API_URL`, `READ_ONLY` feed the build.
 - `.dockerignore` — keeps `.env*` (not `*.sample`), `.git`, `ai`, docs and tests out of the build; no image holds an env file.
 - `Dockerfile.dev` — dev image on `node:24-alpine`: `npm ci` and `npm run dev`.
 - `docker-compose.yml` — runs the published image `serhii5105/quotes-client:latest` with `.env` on port 4000.
 - `docker-compose.dev.yml` — builds `Dockerfile.dev`, mounts the project, keeps `node_modules` and `.next` in volumes.
-- Build: `docker build --build-arg API_URL=... --build-arg SITE_URL=... --build-arg HOME_QUOTE_ID=... -t serhii5105/quotes-client .`
+- Build: `docker build --build-arg API_URL=... --build-arg SITE_URL=... --build-arg HOME_QUOTE_ID=... --build-arg READ_ONLY=... -t serhii5105/quotes-client .`
   Run with `--env-file .env`. Publishing to Docker Hub stays manual.
 - Production: `docker compose up -d` and `docker compose down`.
 - Dev: `docker compose -f docker-compose.dev.yml up --build` and `docker compose -f docker-compose.dev.yml down`.

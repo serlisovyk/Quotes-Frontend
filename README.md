@@ -29,7 +29,7 @@ https://quotes-backend-eight.vercel.app/
 - Random quotes page with manual refresh.
 - Search by text, author, category (with suggestions from the API) and page size, with pagination.
 - Quote details page.
-- Create, edit, and delete quote flows.
+- Create, edit, and delete quote flows, or a read-only mode (`READ_ONLY=true`).
 - Server Actions for mutations.
 - Native Next.js server-side data fetching and cache invalidation.
 - Inline error states, success toasts, a request timeout and error screens.
@@ -124,6 +124,7 @@ Publishing the image to Docker Hub is manual.
 - `SITE_URL`: public site base URL used for metadata, robots, and sitemap.
 - `API_URL`: server-side backend API base URL.
 - `HOME_QUOTE_ID`: server-side id of the quote on the home page. Optional: without it, or with an invalid id or a missing quote, the home page has no quote card.
+- `READ_ONLY`: server-side flag; `true` makes the site read-only (no create, edit or delete). Set it for both the build and the run.
 
 Production example is available in `.env.production.sample`.
 
