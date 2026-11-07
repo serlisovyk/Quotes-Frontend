@@ -39,7 +39,8 @@ A test sits next to its route file (`page.test.jsx`).
 - `quotes/[id]/edit/page.jsx` — `/quotes/:id/edit`: the form bound to `updateQuoteAction`, dynamic, `noindex`, 404 like the quote page.
 - `quotes/create/page.jsx` — `/quotes/create`: the form bound to `createQuoteAction`, `noindex`.
 - `not-found.jsx` — the 404 page (unknown URL, `notFound()`): heading and a link home.
-- `error.jsx` — a failed page load (network error, 5xx): heading and a "Try again" button (`reset`).
+- `error.jsx` — a failed page load (network error, 5xx, timeout): `ErrorScreen`, logs the error.
+- `global-error.jsx` — an error in the root layout: its own `<html>` and theme script, `ErrorScreen`, logs the error.
 - `random/loading.jsx`, `search/loading.jsx` — the spinner while the page loads; quote pages have none (a 404 stays 404).
 - `robots.js`, `sitemap.js` — metadata routes (the sitemap lists home, random and search).
 
@@ -49,7 +50,7 @@ Every module has a folder of its own with an `index.js` barrel and its test besi
 one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
 
 - `services/` — the only code that calls the backend; every file imports `server-only`, except `category-suggestions`.
-  - `fetcher/` — `fetcher.get`, `post`, `patch`, `delete` over `fetch` and `API_URL`; throws `ApiError` on a bad response.
+  - `fetcher/` — `fetcher.get`, `post`, `patch`, `delete` over `fetch` and `API_URL`; aborts a request after a timeout; throws `ApiError` on a bad response.
   - `quotes/` — the endpoint functions (`fetchQuotesResult`, `fetchRandomQuotesResult`, `fetchQuoteById`, `fetchQuoteIfExists`,
     `postQuote`, `patchQuote`, `deleteQuote`) and their cache options.
   - `categories/` — `fetchCategories`, `fetchCategoriesResult` (`GET /categories`, uncached).
@@ -64,19 +65,21 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
   - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
-- `constants/` — one file per domain (`api`, `combobox`, `menu`, `quotes`, `routes`, `search`, `security`, `validation`, `toast`, `theme`, class variants).
+- `constants/` — one file per domain (`api`, `error-screen`, `combobox`, `menu`, `quotes`, `routes`, `search`, `security`, `validation`, `toast`, `theme`,
+  class variants).
 - `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `select-field`,
     `category-field`, `quote-form`, `search-form`, `delete-quote-button`, `random-quotes-refresh-button`.
-  - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `category-suggestions`, `form-field`,
-    `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner),
+  - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `error-screen`, `category-tag`, `category-tags`, `category-suggestions`,
+    `form-field`, `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner),
     `footer`, `theme-icon`.
 - `hooks/` — one folder each, `use-<name>/use-<name>.js`.
   - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog).
   - `use-category-field` (combobox state and keys), `use-category-suggestions` (debounced, cancellable lookup).
   - `use-theme` (choice, resolved theme, `data-theme`, `theme-color`).
+  - `use-error-logging` (writes a page error to the console).
 - `tests/` — shared test code, each in a folder with a barrel.
   - `mocks/` (`server-only`), `utils/` (none yet).
   - `setup/` — Vitest setup files: cleanup, jest-dom, `matchMedia`, the `<dialog>` methods jsdom lacks.

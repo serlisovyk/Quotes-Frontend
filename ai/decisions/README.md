@@ -61,6 +61,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [A `notFound()` page is a 404 with an empty server shell](2026-11-07-not-found-server-shell.md)
 - [Category suggestions through a Route Handler](2026-11-07-category-suggestions-route-handler.md)
 - [Security headers without a full CSP](2026-11-07-security-headers-without-csp.md)
+- [API request timeout and console-only error logging](2026-11-07-api-timeout-and-error-logging.md)
 
 ### UI and tests
 

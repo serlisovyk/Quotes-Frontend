@@ -32,7 +32,7 @@ https://quotes-backend-eight.vercel.app/
 - Create, edit, and delete quote flows.
 - Server Actions for mutations.
 - Native Next.js server-side data fetching and cache invalidation.
-- Inline error states and success toasts.
+- Inline error states, success toasts, a request timeout and error screens.
 - Metadata, favicon, sitemap, and robots configuration.
 - Light, dark and system theme, set before the first paint.
 - Unit and component tests with Vitest and Testing Library.
