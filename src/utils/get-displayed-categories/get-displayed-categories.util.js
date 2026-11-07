@@ -9,13 +9,14 @@ export function getDisplayedCategories(
 
   const visible = categories.slice(0, MAX_VISIBLE_CATEGORIES)
 
-  if (!selectedCategory || visible.includes(selectedCategory)) {
-    return visible
-  }
+  const selected = selectedCategory?.toLowerCase()
+  const isSelected = (category) => category.toLowerCase() === selected
 
-  if (categories.includes(selectedCategory)) {
-    return [...visible.slice(0, -1), selectedCategory]
-  }
+  if (!selected || visible.some(isSelected)) return visible
+
+  const hiddenSelected = categories.find(isSelected)
+
+  if (hiddenSelected) return [...visible.slice(0, -1), hiddenSelected]
 
   return visible
 }

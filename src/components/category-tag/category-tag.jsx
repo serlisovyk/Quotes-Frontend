@@ -3,7 +3,7 @@ import { createSearchQueryString } from '@/utils/query-string'
 import { CATEGORY_TAG_CLASSES, ROUTES } from '@/constants'
 
 export function CategoryTag({ category, selectedCategory, isSingleQuotePage }) {
-  const isSelected = category === selectedCategory
+  const isSelected = category.toLowerCase() === selectedCategory?.toLowerCase()
   const href = `${ROUTES.SEARCH}?${createSearchQueryString({ category })}`
 
   const getPageClasses = () => {
