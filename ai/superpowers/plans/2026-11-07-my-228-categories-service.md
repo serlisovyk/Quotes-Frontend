@@ -21,8 +21,9 @@ Branch `my-228-categories-service`. No spec: nothing observable changes, no page
 
 ## Changes
 
-- `constants/api.constant.js`: `CATEGORIES_API_ENDPOINT`, `ALLOWED_CATEGORIES_PARAM_NAMES`
-  (`name`, `limit`, `offset`), `ALLOWED_API_QUERY_PARAM_NAMES`.
+- `constants/api.constant.js`: `CATEGORIES_API_ENDPOINT`. `constants/search.constant.js` (the query
+  params live there): `ALLOWED_CATEGORIES_PARAM_NAMES` (`name`, `limit`, `offset`),
+  `ALLOWED_API_QUERY_PARAM_NAMES`.
 - `utils/query-string`: the optional allow-list argument; `services/fetcher`: passes the union.
 - `services/categories/` (`categories.service.js`, `index.js`, test).
 - Docs: `README.md` API section (both list responses), `ai/map.md` (the new service). No rule changes.

@@ -2,6 +2,7 @@ import 'server-only'
 
 import { createApiError } from '@/utils/create-api-error'
 import { createSearchQueryString } from '@/utils/query-string'
+import { ALLOWED_API_QUERY_PARAM_NAMES } from '@/constants'
 
 const getApiUrl = () => process.env.API_URL
 
@@ -12,7 +13,10 @@ const createUrl = (endpoint, queryParams = {}) => {
     throw new Error('API_URL environment variable is required.')
   }
 
-  const queryString = createSearchQueryString(queryParams)
+  const queryString = createSearchQueryString(
+    queryParams,
+    ALLOWED_API_QUERY_PARAM_NAMES,
+  )
 
   return queryString
     ? `${apiUrl}/${endpoint}?${queryString}`

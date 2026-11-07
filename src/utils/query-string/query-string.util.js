@@ -1,10 +1,13 @@
 import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 
-export const createSearchQueryString = (queryParams = {}) => {
+export const createSearchQueryString = (
+  queryParams = {},
+  allowedParamNames = ALLOWED_SEARCH_PARAM_NAMES,
+) => {
   const filteredParams = Object.fromEntries(
     Object.entries(queryParams).filter(
       ([key, value]) =>
-        ALLOWED_SEARCH_PARAM_NAMES.includes(key) &&
+        allowedParamNames.includes(key) &&
         value !== undefined &&
         value !== null &&
         value !== '',
