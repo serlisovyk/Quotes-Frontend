@@ -81,6 +81,35 @@ describe('Services fetcher', () => {
     })
   })
 
+  test.each(['http://api.test/', 'http://api.test//', 'http://api.test'])(
+    'builds one URL without a double slash for API_URL %s',
+    async (apiUrl) => {
+      global.fetch.mockResolvedValue(
+        createResponse({ ok: true, status: 200, body: { quotes: [] } }),
+      )
+
+      const fetcher = await importFreshFetcher({ apiUrl })
+
+      await fetcher.get('quotes', { text: 'sharp' })
+      await fetcher.get('quotes')
+
+      expect(global.fetch.mock.calls[0][0]).toBe('http://api.test/quotes?text=sharp')
+      expect(global.fetch.mock.calls[1][0]).toBe('http://api.test/quotes')
+    },
+  )
+
+  test('ignores a leading slash of the endpoint', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, status: 200, body: {} }),
+    )
+
+    const fetcher = await importFreshFetcher({ apiUrl: 'http://api.test/' })
+
+    await fetcher.delete('/quotes/1')
+
+    expect(global.fetch.mock.calls[0][0]).toBe('http://api.test/quotes/1')
+  })
+
   test('passes Next fetch options through to GET requests', async () => {
     global.fetch.mockResolvedValue(
       createResponse({ ok: true, status: 200, body: { quotes: [] } }),
