@@ -1,4 +1,5 @@
 import { describe, expect, test } from 'vitest'
+import { TOO_MANY_REQUESTS_MESSAGE } from '@/constants'
 import {
   createApiErrorState,
   createDeleteApiErrorState,
@@ -72,6 +73,25 @@ describe('quoteActionState utilities', () => {
       values,
       errors: {},
       formError: 'Server down',
+    })
+  })
+
+  test('tells a rate limited form to try again later', () => {
+    const values = { text: 'Quote text', author: 'Author', categories: '' }
+    const error = { message: 'Rate limit exceeded', status: 429 }
+
+    expect(createApiErrorState(error, values)).toEqual({
+      values,
+      errors: {},
+      formError: TOO_MANY_REQUESTS_MESSAGE,
+    })
+  })
+
+  test('tells a rate limited delete to try again later', () => {
+    const error = { message: 'Rate limit exceeded', status: 429 }
+
+    expect(createDeleteApiErrorState(error)).toEqual({
+      error: TOO_MANY_REQUESTS_MESSAGE,
     })
   })
 
