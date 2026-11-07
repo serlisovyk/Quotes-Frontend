@@ -14,10 +14,10 @@ export const metadata = {
 
 export default function FavoritesPage() {
   return (
-    <div className="p-4">
+    <>
       <h1 className="mb-6 text-center text-3xl">Favorites</h1>
 
       <FavoriteQuotes />
-    </div>
+    </>
   )
 }
