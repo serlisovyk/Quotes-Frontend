@@ -49,6 +49,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - `fetcher/` — `fetcher.get`, `post`, `patch`, `delete` over `fetch` and `API_URL`; throws `ApiError` on a bad response.
   - `quotes/` — the endpoint functions (`fetchQuotesResult`, `fetchRandomQuotesResult`, `fetchQuoteById`, `fetchQuoteIfExists`,
     `postQuote`, `patchQuote`, `deleteQuote`) and their cache options.
+  - `categories/` — `fetchCategories`, `fetchCategoriesResult` (`GET /categories`, uncached).
 - `errors/api/` — the `ApiError` class.
 - `actions/quote/` — Server Actions `createQuoteAction`, `updateQuoteAction`, `deleteQuoteAction`.
 - `utils/` — pure helpers, one folder each.

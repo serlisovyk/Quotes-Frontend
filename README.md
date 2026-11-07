@@ -147,6 +147,10 @@ The frontend expects the backend to provide:
 - `GET /quotes/:id`
 - `PATCH /quotes/:id`
 - `DELETE /quotes/:id`
+- `GET /categories` (`limit`, `offset`, `name`)
+
+Both lists answer with a `total` and their items: `GET /quotes` as `{ total, quotes }`, `GET /categories` as
+`{ total, categories }` (`categories: [{ id, name }]`; no match gives `{ total: 0, categories: [] }`).
 
 ## Notes
 
