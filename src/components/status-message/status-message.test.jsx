@@ -10,7 +10,7 @@ describe('StatusMessage Component', () => {
 
     expect(message).toBeTruthy()
     expect(message.className).toContain('text-base')
-    expect(message.className).toContain('text-gray-600')
+    expect(message.className).toContain('text-muted')
   })
 
   test('renders large message styles when requested', () => {

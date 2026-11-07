@@ -12,7 +12,7 @@ describe('Button Component', () => {
     const button = screen.getByRole('button', { name: /click me/i })
     expect(button).toBeTruthy()
 
-    const expectedClass = 'bg-violet-900'
+    const expectedClass = 'bg-accent'
     expect(button.className).toContain(expectedClass)
   })
 
@@ -21,7 +21,7 @@ describe('Button Component', () => {
 
     const button = screen.getByRole('button', { name: /click me/i })
 
-    const expectedClass = 'bg-gray-300'
+    const expectedClass = 'bg-secondary'
     expect(button.className).toContain(expectedClass)
   })
 
@@ -30,7 +30,7 @@ describe('Button Component', () => {
 
     const button = screen.getByRole('button', { name: /delete/i })
 
-    const expectedClass = 'bg-red-900'
+    const expectedClass = 'bg-danger'
     expect(button.className).toContain(expectedClass)
   })
 
@@ -62,7 +62,7 @@ describe('Button Component', () => {
 
     expect(link).toBeTruthy()
     expect(link.getAttribute('href')).toBe('/search')
-    expect(link.className).toContain('bg-violet-900')
+    expect(link.className).toContain('bg-accent')
   })
 
   test('shows a disabled link as inert and out of the tab order', () => {

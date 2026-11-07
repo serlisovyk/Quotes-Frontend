@@ -57,7 +57,7 @@ describe('Quote Component', () => {
     expect(highlightedText).toBeTruthy()
     expect(highlightedText.tagName).toBe('SPAN')
 
-    expect(highlightedText.className).toContain('bg-yellow-300')
+    expect(highlightedText.className).toContain('bg-highlight')
 
     expect(getByText(/This is a /)).toBeTruthy()
     expect(
@@ -69,7 +69,7 @@ describe('Quote Component', () => {
     const quote = { ...mockQuote, text: 'I like c++ and (ab) a lot' }
     const { getByText } = render(<Quote quote={quote} searchText="c++" />)
 
-    expect(getByText('c++').className).toContain('bg-yellow-300')
+    expect(getByText('c++').className).toContain('bg-highlight')
   })
 
   test.each([
