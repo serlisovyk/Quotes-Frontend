@@ -1,6 +1,7 @@
 import {
   CATEGORY_NAME_MAX_LENGTH,
   CATEGORY_NAME_REGEX,
+  CATEGORY_SEARCH_REGEX,
   MAX_CATEGORIES_PER_QUOTE,
   MAX_ENTITY_ID,
   MAX_SEARCH_LIMIT,
@@ -66,10 +67,17 @@ export function createQuotePayload(values) {
   return { text, author, categories: splitCategoryNames(categories) }
 }
 
+export function isCategorySearchName(name) {
+  const isNameValid = CATEGORY_SEARCH_REGEX.test(name)
+  const isNameShortEnough = name.length <= CATEGORY_NAME_MAX_LENGTH
+
+  return isNameValid && isNameShortEnough
+}
+
 export function getSearchInputValidationMessage(name, value) {
   if (!value) return
 
-  if (name === 'category' && !CATEGORY_NAME_REGEX.test(value)) {
+  if (name === 'category' && !CATEGORY_SEARCH_REGEX.test(value)) {
     return VALIDATION_MESSAGE.SEARCH_CATEGORY
   }
 

@@ -24,7 +24,7 @@ export const VALIDATION_MESSAGE = {
   CATEGORY_NAME_TOO_LONG: `Category name must be at most ${CATEGORY_NAME_MAX_LENGTH} characters.`,
   INVALID_CATEGORIES: (names) =>
     `Invalid categories: ${names.join(', ')}. ${CATEGORY_RULE_MESSAGE}`,
-  SEARCH_CATEGORY: CATEGORY_RULE_MESSAGE,
+  SEARCH_CATEGORY: 'Category can only contain letters, numbers and dashes.',
   SEARCH_LIMIT: `Limit must be in range 1..${MAX_SEARCH_LIMIT}.`,
   SEARCH_OFFSET: 'Offset must be a positive integer or zero.',
 }
