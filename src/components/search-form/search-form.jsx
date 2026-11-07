@@ -1,76 +1,20 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
-import { useState } from 'react'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/components/button'
 import { createSearchInputFields } from '@/config'
-import { createSearchQueryString } from '@/utils/query-string'
-import {
-  getSearchInputValidationMessage,
-  getSearchValidationErrors,
-} from '@/utils/validation'
-import { BUTTON_GROUP_CLASSES, INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
+import { useSearchForm } from '@/hooks/use-search-form'
+import { BUTTON_GROUP_CLASSES, INITIAL_SEARCH_VALUES } from '@/constants'
 
 export function SearchForm({ initialSearchValues = INITIAL_SEARCH_VALUES }) {
-  const router = useRouter()
-
-  const [edit, setEdit] = useState(null)
-
-  const initialForm = {
-    searchValues: initialSearchValues,
-    validationErrors: {},
-    showError: false,
-  }
-  const isEditCurrent = edit?.source === initialSearchValues
-  const { searchValues, validationErrors, showError } = isEditCurrent
-    ? edit
-    : initialForm
-
-  const updateForm = (changes) =>
-    setEdit({
-      searchValues,
-      validationErrors,
-      showError,
-      ...changes,
-      source: initialSearchValues,
-    })
-
-  const handleInputChange = (name, value) => {
-    const errorMessage = getSearchInputValidationMessage(name, value)
-    const nextValidationErrors = { ...validationErrors, [name]: errorMessage }
-
-    if (!errorMessage) delete nextValidationErrors[name]
-
-    updateForm({
-      searchValues: { ...searchValues, [name]: value },
-      validationErrors: nextValidationErrors,
-    })
-  }
-
-  const handleSubmit = (event) => {
-    event.preventDefault()
-
-    const errors = getSearchValidationErrors(searchValues)
-    const hasErrors = Object.keys(errors).length > 0
-
-    updateForm({ validationErrors: errors, showError: true })
-
-    if (hasErrors) return
-
-    const query = createSearchQueryString(searchValues)
-
-    router.push(query ? `${ROUTES.SEARCH}?${query}` : ROUTES.SEARCH)
-  }
-
-  const handleClear = () => {
-    updateForm({
-      searchValues: { ...INITIAL_SEARCH_VALUES },
-      validationErrors: {},
-      showError: false,
-    })
-    router.push(ROUTES.SEARCH)
-  }
+  const {
+    searchValues,
+    validationErrors,
+    showError,
+    handleInputChange,
+    handleSubmit,
+    handleClear,
+  } = useSearchForm(initialSearchValues)
 
   const searchInputFields = createSearchInputFields({
     searchValues,

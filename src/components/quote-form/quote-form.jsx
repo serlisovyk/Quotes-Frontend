@@ -1,26 +1,17 @@
 'use client'
 
-import { useActionState, useState } from 'react'
 import { QuoteFormFields } from '@/components/quote-form-fields'
 import { Button } from '@/components/button'
-import { createInitialQuoteFormState } from '@/utils/quote-form'
+import { useQuoteForm } from '@/hooks/use-quote-form'
 import { BUTTON_GROUP_CLASSES } from '@/constants'
 
 export function QuoteForm(props) {
   const { action, initialState, title, buttonText } = props
 
-  const [actionState, formAction, isPending] = useActionState(action, initialState)
-
-  const [edit, setEdit] = useState(null)
-
-  const isEditCurrent = edit?.basedOn === actionState
-  const formState = isEditCurrent ? edit.formState : actionState
-
-  const setValues = (values) =>
-    setEdit({ formState: createInitialQuoteFormState(values), basedOn: actionState })
-
-  const handleReset = () =>
-    setEdit({ formState: initialState, basedOn: actionState })
+  const { formState, formAction, isPending, setValues, handleReset } = useQuoteForm(
+    action,
+    initialState,
+  )
 
   return (
     <form action={formAction} className="p-4">

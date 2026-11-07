@@ -64,7 +64,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `delete-quote-button`, `random-quotes-refresh-button`.
   - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
     `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`.
-- `hooks/` — none yet; a hook is `use-<name>/use-<name>.js`.
+- `hooks/` — `use-quote-form`, `use-search-form`: the state and handlers of the two forms; a hook is `use-<name>/use-<name>.js`.
 - `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup file) and `utils/` (none yet), each in a folder with a barrel.
 
 ## Environment
