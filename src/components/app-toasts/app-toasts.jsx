@@ -3,17 +3,17 @@
 import { useEffect } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
-
-const SUCCESS_TOAST_MESSAGES = {
-  created: 'Quote created successfully.',
-  updated: 'Quote updated successfully.',
-  deleted: 'Quote deleted successfully.',
-}
+import {
+  SUCCESS_TOAST_MESSAGES,
+  TOAST_DURATION_MS,
+  TOAST_POSITION,
+} from '@/constants'
 
 export function AppToasts() {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
+
   const toastType = searchParams.get('toast')
 
   useEffect(() => {
@@ -29,8 +29,16 @@ export function AppToasts() {
     nextSearchParams.delete('toast')
 
     const queryString = nextSearchParams.toString()
+
     router.replace(queryString ? `${pathname}?${queryString}` : pathname)
   }, [pathname, router, searchParams, toastType])
 
-  return <Toaster position="top-right" duration={5000} richColors closeButton />
+  return (
+    <Toaster
+      position={TOAST_POSITION}
+      duration={TOAST_DURATION_MS}
+      richColors
+      closeButton
+    />
+  )
 }
