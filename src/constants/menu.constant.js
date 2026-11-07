@@ -4,7 +4,7 @@ export const MENU_ITEMS = [
   { href: ROUTES.HOME, text: 'Home' },
   { href: ROUTES.RANDOM, text: 'Random' },
   { href: ROUTES.SEARCH, text: 'Search' },
-  { href: ROUTES.CREATE, text: 'Create New' },
+  { href: ROUTES.CREATE, text: 'Create New', isWrite: true },
 ]
 
 export const MOBILE_MENU_ID = 'mobile-navigation'

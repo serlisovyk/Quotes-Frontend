@@ -8,7 +8,7 @@ import { ThemeSwitch } from '@/components/theme-switch'
 import { useMobileMenu } from '@/hooks/use-mobile-menu'
 import { MOBILE_MENU_CLASSES, MOBILE_MENU_ID, ROUTES } from '@/constants'
 
-export function Header() {
+export function Header({ isReadOnly = false }) {
   const {
     dialogRef,
     isOpen,
@@ -58,12 +58,12 @@ export function Header() {
                 controls={MOBILE_MENU_ID}
               />
 
-              <MenuItems closeMenu={closeMenu} />
+              <MenuItems closeMenu={closeMenu} isReadOnly={isReadOnly} />
             </div>
           </dialog>
 
           <div className="hidden space-x-8 pl-10 text-xl md:flex lg:pl-20">
-            <MenuItems />
+            <MenuItems isReadOnly={isReadOnly} />
           </div>
 
           <div className="ml-2 md:ml-auto">

@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { MENU_ITEMS } from '@/constants'
 
-export function MenuItems({ closeMenu = null }) {
+export function MenuItems({ closeMenu = null, isReadOnly = false }) {
   const pathname = usePathname()
+  const items = MENU_ITEMS.filter(({ isWrite }) => !(isReadOnly && isWrite))
 
-  return MENU_ITEMS.map(({ text, href }) => {
+  return items.map(({ text, href }) => {
     const isActive = pathname === href
 
     return (
