@@ -85,7 +85,7 @@ export default function RootLayout({ children }) {
       </head>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col overflow-y-scroll bg-page font-sans text-body antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col bg-page font-sans text-body antialiased`}
       >
         <a href="#main-content" className={SKIP_LINK_CLASS_NAME}>
           Skip to content

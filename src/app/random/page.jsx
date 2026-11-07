@@ -16,9 +16,10 @@ export default async function RandomQuotesPage() {
   const { quotes, hasError } = await fetchRandomQuotesResult()
 
   return (
-    <div className="p-4">
+    <>
       <h1 className="mb-6 text-center text-3xl">Random Quotes</h1>
+
       <RandomQuotesRefreshButton quotes={quotes} hasError={hasError} />
-    </div>
+    </>
   )
 }
