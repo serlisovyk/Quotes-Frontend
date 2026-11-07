@@ -30,10 +30,13 @@ describe('theme storage', () => {
     expect(readStoredTheme()).toBe(THEMES.SYSTEM)
   })
 
-  test('reads system when the storage throws', () => {
+  test('keeps the choice for the page when the storage throws', () => {
     blockStorage('getItem')
+    blockStorage('setItem')
 
-    expect(readStoredTheme()).toBe(THEMES.SYSTEM)
+    saveTheme(THEMES.DARK)
+
+    expect(readStoredTheme()).toBe(THEMES.DARK)
   })
 
   test('saves the theme and tells the subscribers', () => {
