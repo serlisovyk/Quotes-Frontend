@@ -37,7 +37,7 @@ describe('Services fetcher', () => {
     )
 
     const fetcher = await importFreshFetcher()
-    const result = await fetcher.get('quotes', { text: 'sharp', limit: 10 })
+    const result = await fetcher.get('quotes', 'text=sharp&limit=10')
 
     expect(result).toEqual(responseBody)
     expect(global.fetch).toHaveBeenCalledWith(
@@ -50,7 +50,7 @@ describe('Services fetcher', () => {
     )
   })
 
-  test('keeps the name param of the categories list in the URL', async () => {
+  test('sends the query string it is given without filtering it', async () => {
     global.fetch.mockResolvedValue(
       createResponse({
         ok: true,
@@ -61,7 +61,7 @@ describe('Services fetcher', () => {
 
     const fetcher = await importFreshFetcher()
 
-    await fetcher.get('categories', { name: 'lif', limit: 3 })
+    await fetcher.get('categories', 'name=lif&limit=3')
 
     expect(global.fetch).toHaveBeenCalledWith(
       `${API_URL}/categories?name=lif&limit=3`,
@@ -96,7 +96,7 @@ describe('Services fetcher', () => {
 
       const fetcher = await importFreshFetcher({ apiUrl })
 
-      await fetcher.get('quotes', { text: 'sharp' })
+      await fetcher.get('quotes', 'text=sharp')
       await fetcher.get('quotes')
 
       expect(global.fetch.mock.calls[0][0]).toBe('http://api.test/quotes?text=sharp')
@@ -123,7 +123,7 @@ describe('Services fetcher', () => {
 
     const fetcher = await importFreshFetcher()
 
-    await fetcher.get('quotes', {}, { cache: 'no-store' })
+    await fetcher.get('quotes', '', { cache: 'no-store' })
 
     expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/quotes`, {
       method: 'GET',
@@ -310,7 +310,7 @@ describe('Services fetcher', () => {
 
     const fetcher = await importFreshFetcher()
 
-    await expect(fetcher.get('quotes', { limit: 100 })).rejects.toMatchObject({
+    await expect(fetcher.get('quotes', 'limit=100')).rejects.toMatchObject({
       message: 'Invalid request data',
       status: 400,
       code: 'VALIDATION_ERROR',

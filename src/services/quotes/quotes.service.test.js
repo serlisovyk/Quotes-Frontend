@@ -121,6 +121,28 @@ describe('Services result helpers', () => {
     })
   })
 
+  test('sends only the search params to the quotes endpoint', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, body: { quotes: [], total: 0 } }),
+    )
+
+    const { fetchQuotes } = await importFreshServices()
+
+    await fetchQuotes({
+      text: 'sharp',
+      author: 'Ann',
+      category: 'Life',
+      limit: 10,
+      offset: 20,
+      name: 'lif',
+    })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes?text=sharp&author=Ann&category=Life&limit=10&offset=20`,
+      expect.any(Object),
+    )
+  })
+
   test('uses no-store for search requests', async () => {
     global.fetch.mockResolvedValue(
       createResponse({

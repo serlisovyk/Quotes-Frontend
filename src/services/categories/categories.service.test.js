@@ -69,7 +69,7 @@ describe('Categories Service', () => {
 
       const { fetchCategories } = await importFreshService()
 
-      await fetchCategories({ name: 'lif', foo: 'bar' })
+      await fetchCategories({ name: 'lif', text: 'sharp', foo: 'bar' })
 
       expect(global.fetch).toHaveBeenCalledWith(
         `${API_URL}/categories?name=lif`,
