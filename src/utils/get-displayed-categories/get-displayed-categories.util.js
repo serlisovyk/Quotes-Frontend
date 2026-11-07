@@ -1,3 +1,4 @@
+import { isSameCategory } from '@/utils/is-same-category'
 import { MAX_VISIBLE_CATEGORIES } from '@/constants'
 
 export function getDisplayedCategories(
@@ -9,10 +10,9 @@ export function getDisplayedCategories(
 
   const visible = categories.slice(0, MAX_VISIBLE_CATEGORIES)
 
-  const selected = selectedCategory?.toLowerCase()
-  const isSelected = (category) => category.toLowerCase() === selected
+  const isSelected = (category) => isSameCategory(category, selectedCategory)
 
-  if (!selected || visible.some(isSelected)) return visible
+  if (!selectedCategory || visible.some(isSelected)) return visible
 
   const hiddenSelected = categories.find(isSelected)
 
