@@ -43,7 +43,7 @@ the error page look as they did.
 
 ## Loader
 
-A CSS spinner replaces `react-spinners`: a ring that turns (`motion-reduce` stops it), hidden from assistive
+A CSS spinner replaces `react-spinners`: a ring that turns (it pulses instead under `prefers-reduced-motion`), hidden from assistive
 technology. The "Loading" announcement stays in `LoadingStatus` (`role="status"`).
 
 ## Pagination

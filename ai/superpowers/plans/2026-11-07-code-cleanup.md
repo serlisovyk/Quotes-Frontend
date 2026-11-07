@@ -30,7 +30,11 @@ content of those two files and never moves anything in `src/app`.
 - **Spinner colours** use Tailwind palette classes for now; the theme tokens are another task's.
 - **Button spacing:** parents use `gap-5 md:gap-10`, the sum of the old wrapper margins.
 - **Pagination:** page list and href become a util (`utils/pagination`); class variants and numbers become
-  `constants/pagination.constant.js`.
+  `constants/pagination.constant.js`. The current page is passed both `isActive` and `isDisabled` and the
+  disabled look wins, as before: the unreachable primary look is left to the tokens task.
+- **Also found while testing first:** `CategoryTags` put `false` or `undefined` into `className`; fixed with a
+  red test. `getSearchValidationErrors` is the extracted search validation of `SearchForm`.
+- **Left alone:** the search category check still rejects capitals, which the backend search accepts.
 
 ## Steps (red first)
 

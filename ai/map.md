@@ -53,17 +53,17 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
 - `actions/quote/` — Server Actions `createQuoteAction`, `updateQuoteAction`, `deleteQuoteAction`.
 - `utils/` — pure helpers, one folder each.
   - `validation`, `query-string`, `quote-action-state`, `quote-form`, `escape-reg-exp`, `get-single-quote-api-endpoint`,
-    `get-displayed-categories` — form and search validation, search params, the shapes of form values and action state, and so on.
+    `get-displayed-categories`, `pagination` — form and search validation, search params, form and action state, pagination pages.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
-- `constants/` — `api`, `menu` (`MENU_ITEMS`), `quotes`, `routes`, `search` constants (routes, limits, cache seconds, highlight classes).
+- `constants/` — one file per domain (`api`, `menu`, `quotes`, `routes`, `search`, `validation`, `toast`, class variants).
 - `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
 - `components/` — one folder per component, named export, no suffix.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `input-field`, `quote-form`, `search-form`,
     `delete-quote-button`, `random-quotes-refresh-button`.
   - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
-    `pagination`, `status-message`, `button`, `burger-button`, `loader`, `footer`.
+    `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`.
 - `hooks/` — none yet; a hook is `use-<name>/use-<name>.js`.
 - `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup file) and `utils/` (none yet), each in a folder with a barrel.
 
@@ -75,7 +75,6 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 - `HOME_QUOTE_ID` — id of the quote on the home page. Server-only, optional: read in `config/home.config.js`.
 - `SITE_URL` — public frontend URL for metadata, `robots.js` and `sitemap.js`.
 - `PORT` — port of the Next.js server (4000). `HOSTNAME` — `0.0.0.0` in Docker. `NODE_ENV` — mode.
-- `CHOKIDAR_USEPOLLING`, `WATCHPACK_POLLING` — file-watcher polling for Docker dev mode.
 
 ## Docker
 

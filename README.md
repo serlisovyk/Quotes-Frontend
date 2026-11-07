@@ -58,8 +58,6 @@ PORT=4000
 HOSTNAME=localhost
 SITE_URL=http://localhost:4000
 API_URL=https://quotes-backend-eight.vercel.app/
-CHOKIDAR_USEPOLLING=false
-WATCHPACK_POLLING=false
 ```
 
 4. Start the app:
@@ -117,8 +115,6 @@ The frontend service reads variables from `.env`.
 - `SITE_URL`: public site base URL used for metadata, robots, and sitemap.
 - `API_URL`: server-side backend API base URL.
 - `HOME_QUOTE_ID`: server-side id of the quote on the home page. Optional: without it, or with an invalid id or a missing quote, the home page has no quote card.
-- `CHOKIDAR_USEPOLLING`: polling file watcher for Docker dev mode.
-- `WATCHPACK_POLLING`: webpack polling watcher for Docker dev mode.
 
 Production example is available in `.env.production.sample`.
 
