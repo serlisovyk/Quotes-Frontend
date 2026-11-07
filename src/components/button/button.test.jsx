@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { Button } from './button.jsx'
 
 describe('Button Component', () => {
@@ -62,5 +63,49 @@ describe('Button Component', () => {
     expect(link).toBeTruthy()
     expect(link.getAttribute('href')).toBe('/search')
     expect(link.className).toContain('bg-violet-900')
+  })
+
+  test('shows a disabled link as inert and out of the tab order', () => {
+    render(<Button text="Edit" href="/edit" disabled />)
+
+    const link = screen.getByRole('link', { name: 'Edit' })
+
+    expect(link).toHaveAttribute('aria-disabled', 'true')
+    expect(link).toHaveAttribute('tabindex', '-1')
+    expect(link).toHaveClass('pointer-events-none')
+  })
+
+  test('keeps an enabled link focusable', () => {
+    render(<Button text="Edit" href="/edit" />)
+
+    const link = screen.getByRole('link', { name: 'Edit' })
+
+    expect(link).not.toHaveAttribute('aria-disabled')
+    expect(link).not.toHaveClass('pointer-events-none')
+  })
+
+  test('does not call onClick while disabled', async () => {
+    const user = userEvent.setup()
+    const onClick = vi.fn()
+    render(<Button text="Save" onClick={onClick} disabled />)
+
+    await user.click(screen.getByRole('button', { name: 'Save' }))
+
+    expect(screen.getByRole('button', { name: 'Save' })).toBeDisabled()
+    expect(onClick).not.toHaveBeenCalled()
+  })
+
+  test('submits a form when its type is submit', async () => {
+    const user = userEvent.setup()
+    const onSubmit = vi.fn((event) => event.preventDefault())
+    render(
+      <form onSubmit={onSubmit}>
+        <Button text="Send" type="submit" />
+      </form>,
+    )
+
+    await user.click(screen.getByRole('button', { name: 'Send' }))
+
+    expect(onSubmit).toHaveBeenCalledTimes(1)
   })
 })
