@@ -89,6 +89,18 @@ export function getSearchInputValidationMessage(name, value) {
   }
 }
 
+export function getSearchValidationErrors(searchValues) {
+  const errors = {}
+
+  Object.entries(searchValues).forEach(([name, value]) => {
+    const message = getSearchInputValidationMessage(name, value)
+
+    if (message) errors[name] = message
+  })
+
+  return errors
+}
+
 export function isQuoteValidId(id) {
   const idText = String(id)
 

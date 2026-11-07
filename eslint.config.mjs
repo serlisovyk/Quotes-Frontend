@@ -131,14 +131,5 @@ export default defineConfig([
       'react/display-name': 'off',
     },
   },
-  {
-    files: [
-      'src/components/quote-form/quote-form.jsx',
-      'src/components/search-form/search-form.jsx',
-    ],
-    rules: {
-      'react-hooks/set-state-in-effect': 'off',
-    },
-  },
   prettier,
 ])

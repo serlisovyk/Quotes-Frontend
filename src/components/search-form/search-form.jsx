@@ -1,72 +1,74 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/components/button'
 import { createSearchInputFields } from '@/config'
-import { BUTTON_GROUP_CLASSES, INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 import { createSearchQueryString } from '@/utils/query-string'
-import { getSearchInputValidationMessage } from '@/utils/validation'
+import {
+  getSearchInputValidationMessage,
+  getSearchValidationErrors,
+} from '@/utils/validation'
+import { BUTTON_GROUP_CLASSES, INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 
 export function SearchForm({ initialSearchValues = INITIAL_SEARCH_VALUES }) {
   const router = useRouter()
-  const [searchValues, setSearchValues] = useState(initialSearchValues)
-  const [validationErrors, setValidationErrors] = useState({})
-  const [showError, setShowError] = useState(false)
 
-  useEffect(() => {
-    setSearchValues(initialSearchValues)
-    setValidationErrors({})
-    setShowError(false)
-  }, [initialSearchValues])
+  const [edit, setEdit] = useState(null)
+
+  const initialForm = {
+    searchValues: initialSearchValues,
+    validationErrors: {},
+    showError: false,
+  }
+  const isEditCurrent = edit?.source === initialSearchValues
+  const { searchValues, validationErrors, showError } = isEditCurrent
+    ? edit
+    : initialForm
+
+  const updateForm = (changes) =>
+    setEdit({
+      searchValues,
+      validationErrors,
+      showError,
+      ...changes,
+      source: initialSearchValues,
+    })
 
   const handleInputChange = (name, value) => {
-    setSearchValues({ ...searchValues, [name]: value })
-
     const errorMessage = getSearchInputValidationMessage(name, value)
-    const newValidationErrors = { ...validationErrors }
+    const nextValidationErrors = { ...validationErrors, [name]: errorMessage }
 
-    if (errorMessage) {
-      newValidationErrors[name] = errorMessage
-    } else {
-      delete newValidationErrors[name]
-    }
+    if (!errorMessage) delete nextValidationErrors[name]
 
-    setValidationErrors(newValidationErrors)
-  }
-
-  const validateSearchValues = () => {
-    const errors = Object.entries(searchValues).reduce((acc, [name, value]) => {
-      const errorMessage = getSearchInputValidationMessage(name, value)
-
-      if (errorMessage) {
-        acc[name] = errorMessage
-      }
-
-      return acc
-    }, {})
-
-    setValidationErrors(errors)
-    return errors
+    updateForm({
+      searchValues: { ...searchValues, [name]: value },
+      validationErrors: nextValidationErrors,
+    })
   }
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    setShowError(true)
 
-    const errors = validateSearchValues()
+    const errors = getSearchValidationErrors(searchValues)
+    const hasErrors = Object.keys(errors).length > 0
 
-    if (Object.keys(errors).length) return
+    updateForm({ validationErrors: errors, showError: true })
+
+    if (hasErrors) return
 
     const query = createSearchQueryString(searchValues)
+
     router.push(query ? `${ROUTES.SEARCH}?${query}` : ROUTES.SEARCH)
   }
 
   const handleClear = () => {
-    setSearchValues({ ...INITIAL_SEARCH_VALUES })
-    setValidationErrors({})
-    setShowError(false)
+    updateForm({
+      searchValues: { ...INITIAL_SEARCH_VALUES },
+      validationErrors: {},
+      showError: false,
+    })
     router.push(ROUTES.SEARCH)
   }
 
