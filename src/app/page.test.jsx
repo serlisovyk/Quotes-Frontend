@@ -96,4 +96,20 @@ describe('Home Page', () => {
 
     expectHomeWithoutCard()
   })
+
+  test('tells the story under the hero in proofread English', async () => {
+    await renderHomePage(undefined)
+
+    expect(
+      screen.getByText(/true leader: a man who walked a long road of trials/),
+    ).toBeVisible()
+    expect(
+      screen.getByText(
+        /inspired me to create this project for searching, adding and editing quotes./,
+      ),
+    ).toBeVisible()
+    expect(screen.getByText(/more than a collection of quotes/)).toHaveTextContent(
+      /practice their English, and pick quotes for social media posts/,
+    )
+  })
 })
