@@ -18,7 +18,8 @@ Walk the diff against `ai/rules/definition-of-done.md` and the rules of the area
   and a backend failure each show their inline message instead of a crash; metadata and canonical URLs
   are right.
 - **Search**: text, author, category, limit and offset combine; unknown or invalid params are ignored or
-  reported; an empty search shows nothing, a search without results says so; pagination keeps the filters.
+  reported; an empty search shows nothing, a search without results says so; pagination keeps the filters and an uneven offset
+  is aligned to its page; the category field suggests names with the combobox keys working.
 - **Mutations**: create, update and delete validate on the server, show field and form errors inline,
   keep the typed values after a failure, revalidate every affected page, redirect and show the success
   toast once; the delete button shows its pending state and its error.

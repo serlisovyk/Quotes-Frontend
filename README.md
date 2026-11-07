@@ -154,7 +154,7 @@ Both lists answer with a `total` and their items: `GET /quotes` as `{ total, quo
 
 ## Notes
 
-- API requests are server-only and use `API_URL`.
+- API requests are server-only and use `API_URL`; the browser reads category suggestions through `/api/categories`.
 - Search and random pages are intentionally uncached.
 - Home and quote details use native Next.js time-based revalidation.
 - Mutations revalidate affected routes before redirecting.
