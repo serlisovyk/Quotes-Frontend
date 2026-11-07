@@ -1,8 +1,6 @@
 import { DEFAULT_ERROR_MESSAGE } from '@/constants'
 
 function getFieldMessages(fields) {
-  if (!fields) return []
-
   return Object.entries(fields).map(([field, message]) => `${message} (${field})`)
 }
 
