@@ -4,6 +4,7 @@ import {
   getQuoteFormValidationErrors,
   getSearchInputValidationMessage,
   getSearchValidationErrors,
+  isCategorySearchName,
   isQuoteValidId,
 } from './validation.util.js'
 
@@ -114,16 +115,34 @@ describe('getSearchValidationErrors utility function', () => {
   test('returns the message of every invalid field by its name', () => {
     const result = getSearchValidationErrors({
       text: 'life',
-      category: 'Bad Category',
+      category: 'Bad Category!',
       limit: '100',
       offset: '-1',
     })
 
     expect(result).toEqual({
-      category: 'Category can only contain lowercase letters, numbers and dashes.',
+      category: 'Category can only contain letters, numbers and dashes.',
       limit: 'Limit must be in range 1..50.',
       offset: 'Offset must be a positive integer or zero.',
     })
+  })
+})
+
+describe('isCategorySearchName utility function', () => {
+  test('accepts letters of any case, numbers and dashes', () => {
+    expect(isCategorySearchName('bob-marley')).toBe(true)
+    expect(isCategorySearchName('Bob-Marley-2')).toBe(true)
+  })
+
+  test('rejects an empty name, other characters and a name that is too long', () => {
+    expect(isCategorySearchName('')).toBe(false)
+    expect(isCategorySearchName('bob marley')).toBe(false)
+    expect(isCategorySearchName('bob_marley')).toBe(false)
+    expect(isCategorySearchName('a'.repeat(51))).toBe(false)
+  })
+
+  test('accepts a name of the maximum length', () => {
+    expect(isCategorySearchName('a'.repeat(50))).toBe(true)
   })
 })
 
@@ -179,13 +198,16 @@ describe('getSearchInputValidationMessage utility function', () => {
 
   test('returns error message for invalid category', () => {
     const result = getSearchInputValidationMessage('category', 'invalid-category@')
-    expect(result).toBe(
-      'Category can only contain lowercase letters, numbers and dashes.',
-    )
+    expect(result).toBe('Category can only contain letters, numbers and dashes.')
   })
 
   test('returns no message for valid category', () => {
     const result = getSearchInputValidationMessage('category', 'valid-category')
+    expect(result).toBeUndefined()
+  })
+
+  test('accepts uppercase letters in a category search like the backend', () => {
+    const result = getSearchInputValidationMessage('category', 'Leadership-2')
     expect(result).toBeUndefined()
   })
 
