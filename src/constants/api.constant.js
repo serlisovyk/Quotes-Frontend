@@ -3,6 +3,15 @@ export const DEFAULT_ERROR_MESSAGE = 'Some error occurred'
 export const TOO_MANY_REQUESTS_MESSAGE =
   'Too many requests, please try again in a few minutes.'
 
+export const SERVER_NOT_RESPONDING_MESSAGE =
+  'The server is not responding, please try again later.'
+
+export const UNREACHABLE_SERVER_ERROR_NAMES = [
+  'TimeoutError',
+  'AbortError',
+  'TypeError',
+]
+
 export const QUOTES_API_ENDPOINT = 'quotes'
 
 export const RANDOM_QUOTES_API_ENDPOINT = 'quotes/random'
