@@ -64,5 +64,6 @@ has one job (decision `naming-like-backend`):
 - No client-side data fetching and no client-side server-state library, except the category suggestions: a
   client service over our own Route Handler (decision `category-suggestions-route-handler`).
 - No global mutable state: state a page needs lives in the URL (search params) or in the form's own
-  state.
+  state; the exceptions are the theme and the favorites, kept in `localStorage` and read with
+  `useSyncExternalStore`.
 - Do not rename existing exports or routes only for cosmetic reasons.
