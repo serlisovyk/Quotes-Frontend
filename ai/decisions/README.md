@@ -49,6 +49,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [ESLint stays on 9](2026-11-06-eslint-stays-on-9.md)
 - [Naming and structure like the backend](2026-11-06-naming-like-backend.md)
 - [Barrels per module, layer-wide only for constants and config](2026-11-06-barrels-per-module.md)
+- [No file-watcher polling variables](2026-11-07-no-polling-env-vars.md)
 
 ### Architecture
 
