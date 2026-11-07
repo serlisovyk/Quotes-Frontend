@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { renderToString } from 'react-dom/server'
-import RootLayout from './layout'
+import RootLayout, { metadata } from './layout'
 
 vi.mock('next/font/local', () => ({
   default: () => ({ variable: 'font-variable' }),
@@ -57,5 +57,9 @@ describe('Root Layout', () => {
 
     expect(html).toContain('<header>Header</header>')
     expect(html).toContain('<footer>Footer</footer>')
+  })
+
+  test('sets no robots rule, so a 404 carries only the noindex Next.js adds', () => {
+    expect(metadata.robots).toBeUndefined()
   })
 })
