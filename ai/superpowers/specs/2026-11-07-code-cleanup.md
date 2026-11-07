@@ -7,13 +7,13 @@ What a user or a caller sees after the change. Everything not listed here looks 
 Limits follow the backend: text 10 to 2500 characters, author 2 to 255, 1 to 10 categories, a category name
 at most 50 characters and only `[a-z0-9-]`. The messages carry the backend's meaning:
 
-| Field      | Failure                         | Message                                                                                               |
-| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| text       | fewer than 10 or more than 2500 | `Text must be from 10 to 2500 characters.`                                                            |
-| author     | fewer than 2 or more than 255   | `Author must be from 2 to 255 characters.`                                                            |
-| categories | none, or more than 10           | `There must be from 1 to 10 categories.`                                                              |
-| categories | a name longer than 50           | `Category name must be at most 50 characters.`                                                        |
-| categories | a name outside `[a-z0-9-]`      | `Invalid categories: <names>. Category names can only contain lowercase letters, numbers and dashes.` |
+| Field      | Failure                         | Message                                                                                         |
+| ---------- | ------------------------------- | ----------------------------------------------------------------------------------------------- |
+| text       | fewer than 10 or more than 2500 | `Text must be from 10 to 2500 characters.`                                                      |
+| author     | fewer than 2 or more than 255   | `Author must be from 2 to 255 characters.`                                                      |
+| categories | none, or more than 10           | `There must be from 1 to 10 categories.`                                                        |
+| categories | a name longer than 50           | `Category name must be at most 50 characters.`                                                  |
+| categories | a name outside `[a-z0-9-]`      | `Invalid categories: <names>. Category can only contain lowercase letters, numbers and dashes.` |
 
 Boundaries are inclusive: 10 and 2500 characters pass, 9 and 2501 fail; 10 categories pass, 11 fail.
 
