@@ -1,72 +1,100 @@
-import { CATEGORY_NAME_REGEX, MAX_ENTITY_ID, MAX_SEARCH_LIMIT } from '@/constants'
+import {
+  CATEGORY_NAME_MAX_LENGTH,
+  CATEGORY_NAME_REGEX,
+  MAX_CATEGORIES_PER_QUOTE,
+  MAX_ENTITY_ID,
+  MAX_SEARCH_LIMIT,
+  MIN_CATEGORIES_PER_QUOTE,
+  QUOTE_AUTHOR_MAX_LENGTH,
+  QUOTE_AUTHOR_MIN_LENGTH,
+  QUOTE_ID_REGEX,
+  QUOTE_TEXT_MAX_LENGTH,
+  QUOTE_TEXT_MIN_LENGTH,
+  VALIDATION_MESSAGE,
+} from '@/constants'
+
+function splitCategoryNames(categories) {
+  return categories.split(',').map((category) => category.trim())
+}
+
+function isLengthOutside(value, minLength, maxLength) {
+  return value.length < minLength || value.length > maxLength
+}
+
+function getCategoriesError(categories) {
+  const hasCategories = Boolean(categories.trim())
+
+  if (!hasCategories) return VALIDATION_MESSAGE.QUOTE_CATEGORIES
+
+  const names = splitCategoryNames(categories)
+  const hasTooManyCategories = names.length > MAX_CATEGORIES_PER_QUOTE
+
+  if (hasTooManyCategories) return VALIDATION_MESSAGE.QUOTE_CATEGORIES
+
+  const invalidNames = names.filter((name) => !CATEGORY_NAME_REGEX.test(name))
+  const hasInvalidNames = invalidNames.length > 0
+
+  if (hasInvalidNames) return VALIDATION_MESSAGE.INVALID_CATEGORIES(invalidNames)
+
+  const hasTooLongName = names.some((name) => name.length > CATEGORY_NAME_MAX_LENGTH)
+
+  if (hasTooLongName) return VALIDATION_MESSAGE.CATEGORY_NAME_TOO_LONG
+}
 
 export function getQuoteFormValidationErrors(values) {
+  const { text = '', author = '', categories = '' } = values
   const errors = {}
-  const { text, author, categories } = values
 
-  if ((text || '').length < 10) {
-    errors.text = 'Text must be at least 10 characters long.'
+  if (isLengthOutside(text, QUOTE_TEXT_MIN_LENGTH, QUOTE_TEXT_MAX_LENGTH)) {
+    errors.text = VALIDATION_MESSAGE.QUOTE_TEXT
   }
 
-  if ((author || '').length < 2 || (author || '').length > 255) {
-    errors.author = 'Author must be between 2 and 255 characters long.'
+  if (isLengthOutside(author, QUOTE_AUTHOR_MIN_LENGTH, QUOTE_AUTHOR_MAX_LENGTH)) {
+    errors.author = VALIDATION_MESSAGE.QUOTE_AUTHOR
   }
 
-  if (!(categories || '').trim()) {
-    errors.categories = 'There must be at least one category.'
-  } else {
-    const categoryArray = categories.split(',').map((category) => category.trim())
+  const categoriesError = getCategoriesError(categories)
 
-    const invalidCategories = categoryArray.filter(
-      (category) => !CATEGORY_NAME_REGEX.test(category),
-    )
-
-    if (invalidCategories.length > 0) {
-      errors.categories = `Invalid categories: ${invalidCategories.join(
-        ', ',
-      )}. Category names can only contain lowercase letters, numbers, and dashes.`
-    }
-  }
+  if (categoriesError) errors.categories = categoriesError
 
   return errors
 }
 
 export function createQuotePayload(values) {
-  return {
-    text: values.text,
-    author: values.author,
-    categories: values.categories.split(',').map((category) => category.trim()),
-  }
+  const { text, author, categories } = values
+
+  return { text, author, categories: splitCategoryNames(categories) }
 }
 
 export function getSearchInputValidationMessage(name, value) {
-  if (name === 'category' && value && !CATEGORY_NAME_REGEX.test(value)) {
-    return 'Category can only contain lowercase letters, numbers, and dashes.'
+  if (!value) return
+
+  if (name === 'category' && !CATEGORY_NAME_REGEX.test(value)) {
+    return VALIDATION_MESSAGE.SEARCH_CATEGORY
   }
 
-  if (name === 'limit' && value) {
-    const parsedLimit = Number(value)
+  if (name === 'limit') {
+    const limit = Number(value)
+    const isLimitValid =
+      Number.isInteger(limit) && limit >= 1 && limit <= MAX_SEARCH_LIMIT
 
-    if (
-      !Number.isInteger(parsedLimit) ||
-      parsedLimit < 1 ||
-      parsedLimit > MAX_SEARCH_LIMIT
-    ) {
-      return `Limit must be in range 1..${MAX_SEARCH_LIMIT}.`
-    }
+    if (!isLimitValid) return VALIDATION_MESSAGE.SEARCH_LIMIT
   }
 
-  if (name === 'offset' && value) {
-    const parsedOffset = Number(value)
+  if (name === 'offset') {
+    const offset = Number(value)
+    const isOffsetValid = Number.isInteger(offset) && offset >= 0
 
-    if (!Number.isInteger(parsedOffset) || parsedOffset < 0) {
-      return 'Offset must be a positive integer or zero.'
-    }
+    if (!isOffsetValid) return VALIDATION_MESSAGE.SEARCH_OFFSET
   }
 }
 
 export function isQuoteValidId(id) {
-  const parsedId = parseInt(id, 10)
+  const idText = String(id)
 
-  return Number.isInteger(parsedId) && parsedId > 0 && parsedId <= MAX_ENTITY_ID
+  if (!QUOTE_ID_REGEX.test(idText)) return false
+
+  const numericId = Number(idText)
+
+  return numericId > 0 && numericId <= MAX_ENTITY_ID
 }

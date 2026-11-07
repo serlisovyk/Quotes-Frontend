@@ -1,3 +1,5 @@
+import { MAX_SEARCH_LIMIT } from '@/constants'
+
 export const createQuoteInputFields = ({ values, setValues, validationErrors }) => [
   {
     id: 'text',
@@ -59,7 +61,7 @@ export const createSearchInputFields = ({ searchValues, validationErrors }) => [
     placeholder: 'Limit',
     type: 'number',
     min: 1,
-    max: 50,
+    max: MAX_SEARCH_LIMIT,
     step: 1,
     value: searchValues.limit || '',
     error: validationErrors.limit,

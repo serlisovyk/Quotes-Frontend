@@ -4,7 +4,9 @@ export const INITIAL_FORM_VALUES = {
   categories: '',
 }
 
-export const CATEGORY_NAME_REGEX = /^[a-z0-9\-]+$/
+export const CATEGORY_NAME_REGEX = /^[a-z0-9-]+$/
+
+export const QUOTE_ID_REGEX = /^\d+$/
 
 export const MAX_ENTITY_ID = 2147483647
 
