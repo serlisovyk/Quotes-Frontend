@@ -40,7 +40,12 @@ export default async function QuotePage({ params }) {
           <AuthorLink author={quote.author} />
         </p>
         <div className="mb-6 flex justify-center">
-          <QuoteActions id={quote.id} text={quote.text} author={quote.author} />
+          <QuoteActions
+            id={quote.id}
+            text={quote.text}
+            author={quote.author}
+            categories={quote.categories}
+          />
         </div>
         <CategoryTags categories={quote.categories} isSingleQuotePage />
       </div>

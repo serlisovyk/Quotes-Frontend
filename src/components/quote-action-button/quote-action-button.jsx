@@ -1,12 +1,13 @@
 import { QuoteActionIcon } from '@/components/quote-action-icon'
 import { QUOTE_ACTION_BUTTON_CLASSES } from '@/constants'
 
-export function QuoteActionButton({ label, icon, onClick }) {
+export function QuoteActionButton({ label, icon, isPressed, onClick }) {
   return (
     <button
       type="button"
       onClick={onClick}
       aria-label={label}
+      aria-pressed={isPressed}
       className={QUOTE_ACTION_BUTTON_CLASSES}
     >
       <QuoteActionIcon icon={icon} />

@@ -31,7 +31,7 @@ export function Quote({ quote, selectedCategory, searchText }) {
       </p>
 
       <div className="mb-6 flex justify-end">
-        <QuoteActions id={id} text={text} author={author} />
+        <QuoteActions id={id} text={text} author={author} categories={categories} />
       </div>
 
       <CategoryTags categories={categories} selectedCategory={selectedCategory} />
