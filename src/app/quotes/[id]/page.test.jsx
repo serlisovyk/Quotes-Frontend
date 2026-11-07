@@ -1,7 +1,7 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import { fetchQuoteIfExists } from '@/services/quotes'
-import QuotePage from './page'
+import QuotePage, { generateMetadata } from './page'
 
 const mockNotFound = vi.hoisted(() =>
   vi.fn(() => {
@@ -47,6 +47,15 @@ describe('Quote page author link', () => {
     expect(getByRole('link', { name: `- ${author}` }).getAttribute('href')).toBe(
       href,
     )
+  })
+})
+
+describe('Quote page metadata', () => {
+  test('names the quote by its id and points the canonical URL at it', async () => {
+    const metadata = await generateMetadata({ params: Promise.resolve({ id: '7' }) })
+
+    expect(metadata.title).toBe('Quote #7')
+    expect(metadata.alternates.canonical).toBe('/quotes/7')
   })
 })
 
