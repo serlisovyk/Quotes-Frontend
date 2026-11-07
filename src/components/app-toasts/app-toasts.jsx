@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { Toaster, toast } from 'sonner'
+import { useTheme } from '@/hooks/use-theme'
 import {
   SUCCESS_TOAST_MESSAGES,
   TOAST_DURATION_MS,
@@ -13,6 +14,8 @@ export function AppToasts() {
   const pathname = usePathname()
   const router = useRouter()
   const searchParams = useSearchParams()
+
+  const { resolvedTheme } = useTheme()
 
   const toastType = searchParams.get('toast')
 
@@ -35,6 +38,7 @@ export function AppToasts() {
 
   return (
     <Toaster
+      theme={resolvedTheme}
       position={TOAST_POSITION}
       duration={TOAST_DURATION_MS}
       richColors

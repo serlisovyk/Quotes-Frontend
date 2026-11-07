@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { BurgerButton } from '@/components/burger-button'
 import { MenuItems } from '@/components/menu-items'
+import { ThemeSwitch } from '@/components/theme-switch'
 import { ROUTES } from '@/constants'
 
 export function Header() {
@@ -72,6 +73,10 @@ export function Header() {
 
           <div className="hidden md:flex space-x-8 pl-10 lg:pl-20 text-xl">
             <MenuItems />
+          </div>
+
+          <div className="ml-2 md:ml-auto">
+            <ThemeSwitch />
           </div>
         </div>
       </nav>

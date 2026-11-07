@@ -23,6 +23,8 @@ export const THEME_COLORS = {
 
 export const DARK_SCHEME_QUERY = '(prefers-color-scheme: dark)'
 
+export const LIGHT_SCHEME_QUERY = '(prefers-color-scheme: light)'
+
 export const THEME_COLOR_META_SELECTOR = 'meta[name="theme-color"]'
 
 export const THEME_ICON_PATHS = {

@@ -10,7 +10,14 @@ import {
   SITE_URL,
   SKIP_LINK_CLASS_NAME,
 } from '@/config'
-import { ROUTES } from '@/constants'
+import { getThemeInitScript } from '@/utils/get-theme-init-script'
+import {
+  DARK_SCHEME_QUERY,
+  LIGHT_SCHEME_QUERY,
+  ROUTES,
+  THEME_COLORS,
+  THEMES,
+} from '@/constants'
 import './globals.css'
 
 const geistSans = localFont({
@@ -67,15 +74,22 @@ export const metadata = {
 }
 
 export const viewport = {
-  themeColor: '#ffffff',
+  themeColor: [
+    { media: LIGHT_SCHEME_QUERY, color: THEME_COLORS[THEMES.LIGHT] },
+    { media: DARK_SCHEME_QUERY, color: THEME_COLORS[THEMES.DARK] },
+  ],
   colorScheme: 'light dark',
 }
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className="scrollbar-gutter-stable">
+    <html lang="en" className="scrollbar-gutter-stable" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: getThemeInitScript() }} />
+      </head>
+
       <body
-        className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col overflow-y-scroll bg-(--background) font-sans text-(--foreground) antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} m-0 flex min-h-screen flex-col overflow-y-scroll bg-page font-sans text-body antialiased`}
       >
         <a href="#main-content" className={SKIP_LINK_CLASS_NAME}>
           Skip to content
