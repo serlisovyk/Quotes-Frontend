@@ -75,6 +75,19 @@ describe('Search page', () => {
     )
   })
 
+  test('searches and highlights a category given in capitals as the lowercase one', async () => {
+    fetchQuotesResult.mockResolvedValue({
+      quotes: [quote],
+      total: 1,
+      hasError: false,
+    })
+
+    await renderPage({ category: 'Life' })
+
+    expect(fetchQuotesResult).toHaveBeenCalledWith({ category: 'life' })
+    expect(screen.getByLabelText('Quotes')).toHaveTextContent('1|life|')
+  })
+
   test('searches with an offset aligned down to the limit and passes it to the pagination', async () => {
     fetchQuotesResult.mockResolvedValue({
       quotes: [quote],

@@ -104,4 +104,13 @@ describe('createSearchValuesFromSearchParamsObject utility function', () => {
       text: 'first',
     })
   })
+
+  test('lowercases the category, which the API accepts only in lowercase', () => {
+    const result = createSearchValuesFromSearchParamsObject({
+      text: 'Life',
+      category: 'Self-Help',
+    })
+
+    expect(result).toEqual({ text: 'Life', category: 'self-help' })
+  })
 })
