@@ -1,4 +1,4 @@
-import { MAX_SEARCH_LIMIT } from '@/constants'
+import { DEFAULT_SEARCH_LIMIT, SEARCH_LIMIT_OPTIONS } from '@/constants'
 
 export const createQuoteInputFields = ({ values, setValues, validationErrors }) => [
   {
@@ -62,21 +62,9 @@ export const createSearchInputFields = ({ searchValues, validationErrors }) => [
     id: 'limit',
     name: 'limit',
     label: 'Limit',
-    type: 'number',
-    min: 1,
-    max: MAX_SEARCH_LIMIT,
-    step: 1,
-    value: searchValues.limit || '',
+    control: 'select',
+    options: SEARCH_LIMIT_OPTIONS,
+    value: searchValues.limit || String(DEFAULT_SEARCH_LIMIT),
     error: validationErrors.limit,
-  },
-  {
-    id: 'offset',
-    name: 'offset',
-    label: 'Offset',
-    type: 'number',
-    min: 0,
-    step: 1,
-    value: searchValues.offset || '',
-    error: validationErrors.offset,
   },
 ]

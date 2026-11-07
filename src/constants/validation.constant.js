@@ -26,5 +26,4 @@ export const VALIDATION_MESSAGE = {
     `Invalid categories: ${names.join(', ')}. ${CATEGORY_RULE_MESSAGE}`,
   SEARCH_CATEGORY: 'Category can only contain letters, numbers and dashes.',
   SEARCH_LIMIT: `Limit must be in range 1..${MAX_SEARCH_LIMIT}.`,
-  SEARCH_OFFSET: 'Offset must be a positive integer or zero.',
 }

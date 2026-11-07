@@ -88,13 +88,6 @@ export function getSearchInputValidationMessage(name, value) {
 
     if (!isLimitValid) return VALIDATION_MESSAGE.SEARCH_LIMIT
   }
-
-  if (name === 'offset') {
-    const offset = Number(value)
-    const isOffsetValid = Number.isInteger(offset) && offset >= 0
-
-    if (!isOffsetValid) return VALIDATION_MESSAGE.SEARCH_OFFSET
-  }
 }
 
 export function getSearchValidationErrors(searchValues) {

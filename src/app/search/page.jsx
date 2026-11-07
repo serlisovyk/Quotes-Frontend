@@ -11,7 +11,7 @@ export const dynamic = 'force-dynamic'
 
 export const metadata = {
   title: 'Search Quotes',
-  description: 'Search quotes by text, author, category, limit, and offset.',
+  description: 'Search quotes by text, author, category, and limit.',
   alternates: {
     canonical: ROUTES.SEARCH,
   },

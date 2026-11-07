@@ -6,7 +6,7 @@ import {
   getSearchInputValidationMessage,
   getSearchValidationErrors,
 } from '@/utils/validation'
-import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
+import { INITIAL_SEARCH_VALUES, ROUTES, SEARCH_FORM_FIELD_NAMES } from '@/constants'
 
 export function useSearchForm(initialSearchValues) {
   const router = useRouter()
@@ -48,7 +48,7 @@ export function useSearchForm(initialSearchValues) {
 
     if (hasErrors) return
 
-    const query = createSearchQueryString(searchValues)
+    const query = createSearchQueryString(searchValues, SEARCH_FORM_FIELD_NAMES)
 
     router.push(query ? `${ROUTES.SEARCH}?${query}` : ROUTES.SEARCH)
   }

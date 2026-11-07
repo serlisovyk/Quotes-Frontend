@@ -1,6 +1,11 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import {
+  FIELD_ERROR_CLASSES,
+  FIELD_INPUT_CLASSES,
+  FIELD_LABEL_CLASSES,
+} from '@/constants'
 
 export function InputField(props) {
   const {
@@ -46,7 +51,7 @@ export function InputField(props) {
 
   return (
     <div className="w-full">
-      <label htmlFor={id} className="mb-1 block text-base text-body">
+      <label htmlFor={id} className={FIELD_LABEL_CLASSES}>
         {label}
       </label>
 
@@ -64,7 +69,7 @@ export function InputField(props) {
           onChange={handleChange}
           aria-invalid={showError && !!error}
           aria-describedby={showError && error ? errorId : undefined}
-          className="w-full rounded border border-line bg-panel py-2 pr-12 pl-3 text-body placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
+          className={FIELD_INPUT_CLASSES}
         />
         {currentValue && (
           <button
@@ -84,7 +89,7 @@ export function InputField(props) {
         )}
       </div>
       {showError && error && (
-        <p id={errorId} className="text-danger-text text-base">
+        <p id={errorId} className={FIELD_ERROR_CLASSES}>
           {error}
         </p>
       )}
