@@ -6,6 +6,22 @@ const renderPagination = (total, queryParams = {}) =>
   render(<Pagination total={total} queryParams={queryParams} />)
 
 describe('Pagination', () => {
+  test('counts pages by the limit when the offset is uneven', () => {
+    renderPagination(40, { limit: '10', offset: '5' })
+
+    expect(screen.getByText('1').getAttribute('aria-current')).toBe('page')
+    expect(screen.getByRole('link', { name: 'Next' }).getAttribute('href')).toBe(
+      '/search?limit=10&offset=10',
+    )
+  })
+
+  test('treats a negative offset as the first page', () => {
+    renderPagination(40, { limit: '10', offset: '-5' })
+
+    expect(screen.getByText('1').getAttribute('aria-current')).toBe('page')
+    expect(screen.getByText('Prev').getAttribute('aria-disabled')).toBe('true')
+  })
+
   test('renders nothing when everything fits on one page', () => {
     const { container } = renderPagination(10, { limit: '10' })
 

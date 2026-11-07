@@ -1,5 +1,49 @@
 import { describe, expect, test } from 'vitest'
-import { createPageHref, getPaginationPages } from './pagination.util.js'
+import {
+  alignOffset,
+  alignQueryParams,
+  createPageHref,
+  getPaginationPages,
+} from './pagination.util.js'
+
+describe('alignOffset utility function', () => {
+  test('keeps an offset that is a multiple of the limit', () => {
+    expect(alignOffset('20', 10)).toBe(20)
+    expect(alignOffset(0, 10)).toBe(0)
+  })
+
+  test('aligns an uneven offset down to a multiple of the limit', () => {
+    expect(alignOffset('5', 10)).toBe(0)
+    expect(alignOffset('25', 10)).toBe(20)
+    expect(alignOffset(14, 5)).toBe(10)
+  })
+
+  test('falls back to the first page for a missing, negative or non-numeric offset', () => {
+    expect(alignOffset(undefined, 10)).toBe(0)
+    expect(alignOffset('-5', 10)).toBe(0)
+    expect(alignOffset('abc', 10)).toBe(0)
+  })
+})
+
+describe('alignQueryParams utility function', () => {
+  test('aligns the offset by the limit of the query', () => {
+    expect(alignQueryParams({ text: 'life', limit: '20', offset: '35' })).toEqual({
+      text: 'life',
+      limit: '20',
+      offset: '20',
+    })
+  })
+
+  test('aligns by the default limit when the query has none', () => {
+    expect(alignQueryParams({ offset: '15' })).toEqual({ offset: '10' })
+  })
+
+  test('returns the query as it is when it has no offset', () => {
+    const queryParams = { text: 'life', limit: '20' }
+
+    expect(alignQueryParams(queryParams)).toBe(queryParams)
+  })
+})
 
 describe('getPaginationPages utility function', () => {
   test('lists every page when there are seven or fewer', () => {

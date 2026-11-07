@@ -75,6 +75,25 @@ describe('Search page', () => {
     )
   })
 
+  test('searches with an offset aligned down to the limit and passes it to the pagination', async () => {
+    fetchQuotesResult.mockResolvedValue({
+      quotes: [quote],
+      total: 40,
+      hasError: false,
+    })
+
+    await renderPage({ text: 'sharp', limit: '10', offset: '5' })
+
+    expect(fetchQuotesResult).toHaveBeenCalledWith({
+      text: 'sharp',
+      limit: '10',
+      offset: '0',
+    })
+    expect(screen.getByLabelText('Pages')).toHaveTextContent(
+      '40|{"text":"sharp","limit":"10","offset":"0"}',
+    )
+  })
+
   test('takes the first value of a repeated param', async () => {
     fetchQuotesResult.mockResolvedValue({
       quotes: [quote],
