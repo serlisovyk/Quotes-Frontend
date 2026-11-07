@@ -1,6 +1,7 @@
 export * from './api.constant.js'
 export * from './button.constant.js'
 export * from './category-tag.constant.js'
+export * from './combobox.constant.js'
 export * from './field.constant.js'
 export * from './link.constant.js'
 export * from './menu.constant.js'
