@@ -1,4 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { createElement } from 'react'
+import { renderToString } from 'react-dom/server'
 import { act, renderHook, waitFor } from '@testing-library/react'
 import { THEME_COLORS, THEME_STORAGE_KEY, THEMES } from '@/constants'
 import { useTheme } from './use-theme.js'
@@ -121,5 +123,16 @@ describe('useTheme', () => {
         THEME_COLORS.dark,
       ),
     )
+  })
+
+  test('renders system and light on the server, whatever is saved', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, THEMES.DARK)
+    const Probe = () => {
+      const { theme, resolvedTheme } = useTheme()
+
+      return `${theme} ${resolvedTheme}`
+    }
+
+    expect(renderToString(createElement(Probe))).toBe('system light')
   })
 })
