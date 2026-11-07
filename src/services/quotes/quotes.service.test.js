@@ -86,6 +86,18 @@ describe('Services result helpers', () => {
     })
   })
 
+  test('falls back to no quotes and a zero total when the response omits them', async () => {
+    global.fetch.mockResolvedValue(createResponse({ ok: true, body: {} }))
+
+    const { fetchQuotesResult } = await importFreshServices()
+
+    await expect(fetchQuotesResult()).resolves.toEqual({
+      quotes: [],
+      total: 0,
+      hasError: false,
+    })
+  })
+
   test('returns empty search result with error flag on failure', async () => {
     global.fetch.mockResolvedValue(
       createResponse({
@@ -277,5 +289,75 @@ describe('fetchQuoteByIdOrNull', () => {
     const { fetchQuoteByIdOrNull } = await importFreshServices()
 
     await expect(fetchQuoteByIdOrNull(1)).resolves.toBeNull()
+  })
+})
+
+describe('Quote mutations', () => {
+  const payload = { text: 'Stay sharp', author: 'Someone', categories: ['life'] }
+
+  beforeEach(() => {
+    global.fetch = vi.fn()
+  })
+
+  afterEach(() => {
+    delete global.fetch
+    delete process.env.API_URL
+  })
+
+  test('postQuote posts the payload to the quotes endpoint', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, status: 201, body: { id: 5, ...payload } }),
+    )
+
+    const { postQuote } = await importFreshServices()
+
+    await expect(postQuote(payload)).resolves.toEqual({ id: 5, ...payload })
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes`,
+      expect.objectContaining({ method: 'POST', body: JSON.stringify(payload) }),
+    )
+  })
+
+  test('patchQuote patches the payload on the single quote endpoint', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({ ok: true, body: { id: 5, ...payload } }),
+    )
+
+    const { patchQuote } = await importFreshServices()
+    await patchQuote(5, payload)
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/5`,
+      expect.objectContaining({ method: 'PATCH', body: JSON.stringify(payload) }),
+    )
+  })
+
+  test('deleteQuote deletes the single quote and returns true', async () => {
+    global.fetch.mockResolvedValue(createResponse({ ok: true, status: 204 }))
+
+    const { deleteQuote } = await importFreshServices()
+
+    await expect(deleteQuote(5)).resolves.toBe(true)
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/quotes/5`,
+      expect.objectContaining({ method: 'DELETE' }),
+    )
+  })
+
+  test('postQuote rejects with the API error', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: false,
+        status: 400,
+        body: { error: { message: 'Invalid request data' } },
+      }),
+    )
+
+    const { postQuote } = await importFreshServices()
+
+    await expect(postQuote(payload)).rejects.toMatchObject({
+      message: 'Invalid request data',
+      status: 400,
+    })
   })
 })
