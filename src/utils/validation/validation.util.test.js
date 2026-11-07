@@ -6,6 +6,7 @@ import {
   getSearchValidationErrors,
   isCategorySearchName,
   isQuoteValidId,
+  isSearchLimitValid,
 } from './validation.util.js'
 
 const createValues = (overrides = {}) => ({
@@ -141,6 +142,19 @@ describe('isCategorySearchName utility function', () => {
   test('accepts a name of the maximum length', () => {
     expect(isCategorySearchName('a'.repeat(50))).toBe(true)
   })
+})
+
+describe('isSearchLimitValid utility function', () => {
+  test.each(['1', '15', '050', '50', 15])('accepts %s', (limit) => {
+    expect(isSearchLimitValid(limit)).toBe(true)
+  })
+
+  test.each(['0', '51', '1.5', '-1', 'abc', '', undefined])(
+    'rejects %s',
+    (limit) => {
+      expect(isSearchLimitValid(limit)).toBe(false)
+    },
+  )
 })
 
 describe('isQuoteValidId utility function', () => {

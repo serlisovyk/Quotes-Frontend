@@ -1,3 +1,4 @@
+import { isSearchLimitValid } from '@/utils/validation'
 import { DEFAULT_SEARCH_LIMIT, SEARCH_LIMIT_OPTIONS } from '@/constants'
 
 export const createQuoteInputFields = ({ values, setValues, validationErrors }) => [
@@ -35,39 +36,51 @@ export const createQuoteInputFields = ({ values, setValues, validationErrors }) 
   },
 ]
 
-export const createSearchInputFields = ({ searchValues, validationErrors }) => [
-  {
-    id: 'text',
-    name: 'text',
-    label: 'Text',
-    placeholder: 'e.g. courage',
-    value: searchValues.text,
-    error: validationErrors.text,
-  },
-  {
-    id: 'author',
-    name: 'author',
-    label: 'Author',
-    placeholder: 'e.g. Winston Churchill',
-    value: searchValues.author,
-    error: validationErrors.author,
-  },
-  {
-    id: 'category',
-    name: 'category',
-    label: 'Category',
-    control: 'category',
-    placeholder: 'e.g. leadership',
-    value: searchValues.category,
-    error: validationErrors.category,
-  },
-  {
-    id: 'limit',
-    name: 'limit',
-    label: 'Limit',
-    control: 'select',
-    options: SEARCH_LIMIT_OPTIONS,
-    value: searchValues.limit || String(DEFAULT_SEARCH_LIMIT),
-    error: validationErrors.limit,
-  },
-]
+export const createSearchInputFields = ({ searchValues, validationErrors }) => {
+  const isLimitUsable = isSearchLimitValid(searchValues.limit)
+  const limit = Number(searchValues.limit)
+  const limitOptions =
+    !isLimitUsable || SEARCH_LIMIT_OPTIONS.includes(limit)
+      ? SEARCH_LIMIT_OPTIONS
+      : [...SEARCH_LIMIT_OPTIONS, limit].sort((a, b) => a - b)
+  const limitValue = isLimitUsable
+    ? String(limit)
+    : searchValues.limit || String(DEFAULT_SEARCH_LIMIT)
+
+  return [
+    {
+      id: 'text',
+      name: 'text',
+      label: 'Text',
+      placeholder: 'e.g. courage',
+      value: searchValues.text,
+      error: validationErrors.text,
+    },
+    {
+      id: 'author',
+      name: 'author',
+      label: 'Author',
+      placeholder: 'e.g. Winston Churchill',
+      value: searchValues.author,
+      error: validationErrors.author,
+    },
+    {
+      id: 'category',
+      name: 'category',
+      label: 'Category',
+      control: 'category',
+      placeholder: 'e.g. leadership',
+      value: searchValues.category,
+      error: validationErrors.category,
+    },
+    {
+      id: 'limit',
+      name: 'limit',
+      label: 'Limit',
+      control: 'select',
+      options: limitOptions,
+      value: limitValue,
+      error: validationErrors.limit,
+    },
+  ]
+}

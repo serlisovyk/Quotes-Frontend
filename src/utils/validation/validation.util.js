@@ -74,6 +74,12 @@ export function isCategorySearchName(name) {
   return isNameValid && isNameShortEnough
 }
 
+export function isSearchLimitValid(value) {
+  const limit = Number(value)
+
+  return Number.isInteger(limit) && limit >= 1 && limit <= MAX_SEARCH_LIMIT
+}
+
 export function getSearchInputValidationMessage(name, value) {
   if (!value) return
 
@@ -81,12 +87,8 @@ export function getSearchInputValidationMessage(name, value) {
     return VALIDATION_MESSAGE.SEARCH_CATEGORY
   }
 
-  if (name === 'limit') {
-    const limit = Number(value)
-    const isLimitValid =
-      Number.isInteger(limit) && limit >= 1 && limit <= MAX_SEARCH_LIMIT
-
-    if (!isLimitValid) return VALIDATION_MESSAGE.SEARCH_LIMIT
+  if (name === 'limit' && !isSearchLimitValid(value)) {
+    return VALIDATION_MESSAGE.SEARCH_LIMIT
   }
 }
 
