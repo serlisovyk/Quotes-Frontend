@@ -21,7 +21,7 @@ export function DeleteQuoteButton({ quoteId }) {
       />
 
       {state?.error && (
-        <p className="text-center text-red-500 text-base">{state.error}</p>
+        <p className="text-center text-danger-text text-base">{state.error}</p>
       )}
     </form>
   )

@@ -62,14 +62,14 @@ export function InputField(props) {
           onChange={handleChange}
           aria-invalid={showError && !!error}
           aria-describedby={showError && error ? errorId : undefined}
-          className="py-2 pl-3 pr-12 w-full border border-gray-300 rounded dark:bg-gray-800 dark:border-gray-600 text-gray-800 dark:text-white"
+          className="py-2 pl-3 pr-12 w-full border border-line rounded bg-panel text-body"
         />
         {currentValue && (
           <button
             type="button"
             onClick={handleClear}
             aria-label={`Clear ${placeholder}`}
-            className="absolute right-3 top-1/2 -translate-y-1/2 flex cursor-pointer items-center text-gray-400 transition-colors duration-200 hover:text-gray-600 dark:text-gray-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
+            className="absolute right-3 top-1/2 -translate-y-1/2 flex cursor-pointer items-center text-muted transition-colors duration-fast hover:text-body focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <svg
               className="h-5 w-5 fill-current"
@@ -82,7 +82,7 @@ export function InputField(props) {
         )}
       </div>
       {showError && error && (
-        <p id={errorId} className="text-red-500 text-base">
+        <p id={errorId} className="text-danger-text text-base">
           {error}
         </p>
       )}

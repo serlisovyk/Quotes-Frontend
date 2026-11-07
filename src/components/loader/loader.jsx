@@ -5,7 +5,7 @@ export function Loader({ isFullHeight = false }) {
     <div className={`flex ${heightClasses} items-center justify-center`}>
       <div
         aria-hidden="true"
-        className="size-15 animate-spin rounded-full border-4 border-blue-200 border-t-blue-500 motion-reduce:animate-pulse dark:border-gray-600 dark:border-t-blue-400"
+        className="size-15 animate-spin rounded-full border-4 border-surface border-t-accent-text motion-reduce:animate-pulse"
       />
     </div>
   )

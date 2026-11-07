@@ -1,14 +1,80 @@
 @import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+@theme {
+  --color-page: #ffffff;
+  --color-body: #171717;
+  --color-muted: #4b5563;
+  --color-panel: #ffffff;
+  --color-surface: #e5e7eb;
+  --color-surface-hover: #f3f4f6;
+  --color-line: #6b7280;
+  --color-accent: #4c1d95;
+  --color-accent-hover: #6d28d9;
+  --color-accent-text: #4c1d95;
+  --color-secondary: #d1d5db;
+  --color-secondary-hover: #9ca3af;
+  --color-danger: #7f1d1d;
+  --color-danger-hover: #b91c1c;
+  --color-danger-text: #b91c1c;
+  --color-highlight: #fde047;
+  --color-tag: #bfdbfe;
+  --color-tag-hover: #1d4ed8;
+  --color-chip: #ddd6fe;
+  --color-chip-hover: #c4b5fd;
+  --color-on-solid: #ffffff;
+  --color-on-pale: #1f2937;
+  --color-on-chip: #4c1d95;
+  --color-link-hover: #1d4ed8;
+  --color-focus: #7c3aed;
+  --color-overlay: rgb(0 0 0 / 0.8);
+
+  --transition-duration-fast: 200ms;
+  --transition-duration-base: 300ms;
+  --transition-duration-slow: 500ms;
 }
 
-@media (prefers-color-scheme: dark) {
+:root {
+  color-scheme: light;
+
+  @variant dark {
+    color-scheme: dark;
+
+    --color-page: #0a0a0a;
+    --color-body: #ededed;
+    --color-muted: #d1d5db;
+    --color-panel: #1f2937;
+    --color-surface: #1f2937;
+    --color-surface-hover: #374151;
+    --color-line: #9ca3af;
+    --color-accent: #4c1d95;
+    --color-accent-hover: #6d28d9;
+    --color-accent-text: #c4b5fd;
+    --color-secondary: #d1d5db;
+    --color-secondary-hover: #9ca3af;
+    --color-danger: #7f1d1d;
+    --color-danger-hover: #b91c1c;
+    --color-danger-text: #f87171;
+    --color-highlight: #fef08a;
+    --color-tag: #bfdbfe;
+    --color-tag-hover: #1d4ed8;
+    --color-chip: #6d28d9;
+    --color-chip-hover: #5b21b6;
+    --color-on-solid: #ffffff;
+    --color-on-pale: #1f2937;
+    --color-on-chip: #ede9fe;
+    --color-link-hover: #93c5fd;
+    --color-focus: #a78bfa;
+    --color-overlay: rgb(0 0 0 / 0.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --transition-duration-fast: 0ms;
+    --transition-duration-base: 0ms;
+    --transition-duration-slow: 0ms;
   }
 }
 

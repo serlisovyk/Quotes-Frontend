@@ -15,7 +15,7 @@ export function QuoteForm(props) {
 
   return (
     <form action={formAction} className="p-4">
-      <h1 className="text-3xl mb-6 text-center dark:text-white">{title}</h1>
+      <h1 className="text-3xl mb-6 text-center">{title}</h1>
 
       <QuoteFormFields
         values={formState.values}
@@ -24,7 +24,7 @@ export function QuoteForm(props) {
       />
 
       {formState.formError && (
-        <p className="text-center text-red-500 text-base mb-4">
+        <p className="text-center text-danger-text text-base mb-4">
           {formState.formError}
         </p>
       )}

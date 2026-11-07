@@ -15,10 +15,8 @@ export function MenuItems({ closeMenu = null }) {
         key={text}
         href={href}
         aria-current={isActive ? 'page' : undefined}
-        className={`rounded-sm transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500 ${
-          isActive
-            ? 'text-violet-700 dark:text-violet-300'
-            : 'text-gray-800 hover:text-gray-600 dark:text-white dark:hover:text-gray-400'
+        className={`rounded-sm transition-colors duration-fast focus:outline-none focus-visible:ring-2 focus-visible:ring-focus ${
+          isActive ? 'text-accent-text' : 'text-body hover:text-muted'
         }`}
         onClick={closeMenu}
       >

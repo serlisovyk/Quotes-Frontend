@@ -19,7 +19,7 @@ export function Header() {
 
   return (
     <header>
-      <nav aria-label="Primary" className="bg-white dark:bg-gray-800 p-4 shadow-md">
+      <nav aria-label="Primary" className="bg-panel p-4 shadow-md">
         <div className="container mx-auto flex items-center">
           <Link
             href={ROUTES.HOME}
@@ -34,9 +34,7 @@ export function Header() {
               alt="Quotes App Icon"
               priority
             />
-            <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-              Quotes App
-            </h1>
+            <h1 className="text-2xl font-bold text-body">Quotes App</h1>
           </Link>
 
           <BurgerButton
@@ -50,7 +48,7 @@ export function Header() {
               <div
                 id={mobileMenuId}
                 aria-label="Mobile navigation"
-                className="fixed top-0 right-0 h-full w-3/4 translate-x-0 transition-transform duration-500 ease-in-out z-40 bg-gradient-to-r from-transparent to-white dark:from-transparent dark:to-gray-800"
+                className="fixed top-0 right-0 h-full w-3/4 translate-x-0 transition-transform duration-slow ease-in-out z-40 bg-linear-to-r from-transparent to-panel"
               >
                 <div className="flex pr-5 pt-7 flex-col items-end justify-center space-y-6 text-2xl">
                   <BurgerButton
@@ -65,7 +63,7 @@ export function Header() {
               <button
                 type="button"
                 aria-label="Close mobile navigation"
-                className="fixed left-0 top-0 z-30 h-full w-full cursor-pointer bg-black opacity-80 transition-all duration-200 md:hidden"
+                className="fixed left-0 top-0 z-30 h-full w-full cursor-pointer bg-overlay md:hidden"
                 onClick={toggleMenu}
               />
             </>

@@ -11,9 +11,9 @@ export function Quote({ quote, selectedCategory, searchText }) {
   const visiblePart = isTruncated ? text.slice(0, MAX_VISIBLE_TEXT_LENGTH) : text
 
   return (
-    <div className="rounded-lg bg-gray-200 p-4 shadow-md transition-transform duration-300 hover:-translate-y-1.5 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700">
+    <div className="rounded-lg bg-surface p-4 shadow-md transition-transform duration-base hover:-translate-y-1.5 hover:bg-surface-hover">
       <Link href={`${ROUTES.QUOTES}/${id}`}>
-        <p className="mb-4 text-xl italic text-gray-900 dark:text-gray-100">
+        <p className="mb-4 text-xl italic text-body">
           &quot;
           {renderQuoteText({
             fullText: text,
@@ -25,12 +25,9 @@ export function Quote({ quote, selectedCategory, searchText }) {
         </p>
       </Link>
 
-      <p className="mb-10 text-right text-xl font-semibold text-gray-700 dark:text-gray-300">
+      <p className="mb-10 text-right text-xl font-semibold text-muted">
         <Link href={`${ROUTES.SEARCH}?${createSearchQueryString({ author })}`}>
-          -{' '}
-          <span className="hover:text-blue-600 hover:underline hover:dark:text-blue-300">
-            {author}
-          </span>
+          - <span className="hover:text-link-hover hover:underline">{author}</span>
         </Link>
       </p>
 

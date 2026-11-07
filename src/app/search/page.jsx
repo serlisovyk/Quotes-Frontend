@@ -27,7 +27,7 @@ export default async function SearchQuotesPage({ searchParams }) {
 
   return (
     <div className="p-4">
-      <h1 className="text-3xl mb-6 text-center dark:text-white">Search Quotes</h1>
+      <h1 className="text-3xl mb-6 text-center">Search Quotes</h1>
 
       <SearchForm initialSearchValues={searchValues} />
 

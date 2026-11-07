@@ -31,16 +31,16 @@ export default async function QuotePage({ params }) {
 
   return (
     <div>
-      <div className="max-w-6xl mx-auto p-6 mt-7 bg-white shadow-lg rounded-lg dark:bg-gray-800">
-        <h1 className="text-xl md:text-2xl font-bold text-center mb-6 text-violet-900 dark:text-violet-300">
+      <div className="max-w-6xl mx-auto p-6 mt-7 bg-panel shadow-lg rounded-lg">
+        <h1 className="text-xl md:text-2xl font-bold text-center mb-6 text-accent-text">
           {quote.text}
         </h1>
-        <p className="text-2xl text-center text-gray-600 dark:text-gray-300 mb-10">
+        <p className="text-2xl text-center text-muted mb-10">
           <Link
             href={`${ROUTES.SEARCH}?${createSearchQueryString({ author: quote.author })}`}
           >
             -{' '}
-            <span className="hover:underline hover:text-blue-600 hover:dark:text-blue-300">
+            <span className="hover:underline hover:text-link-hover">
               {quote.author}
             </span>
           </Link>

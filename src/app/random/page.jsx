@@ -17,7 +17,7 @@ export default async function RandomQuotesPage() {
 
   return (
     <div className="p-4">
-      <h1 className="mb-6 text-center text-3xl dark:text-white">Random Quotes</h1>
+      <h1 className="mb-6 text-center text-3xl">Random Quotes</h1>
       <RandomQuotesRefreshButton quotes={quotes} hasError={hasError} />
     </div>
   )

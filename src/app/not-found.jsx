@@ -5,7 +5,7 @@ import { ROUTES } from '@/constants'
 export default function NotFound() {
   return (
     <section className="mt-10 flex flex-col items-center">
-      <h1 className="mb-4 text-center text-2xl font-bold text-violet-900 md:text-4xl dark:text-violet-300">
+      <h1 className="mb-4 text-center text-2xl font-bold text-accent-text md:text-4xl">
         Page not found
       </h1>
 

@@ -1,11 +1,10 @@
 export const CATEGORY_TAG_CLASSES = {
-  base: 'transition-colors duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-500',
+  base: 'transition-colors duration-base focus:outline-none focus-visible:ring-2 focus-visible:ring-focus',
   singleQuote:
-    'rounded-lg bg-violet-200 px-4 py-2 text-base text-violet-900 hover:bg-violet-300 dark:bg-violet-700 dark:text-violet-100 hover:dark:bg-violet-800',
-  selected:
-    'bg-yellow-200 mr-2 mb-2 rounded-full px-2 py-1 text-lg text-gray-700 dark:text-gray-800',
+    'rounded-lg bg-chip px-4 py-2 text-base text-on-chip hover:bg-chip-hover',
+  selected: 'bg-highlight mr-2 mb-2 rounded-full px-2 py-1 text-lg text-on-pale',
   default:
-    'bg-blue-200 hover:bg-blue-500 hover:text-gray-100 mr-2 mb-2 rounded-full px-2 py-1 text-lg text-gray-700 dark:text-gray-800',
+    'bg-tag hover:bg-tag-hover hover:text-on-solid mr-2 mb-2 rounded-full px-2 py-1 text-lg text-on-pale',
 }
 
 export const CATEGORY_TAGS_SINGLE_QUOTE_CLASSES = 'justify-center gap-3'
