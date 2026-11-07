@@ -25,6 +25,8 @@ export const createQuoteInputFields = ({ values, setValues, validationErrors }) 
     id: 'categories',
     name: 'categories',
     label: 'Categories (comma-separated)',
+    control: 'category',
+    isMultiple: true,
     value: values.categories,
     error: validationErrors.categories,
     onChange: setValues
@@ -54,6 +56,7 @@ export const createSearchInputFields = ({ searchValues, validationErrors }) => [
     id: 'category',
     name: 'category',
     label: 'Category',
+    control: 'category',
     placeholder: 'e.g. leadership',
     value: searchValues.category,
     error: validationErrors.category,

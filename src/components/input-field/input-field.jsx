@@ -22,6 +22,8 @@ export function InputField(props) {
     onChange,
     error,
     showError,
+    inputProps,
+    children,
   } = props
 
   const inputRef = useRef(null)
@@ -70,6 +72,7 @@ export function InputField(props) {
           aria-invalid={showError && !!error}
           aria-describedby={showError && error ? errorId : undefined}
           className={FIELD_INPUT_CLASSES}
+          {...inputProps}
         />
         {currentValue && (
           <button
@@ -87,6 +90,8 @@ export function InputField(props) {
             </svg>
           </button>
         )}
+
+        {children}
       </div>
       {showError && error && (
         <p id={errorId} className={FIELD_ERROR_CLASSES}>

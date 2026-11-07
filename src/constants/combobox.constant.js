@@ -1,5 +1,12 @@
 export const NO_ACTIVE_OPTION = -1
 
+export const KEYBOARD_KEY = {
+  ARROW_DOWN: 'ArrowDown',
+  ARROW_UP: 'ArrowUp',
+  ENTER: 'Enter',
+  ESCAPE: 'Escape',
+}
+
 export const OPTION_STEP_DOWN = 1
 
 export const OPTION_STEP_UP = -1
