@@ -30,6 +30,15 @@ describe('createSearchQueryString utility function', () => {
     expect(result).toBe('text=life&author=Albert+Einstein')
   })
 
+  test('should keep only the names of a custom allow-list', () => {
+    const result = createSearchQueryString({ name: 'lif', text: 'life', limit: 3 }, [
+      'name',
+      'limit',
+    ])
+
+    expect(result).toBe('name=lif&limit=3')
+  })
+
   test('should filter out empty string, undefined, and null values', () => {
     const queryParams = {
       text: '',

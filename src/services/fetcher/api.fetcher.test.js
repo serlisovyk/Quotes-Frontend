@@ -45,6 +45,25 @@ describe('Services fetcher', () => {
     )
   })
 
+  test('keeps the name param of the categories list in the URL', async () => {
+    global.fetch.mockResolvedValue(
+      createResponse({
+        ok: true,
+        status: 200,
+        body: { total: 0, categories: [] },
+      }),
+    )
+
+    const fetcher = await importFreshFetcher()
+
+    await fetcher.get('categories', { name: 'lif', limit: 3 })
+
+    expect(global.fetch).toHaveBeenCalledWith(
+      `${API_URL}/categories?name=lif&limit=3`,
+      { method: 'GET', headers: {} },
+    )
+  })
+
   test('uses API_URL for server requests', async () => {
     global.fetch.mockResolvedValue(
       createResponse({ ok: true, status: 200, body: { quotes: [] } }),
