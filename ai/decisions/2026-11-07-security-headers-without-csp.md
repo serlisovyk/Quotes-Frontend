@@ -19,12 +19,11 @@ gives up the static and cached pages (`ai/decisions/2026-11-06-native-next-cachi
   and sits beside `X-Frame-Options` for browsers that read only one of them.
 - Rejected: a full CSP with a nonce (all pages dynamic). Rejected: a full CSP with `'unsafe-inline'` (it
   protects against nothing a script injection needs).
-- Dependabot watches `npm` and `github-actions` weekly and groups minor and patch updates; major `eslint`
-  and `@eslint/js` are ignored while `eslint-stays-on-9` stands.
+- No Dependabot: the author updates dependencies by hand (`npm outdated`), automated update PRs are not
+  wanted.
 
 ## Consequences
 
 - A new header is a line in `SECURITY_HEADERS`; the site stays static where it was.
 - A full CSP is reconsidered only if the inline scripts go away or the pages are dynamic anyway; that is a
   new record superseding this one.
-- Removing the Dependabot ignore for ESLint belongs to the record that supersedes `eslint-stays-on-9`.

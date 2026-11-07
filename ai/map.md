@@ -8,7 +8,6 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `public/` — files served as they are: `churchill.jpg` (home page photo), `nav-icon.png` (logo, favicon, link preview).
 - `next.config.mjs` — `output: 'standalone'` (the `Dockerfile` needs it), React Compiler, strict mode, `agentRules: false`, the security headers
   for every path (`SECURITY_HEADERS`, imported by relative path: native ESM does not see `@/`).
-- `.github/dependabot.yml` — weekly `npm` and `github-actions` updates, minor and patch grouped, ESLint majors ignored.
 - `jsconfig.json` — the one path alias, `@/*` → `src/*`.
 - `vitest.config.js` — Vitest: jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`, `src/tests/setup` cleans up Testing Library and adds the jest-dom matchers; coverage (v8, all of `src/`) with thresholds, report in `coverage/` (ignored).
 - `eslint.config.mjs` — flat config: `core-web-vitals`, `API_URL` and `fetch` limited to `src/services`, the naming scheme, Prettier.

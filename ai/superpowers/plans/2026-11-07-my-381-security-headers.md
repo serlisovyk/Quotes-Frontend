@@ -4,7 +4,7 @@ Branch `my-381-security-headers`. No page, form or interaction changes, so no sp
 
 ## Author's decisions (2026-11-07)
 
-- All points of the issue are agreed.
+- All points of the issue are agreed, except Dependabot: dropped at review (not needed).
 
 ## Decisions in this plan
 
