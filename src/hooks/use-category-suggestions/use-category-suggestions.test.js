@@ -116,6 +116,24 @@ describe('useCategorySuggestions', () => {
     expect(result.current).toEqual(['leadership'])
   })
 
+  test('ignores the rejection of a cancelled request', async () => {
+    const first = createDeferred()
+    fetchCategorySuggestions
+      .mockReturnValueOnce(first.promise)
+      .mockResolvedValueOnce(['leadership'])
+    const { result, rerender } = renderHook(
+      ({ query }) => useCategorySuggestions(query),
+      { initialProps: { query: 'le' } },
+    )
+
+    await advance(CATEGORY_SUGGESTIONS_DEBOUNCE_MS)
+    rerender({ query: 'lea' })
+    await advance(CATEGORY_SUGGESTIONS_DEBOUNCE_MS)
+    await act(async () => first.reject(new DOMException('aborted', 'AbortError')))
+
+    expect(result.current).toEqual(['leadership'])
+  })
+
   test('shows no suggestions after a failed request and does not throw', async () => {
     fetchCategorySuggestions.mockResolvedValueOnce(['leadership'])
     const { result, rerender } = renderHook(
