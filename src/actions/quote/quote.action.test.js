@@ -1,4 +1,4 @@
-import { describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
@@ -8,6 +8,14 @@ import {
   deleteQuoteAction,
   updateQuoteAction,
 } from './quote.action.js'
+
+const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
+
+vi.mock('@/config', () => ({
+  get IS_READ_ONLY() {
+    return mockConfig.isReadOnly
+  },
+}))
 
 vi.mock('next/navigation', () => ({
   redirect: vi.fn((url) => {
@@ -198,6 +206,50 @@ describe('Quote Server Actions', () => {
       expect(revalidatePath).toHaveBeenCalledWith('/quotes/42')
       expect(redirect).toHaveBeenCalledWith('/?toast=deleted')
       expect(error?.message).toBe('NEXT_REDIRECT')
+    })
+  })
+
+  describe('in read-only mode', () => {
+    const message =
+      'The site is read-only: quotes cannot be created, changed or deleted.'
+
+    beforeEach(() => {
+      mockConfig.isReadOnly = true
+    })
+
+    afterEach(() => {
+      mockConfig.isReadOnly = false
+    })
+
+    test('createQuoteAction does not call the API and returns the error', async () => {
+      const state = await createQuoteAction(null, createFormData(validValues))
+
+      expect(state).toEqual({ values: validValues, errors: {}, formError: message })
+      expect(postQuote).not.toHaveBeenCalled()
+      expect(revalidatePath).not.toHaveBeenCalled()
+      expect(redirect).not.toHaveBeenCalled()
+    })
+
+    test('updateQuoteAction does not call the API and returns the error', async () => {
+      const state = await updateQuoteAction(
+        QUOTE_ID,
+        null,
+        createFormData(validValues),
+      )
+
+      expect(state).toEqual({ values: validValues, errors: {}, formError: message })
+      expect(patchQuote).not.toHaveBeenCalled()
+      expect(revalidatePath).not.toHaveBeenCalled()
+      expect(redirect).not.toHaveBeenCalled()
+    })
+
+    test('deleteQuoteAction does not call the API and returns the error', async () => {
+      const state = await deleteQuoteAction(QUOTE_ID)
+
+      expect(state).toEqual({ error: message })
+      expect(deleteQuote).not.toHaveBeenCalled()
+      expect(revalidatePath).not.toHaveBeenCalled()
+      expect(redirect).not.toHaveBeenCalled()
     })
   })
 })
