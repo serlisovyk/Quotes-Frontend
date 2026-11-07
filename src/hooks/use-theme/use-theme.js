@@ -9,6 +9,13 @@ import {
   subscribeToStoredTheme,
 } from '@/utils/theme-storage'
 
+const HEAD_OBSERVER_OPTIONS = {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['content'],
+}
+
 const getServerTheme = () => THEMES.SYSTEM
 
 const getServerIsSystemDark = () => false
@@ -27,7 +34,15 @@ export function useTheme() {
 
   const resolvedTheme = resolveTheme(theme, isSystemDark)
 
-  useEffect(() => applyTheme(resolvedTheme), [resolvedTheme])
+  useEffect(() => {
+    const syncTheme = () => applyTheme(resolvedTheme)
+    const headObserver = new MutationObserver(syncTheme)
+
+    syncTheme()
+    headObserver.observe(document.head, HEAD_OBSERVER_OPTIONS)
+
+    return () => headObserver.disconnect()
+  }, [resolvedTheme])
 
   return { theme, resolvedTheme, setTheme: saveTheme }
 }
