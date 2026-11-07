@@ -3,7 +3,15 @@ import {
   createQuotePayload,
   getQuoteFormValidationErrors,
   getSearchInputValidationMessage,
+  isQuoteValidId,
 } from './validation.util.js'
+
+const createValues = (overrides = {}) => ({
+  text: 'This is a valid quote text.',
+  author: 'Author Name',
+  categories: 'category1, category2',
+  ...overrides,
+})
 
 describe('getQuoteFormValidationErrors utility function', () => {
   test('returns empty errors for valid quote values', () => {
@@ -24,10 +32,91 @@ describe('getQuoteFormValidationErrors utility function', () => {
     })
 
     expect(result).toEqual({
-      text: 'Text must be at least 10 characters long.',
-      author: 'Author must be between 2 and 255 characters long.',
-      categories: 'There must be at least one category.',
+      text: 'Text must be from 10 to 2500 characters.',
+      author: 'Author must be from 2 to 255 characters.',
+      categories: 'There must be from 1 to 10 categories.',
     })
+  })
+
+  test.each([
+    ['10 characters', 'a'.repeat(10), undefined],
+    ['9 characters', 'a'.repeat(9), 'Text must be from 10 to 2500 characters.'],
+    ['2500 characters', 'a'.repeat(2500), undefined],
+    [
+      '2501 characters',
+      'a'.repeat(2501),
+      'Text must be from 10 to 2500 characters.',
+    ],
+  ])('checks the text limits: %s', (_label, text, message) => {
+    expect(getQuoteFormValidationErrors(createValues({ text })).text).toBe(message)
+  })
+
+  test.each([
+    ['2 characters', 'ab', undefined],
+    ['1 character', 'a', 'Author must be from 2 to 255 characters.'],
+    ['255 characters', 'a'.repeat(255), undefined],
+    ['256 characters', 'a'.repeat(256), 'Author must be from 2 to 255 characters.'],
+  ])('checks the author limits: %s', (_label, author, message) => {
+    expect(getQuoteFormValidationErrors(createValues({ author })).author).toBe(
+      message,
+    )
+  })
+
+  test.each([
+    ['10 categories', 10, undefined],
+    ['11 categories', 11, 'There must be from 1 to 10 categories.'],
+  ])('checks the number of categories: %s', (_label, count, message) => {
+    const categories = Array.from({ length: count }, (_, i) => `tag-${i}`).join(',')
+
+    expect(
+      getQuoteFormValidationErrors(createValues({ categories })).categories,
+    ).toBe(message)
+  })
+
+  test.each([
+    ['50 characters', 'a'.repeat(50), undefined],
+    [
+      '51 characters',
+      'a'.repeat(51),
+      'Category name must be at most 50 characters.',
+    ],
+  ])('checks the length of a category name: %s', (_label, name, message) => {
+    const result = getQuoteFormValidationErrors(createValues({ categories: name }))
+
+    expect(result.categories).toBe(message)
+  })
+
+  test('lists the categories with forbidden characters', () => {
+    const result = getQuoteFormValidationErrors(
+      createValues({ categories: 'good, Bad, no_pe, fine-1' }),
+    )
+
+    expect(result.categories).toBe(
+      'Invalid categories: Bad, no_pe. Category names can only contain lowercase letters, numbers and dashes.',
+    )
+  })
+})
+
+describe('isQuoteValidId utility function', () => {
+  test.each(['1', '12', '2147483647', 12])('accepts %s', (id) => {
+    expect(isQuoteValidId(id)).toBe(true)
+  })
+
+  test.each([
+    '12abc',
+    'abc',
+    '1.5',
+    '-1',
+    '+1',
+    ' 12',
+    '12 ',
+    '0',
+    '',
+    '2147483648',
+    undefined,
+    null,
+  ])('rejects %s', (id) => {
+    expect(isQuoteValidId(id)).toBe(false)
   })
 })
 
