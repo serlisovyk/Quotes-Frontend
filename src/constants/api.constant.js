@@ -6,6 +6,8 @@ export const RANDOM_QUOTES_API_ENDPOINT = 'quotes/random'
 
 export const CATEGORIES_API_ENDPOINT = 'categories'
 
+export const API_REQUEST_TIMEOUT_MS = 8000
+
 export const HTTP_STATUS_BAD_REQUEST = 400
 
 export const HTTP_STATUS_NOT_FOUND = 404

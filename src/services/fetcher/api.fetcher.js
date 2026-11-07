@@ -4,6 +4,7 @@ import { createApiError } from '@/utils/create-api-error'
 import { createSearchQueryString } from '@/utils/query-string'
 import {
   ALLOWED_API_QUERY_PARAM_NAMES,
+  API_REQUEST_TIMEOUT_MS,
   LEADING_SLASHES_PATTERN,
   TRAILING_SLASHES_PATTERN,
 } from '@/constants'
@@ -29,6 +30,14 @@ const createUrl = (endpoint, queryParams = {}) => {
   return queryString ? `${url}?${queryString}` : url
 }
 
+const createRequestSignal = (callerSignal) => {
+  const timeoutSignal = AbortSignal.timeout(API_REQUEST_TIMEOUT_MS)
+
+  if (!callerSignal) return timeoutSignal
+
+  return AbortSignal.any([callerSignal, timeoutSignal])
+}
+
 const request = async (
   method,
   endpoint,
@@ -41,6 +50,7 @@ const request = async (
   const options = {
     ...fetchOptions,
     method,
+    signal: createRequestSignal(fetchOptions.signal),
     headers: {
       ...(fetchOptions.headers || {}),
     },
