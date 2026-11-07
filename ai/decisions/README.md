@@ -50,6 +50,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Naming and structure like the backend](2026-11-06-naming-like-backend.md)
 - [Barrels per module, layer-wide only for constants and config](2026-11-06-barrels-per-module.md)
 - [No file-watcher polling variables](2026-11-07-no-polling-env-vars.md)
+- [Env files never enter an image](2026-11-07-no-env-files-in-image.md)
 
 ### Architecture
 

@@ -89,7 +89,7 @@ http://localhost:4000
 
 ## CI
 
-GitHub Actions runs lint, format check, tests with coverage thresholds, and build on every push. The build uses the real backend, so it needs the repository secrets `API_URL` and `SITE_URL`. The pre-commit hook (Husky and lint-staged) runs ESLint and Prettier on staged files.
+GitHub Actions runs lint, format check, tests with coverage thresholds, and build on every push, and builds the production Docker image (not published). The builds use the real backend, so they need the repository secrets `API_URL` and `SITE_URL`; `HOME_QUOTE_ID` is optional. The pre-commit hook (Husky and lint-staged) runs ESLint and Prettier on staged files.
 
 ## Docker
 
@@ -107,7 +107,14 @@ docker compose -f docker-compose.dev.yml up --build
 docker compose -f docker-compose.dev.yml down
 ```
 
-The frontend service reads variables from `.env`.
+The frontend service reads variables from `.env`; the image itself never contains an env file. Build the production image with the values read at build time as build arguments, and pass the run-time variables with `--env-file`:
+
+```powershell
+docker build --build-arg API_URL=https://api.example.com --build-arg SITE_URL=https://site.example.com --build-arg HOME_QUOTE_ID=1 -t serhii5105/quotes-client .
+docker run --rm -p 4000:4000 --env-file .env serhii5105/quotes-client
+```
+
+Publishing the image to Docker Hub is manual.
 
 ## Environment
 

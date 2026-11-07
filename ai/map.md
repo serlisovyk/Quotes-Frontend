@@ -11,7 +11,8 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `vitest.config.js` — Vitest: jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`, `src/tests/setup` cleans up Testing Library and adds the jest-dom matchers; coverage (v8, all of `src/`) with thresholds, report in `coverage/` (ignored).
 - `eslint.config.mjs` — flat config: `core-web-vitals`, `API_URL` and `fetch` limited to `src/services`, the naming scheme, Prettier.
 - `.husky/pre-commit`, `.lintstagedrc.json` — the pre-commit hook: lint-staged runs ESLint and Prettier on staged files, in chunks.
-- `.github/workflows/ci.yml` — CI on every push: lint, format check, tests with coverage, build; the build needs the secrets `API_URL`, `SITE_URL`.
+- `.github/workflows/ci.yml` — CI on every push: lint, format check, tests with coverage, build, and a `docker` job
+  that builds the image without publishing it; secrets `API_URL`, `SITE_URL`, optional `HOME_QUOTE_ID`.
 - `postcss.config.mjs` — the Tailwind CSS 4 plugin. `.prettierrc`, `.prettierignore` — Prettier.
 - `package.json` — scripts `dev`, `build`, `start`, `lint`, `lint:fix`, `format`, `format:check`, `prepare` (installs the hook), `test`, `test:watch`, `test:coverage`.
 - `package-lock.json` — the lockfile (npm).
@@ -90,9 +91,13 @@ Copy `.env.sample` to `.env` for local runs; `.env.production.sample` is the pro
 ## Docker
 
 - `Dockerfile` — multi-stage production image on `node:24-alpine` (`npm ci`, `npm run build`, runs the standalone `server.js` as a non-root user).
+  `ARG SITE_URL`, `HOME_QUOTE_ID`, `API_URL` feed the build.
+- `.dockerignore` — keeps `.env*` (not `*.sample`), `.git`, `ai`, docs and tests out of the build; no image holds an env file.
 - `Dockerfile.dev` — dev image on `node:24-alpine`: `npm ci` and `npm run dev`.
 - `docker-compose.yml` — runs the published image `serhii5105/quotes-client:latest` with `.env` on port 4000.
 - `docker-compose.dev.yml` — builds `Dockerfile.dev`, mounts the project, keeps `node_modules` and `.next` in volumes.
+- Build: `docker build --build-arg API_URL=... --build-arg SITE_URL=... --build-arg HOME_QUOTE_ID=... -t serhii5105/quotes-client .`
+  Run with `--env-file .env`. Publishing to Docker Hub stays manual.
 - Production: `docker compose up -d` and `docker compose down`.
 - Dev: `docker compose -f docker-compose.dev.yml up --build` and `docker compose -f docker-compose.dev.yml down`.
 
