@@ -26,6 +26,12 @@ export default defineConfig({
         'src/**/*.test.{js,jsx}',
       ],
       reporter: ['text', 'html'],
+      thresholds: {
+        statements: 99,
+        branches: 99,
+        functions: 99,
+        lines: 99,
+      },
     },
   },
 })
