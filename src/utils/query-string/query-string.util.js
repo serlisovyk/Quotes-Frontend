@@ -23,7 +23,8 @@ export const createSearchValuesFromSearchParamsObject = (searchParams = {}) => {
     const value = Array.isArray(rawValue) ? rawValue[0] : rawValue
 
     if (value) {
-      acc[searchParamName] = value
+      acc[searchParamName] =
+        searchParamName === 'category' ? value.toLowerCase() : value
     }
 
     return acc
