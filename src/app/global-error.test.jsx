@@ -1,8 +1,8 @@
-import { beforeEach, describe, expect, test, vi } from 'vitest'
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { THEME_STORAGE_KEY } from '@/constants'
+import { THEME_STORAGE_KEY, THEMES } from '@/constants'
 import GlobalError from './global-error'
 
 const renderGlobalError = (error = new Error('Layout failed'), reset = vi.fn()) => {
@@ -16,6 +16,11 @@ describe('Global Error', () => {
     vi.spyOn(console, 'error').mockImplementation(() => {})
   })
 
+  afterEach(() => {
+    localStorage.clear()
+    document.documentElement.removeAttribute('data-theme')
+  })
+
   test('renders a whole document of its own', () => {
     const markup = renderToString(
       <GlobalError error={new Error('Layout failed')} reset={vi.fn()} />,
@@ -26,12 +31,21 @@ describe('Global Error', () => {
     expect(markup).toContain('<title>Something went wrong</title>')
   })
 
-  test('runs the theme script so the colours follow the chosen theme', () => {
-    const markup = renderToString(
-      <GlobalError error={new Error('Layout failed')} reset={vi.fn()} />,
-    )
+  test.each([THEMES.DARK, THEMES.LIGHT])(
+    'applies the saved %s theme to the document',
+    (savedTheme) => {
+      localStorage.setItem(THEME_STORAGE_KEY, savedTheme)
 
-    expect(markup).toContain(THEME_STORAGE_KEY)
+      renderGlobalError()
+
+      expect(document.documentElement).toHaveAttribute('data-theme', savedTheme)
+    },
+  )
+
+  test('falls back to the light theme when nothing is saved', () => {
+    renderGlobalError()
+
+    expect(document.documentElement).toHaveAttribute('data-theme', THEMES.LIGHT)
   })
 
   test('tells something went wrong under the only h1', () => {
