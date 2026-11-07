@@ -1,3 +1,5 @@
+export const DEFAULT_ERROR_MESSAGE = 'Some error occurred'
+
 export const QUOTES_API_ENDPOINT = 'quotes'
 
 export const RANDOM_QUOTES_API_ENDPOINT = 'quotes/random'

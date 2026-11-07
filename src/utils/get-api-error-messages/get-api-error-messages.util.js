@@ -1,3 +1,5 @@
+import { DEFAULT_ERROR_MESSAGE } from '@/constants'
+
 function getFieldMessages(fields) {
   if (!fields) return []
 
@@ -11,5 +13,5 @@ export function getApiErrorMessages(error) {
     if (fieldMessages.length) return fieldMessages
   }
 
-  return [error?.message || 'Some error occurred']
+  return [error?.message || DEFAULT_ERROR_MESSAGE]
 }
