@@ -7,8 +7,12 @@ vi.mock('@/components/category-tags', () => ({
 }))
 
 vi.mock('@/components/quote-actions', () => ({
-  QuoteActions: ({ id, text, author }) => (
-    <button type="button" aria-label={`Actions for ${id}: ${text} by ${author}`} />
+  QuoteActions: ({ id, text, author, categories }) => (
+    <button
+      type="button"
+      aria-label={`Actions for ${id}: ${text} by ${author}`}
+      data-categories={categories.join(',')}
+    />
   ),
 }))
 
@@ -51,6 +55,16 @@ describe('Quote Component', () => {
         name: `Actions for 1: ${mockQuote.text} by Test Author`,
       }),
     ).toBeVisible()
+  })
+
+  test('passes the categories to the quote actions', () => {
+    const { getByRole } = render(<Quote quote={mockQuote} />)
+
+    expect(
+      getByRole('button', {
+        name: `Actions for 1: ${mockQuote.text} by Test Author`,
+      }),
+    ).toHaveAttribute('data-categories', 'category1,category2')
   })
 
   test('renders the CategoryTags component', () => {

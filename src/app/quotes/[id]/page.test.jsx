@@ -23,8 +23,12 @@ vi.mock('@/components/delete-quote-button', () => ({
 }))
 
 vi.mock('@/components/quote-actions', () => ({
-  QuoteActions: ({ id, text, author }) => (
-    <button type="button" aria-label={`Actions for ${id}: ${text} by ${author}`} />
+  QuoteActions: ({ id, text, author, categories }) => (
+    <button
+      type="button"
+      aria-label={`Actions for ${id}: ${text} by ${author}`}
+      data-categories={categories.join(',')}
+    />
   ),
 }))
 
@@ -98,6 +102,18 @@ describe('Quote page copy and share', () => {
     const { getByRole } = await renderPage(quote)
 
     expect(getByRole('button', { name: actionsName })).toBeVisible()
+  })
+
+  test('passes the categories to the quote actions', async () => {
+    const { getByRole } = await renderPage({
+      ...quote,
+      categories: ['life', 'wisdom'],
+    })
+
+    expect(getByRole('button', { name: actionsName })).toHaveAttribute(
+      'data-categories',
+      'life,wisdom',
+    )
   })
 
   test('keeps the quote actions in read-only mode', async () => {
