@@ -3,12 +3,14 @@ import 'server-only'
 import { fetcher } from '@/services/fetcher'
 import { ApiError } from '@/errors/api'
 import {
+  ALLOWED_SEARCH_PARAM_NAMES,
   HTTP_STATUS_NOT_FOUND,
   QUOTE_DETAILS_REVALIDATE_SECONDS,
   QUOTES_API_ENDPOINT,
   RANDOM_QUOTES_API_ENDPOINT,
 } from '@/constants'
 import { getSingleQuoteApiEndpoint } from '@/utils/get-single-quote-api-endpoint'
+import { createSearchQueryString } from '@/utils/query-string'
 
 export const QUOTE_DETAILS_FETCH_OPTIONS = {
   next: {
@@ -16,8 +18,14 @@ export const QUOTE_DETAILS_FETCH_OPTIONS = {
   },
 }
 
-export const fetchQuotes = (queryParams = {}) =>
-  fetcher.get(QUOTES_API_ENDPOINT, queryParams, { cache: 'no-store' })
+export const fetchQuotes = (queryParams = {}) => {
+  const queryString = createSearchQueryString(
+    queryParams,
+    ALLOWED_SEARCH_PARAM_NAMES,
+  )
+
+  return fetcher.get(QUOTES_API_ENDPOINT, queryString, { cache: 'no-store' })
+}
 
 export const fetchQuotesResult = async (queryParams = {}) => {
   try {
@@ -38,7 +46,7 @@ export const fetchQuotesResult = async (queryParams = {}) => {
 }
 
 export const fetchRandomQuotes = () =>
-  fetcher.get(RANDOM_QUOTES_API_ENDPOINT, {}, { cache: 'no-store' })
+  fetcher.get(RANDOM_QUOTES_API_ENDPOINT, '', { cache: 'no-store' })
 
 export const fetchRandomQuotesResult = async () => {
   try {
@@ -55,7 +63,7 @@ export const fetchRandomQuotesResult = async () => {
 }
 
 export const fetchQuoteById = (id, fetchOptions = QUOTE_DETAILS_FETCH_OPTIONS) =>
-  fetcher.get(getSingleQuoteApiEndpoint(id), {}, fetchOptions)
+  fetcher.get(getSingleQuoteApiEndpoint(id), '', fetchOptions)
 
 export const fetchQuoteByIdOrNull = (id, fetchOptions) =>
   fetchQuoteById(id, fetchOptions).catch(() => null)

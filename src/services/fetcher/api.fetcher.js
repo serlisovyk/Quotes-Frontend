@@ -1,9 +1,7 @@
 import 'server-only'
 
 import { createApiError } from '@/utils/create-api-error'
-import { createSearchQueryString } from '@/utils/query-string'
 import {
-  ALLOWED_API_QUERY_PARAM_NAMES,
   API_REQUEST_TIMEOUT_MS,
   LEADING_SLASHES_PATTERN,
   TRAILING_SLASHES_PATTERN,
@@ -11,17 +9,12 @@ import {
 
 const getApiUrl = () => process.env.API_URL
 
-const createUrl = (endpoint, queryParams = {}) => {
+const createUrl = (endpoint, queryString = '') => {
   const apiUrl = getApiUrl()
 
   if (!apiUrl) {
     throw new Error('API_URL environment variable is required.')
   }
-
-  const queryString = createSearchQueryString(
-    queryParams,
-    ALLOWED_API_QUERY_PARAM_NAMES,
-  )
 
   const baseUrl = apiUrl.replace(TRAILING_SLASHES_PATTERN, '')
   const path = endpoint.replace(LEADING_SLASHES_PATTERN, '')
@@ -42,10 +35,10 @@ const request = async (
   method,
   endpoint,
   payload = null,
-  queryParams = {},
+  queryString = '',
   fetchOptions = {},
 ) => {
-  const url = createUrl(endpoint, queryParams)
+  const url = createUrl(endpoint, queryString)
 
   const options = {
     ...fetchOptions,
@@ -81,12 +74,12 @@ const request = async (
 }
 
 export const fetcher = {
-  get: (endpoint, queryParams = {}, fetchOptions = {}) =>
-    request('GET', endpoint, null, queryParams, fetchOptions),
+  get: (endpoint, queryString = '', fetchOptions = {}) =>
+    request('GET', endpoint, null, queryString, fetchOptions),
   post: (endpoint, payload, fetchOptions = {}) =>
-    request('POST', endpoint, payload, {}, fetchOptions),
+    request('POST', endpoint, payload, '', fetchOptions),
   patch: (endpoint, payload, fetchOptions = {}) =>
-    request('PATCH', endpoint, payload, {}, fetchOptions),
+    request('PATCH', endpoint, payload, '', fetchOptions),
   delete: (endpoint, fetchOptions = {}) =>
-    request('DELETE', endpoint, null, {}, fetchOptions),
+    request('DELETE', endpoint, null, '', fetchOptions),
 }
