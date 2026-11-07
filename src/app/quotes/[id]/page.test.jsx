@@ -19,7 +19,15 @@ vi.mock('@/services/quotes', () => ({
 
 vi.mock('@/components/category-tags', () => ({ CategoryTags: () => <div /> }))
 vi.mock('@/components/delete-quote-button', () => ({
-  DeleteQuoteButton: () => <div />,
+  DeleteQuoteButton: () => <button type="button">Delete</button>,
+}))
+
+const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
+
+vi.mock('@/config', () => ({
+  get IS_READ_ONLY() {
+    return mockConfig.isReadOnly
+  },
 }))
 
 const renderPage = async (quote) => {
@@ -47,6 +55,32 @@ describe('Quote page author link', () => {
     expect(
       getByRole('link', { name: `Quotes by ${author}` }).getAttribute('href'),
     ).toBe(href)
+  })
+})
+
+describe('Quote page buttons', () => {
+  const quote = { id: 1, text: 'Some text', author: 'Author', categories: [] }
+
+  test('shows Edit and Delete by default', async () => {
+    const { getByRole } = await renderPage(quote)
+
+    expect(getByRole('link', { name: 'Edit' })).toHaveAttribute(
+      'href',
+      '/quotes/1/edit',
+    )
+    expect(getByRole('button', { name: 'Delete' })).toBeVisible()
+  })
+
+  test('shows the quote without Edit and Delete in read-only mode', async () => {
+    mockConfig.isReadOnly = true
+
+    const { getByRole, queryByRole } = await renderPage(quote)
+
+    mockConfig.isReadOnly = false
+
+    expect(getByRole('heading', { name: 'Some text' })).toBeVisible()
+    expect(queryByRole('link', { name: 'Edit' })).not.toBeInTheDocument()
+    expect(queryByRole('button', { name: 'Delete' })).not.toBeInTheDocument()
   })
 })
 

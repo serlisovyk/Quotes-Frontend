@@ -6,9 +6,14 @@ vi.mock('next/font/local', () => ({
   default: () => ({ variable: 'font-variable' }),
 }))
 
+const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
+
 vi.mock('@/config', async () => ({
   ...(await vi.importActual('@/config')),
   SITE_URL: 'http://localhost:4000',
+  get IS_READ_ONLY() {
+    return mockConfig.isReadOnly
+  },
 }))
 
 vi.mock('@/components/app-toasts', () => {
@@ -23,8 +28,8 @@ vi.mock('@/components/app-toasts', () => {
 
 vi.mock('@/components/header', () => {
   return {
-    Header: function Header() {
-      return <header>Header</header>
+    Header: function Header({ isReadOnly }) {
+      return <header>{isReadOnly ? 'Header read-only' : 'Header'}</header>
     },
   }
 })
@@ -57,6 +62,16 @@ describe('Root Layout', () => {
 
     expect(html).toContain('<header>Header</header>')
     expect(html).toContain('<footer>Footer</footer>')
+  })
+
+  test('tells the header the site is read-only', () => {
+    mockConfig.isReadOnly = true
+
+    const html = renderToString(<RootLayout>content</RootLayout>)
+
+    mockConfig.isReadOnly = false
+
+    expect(html).toContain('<header>Header read-only</header>')
   })
 
   test('sets no robots rule, so a 404 carries only the noindex Next.js adds', () => {

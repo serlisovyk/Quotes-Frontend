@@ -29,7 +29,29 @@ vi.mock('@/components/quote-form', () => ({
   ),
 }))
 
+const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
+
+vi.mock('@/config', () => ({
+  get IS_READ_ONLY() {
+    return mockConfig.isReadOnly
+  },
+}))
+
 const renderWithId = (id) => EditQuotePage({ params: Promise.resolve({ id }) })
+
+describe('Edit quote page in read-only mode', () => {
+  test('calls notFound for an existing quote without calling the API', async () => {
+    mockConfig.isReadOnly = true
+    fetchQuoteIfExists.mockResolvedValue({ id: 7 })
+
+    const promise = renderWithId('7')
+
+    mockConfig.isReadOnly = false
+
+    await expect(promise).rejects.toThrow('NEXT_NOT_FOUND')
+    expect(fetchQuoteIfExists).not.toHaveBeenCalled()
+  })
+})
 
 describe('Edit quote page', () => {
   test('renders the form for an existing quote', async () => {

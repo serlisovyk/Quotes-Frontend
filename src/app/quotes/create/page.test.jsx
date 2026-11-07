@@ -17,6 +17,34 @@ vi.mock('@/components/quote-form', () => ({
   ),
 }))
 
+const mockNotFound = vi.hoisted(() =>
+  vi.fn(() => {
+    throw new Error('NEXT_NOT_FOUND')
+  }),
+)
+
+const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
+
+vi.mock('next/navigation', () => ({
+  notFound: () => mockNotFound(),
+}))
+
+vi.mock('@/config', () => ({
+  get IS_READ_ONLY() {
+    return mockConfig.isReadOnly
+  },
+}))
+
+describe('Create quote page in read-only mode', () => {
+  test('calls notFound instead of rendering the form', () => {
+    mockConfig.isReadOnly = true
+
+    expect(() => CreateQuotePage()).toThrow('NEXT_NOT_FOUND')
+
+    mockConfig.isReadOnly = false
+  })
+})
+
 describe('Create quote page', () => {
   test('is not indexed', () => {
     expect(metadata.robots.index).toBe(false)
