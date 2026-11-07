@@ -46,6 +46,15 @@ describe('SearchForm Component', () => {
     expect(mockPush).not.toHaveBeenCalled()
   })
 
+  test('shows a limit from the link that is not in the list as the chosen one', () => {
+    render(
+      <SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES, limit: '15' }} />,
+    )
+
+    expect(screen.getByRole('combobox', { name: 'Limit' })).toHaveValue('15')
+    expect(screen.getByRole('option', { name: '15' })).toBeVisible()
+  })
+
   test('has no offset field', () => {
     render(<SearchForm />)
 

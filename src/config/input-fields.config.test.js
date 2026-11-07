@@ -97,6 +97,42 @@ describe('Search Input Fields', () => {
     expect(limit).toMatchObject({ control: 'select', options: SEARCH_LIMIT_OPTIONS })
   })
 
+  test('adds a valid limit outside the list to the options in numeric order', () => {
+    const fields = createSearchInputFields({
+      searchValues: { ...searchValues, limit: '15' },
+      validationErrors: {},
+    })
+    const limit = fields.find(({ id }) => id === 'limit')
+
+    expect(limit.options).toEqual([10, 15, 20, 50])
+    expect(limit.value).toBe('15')
+  })
+
+  test('writes an added limit without leading zeros', () => {
+    const fields = createSearchInputFields({
+      searchValues: { ...searchValues, limit: '015' },
+      validationErrors: {},
+    })
+    const limit = fields.find(({ id }) => id === 'limit')
+
+    expect(limit.options).toEqual([10, 15, 20, 50])
+    expect(limit.value).toBe('15')
+  })
+
+  test.each(['20', '0', '51', '1.5', 'abc'])(
+    'keeps the listed options for the limit %s',
+    (value) => {
+      const fields = createSearchInputFields({
+        searchValues: { ...searchValues, limit: value },
+        validationErrors: {},
+      })
+
+      expect(fields.find(({ id }) => id === 'limit').options).toEqual(
+        SEARCH_LIMIT_OPTIONS,
+      )
+    },
+  )
+
   test('shows the default limit for an empty one', () => {
     const fields = createSearchInputFields({
       searchValues: { ...searchValues, limit: '' },
