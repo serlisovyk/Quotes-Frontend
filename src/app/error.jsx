@@ -2,8 +2,11 @@
 
 import { Button } from '@/components/button'
 import { StatusMessage } from '@/components/status-message'
+import { useErrorLogging } from '@/hooks/use-error-logging'
 
-export default function ErrorPage({ reset }) {
+export default function ErrorPage({ error, reset }) {
+  useErrorLogging(error)
+
   return (
     <section className="mt-10 flex flex-col items-center">
       <h1 className="mb-4 text-center text-2xl font-bold text-accent-text md:text-4xl">
