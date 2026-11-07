@@ -20,6 +20,12 @@ describe('Header', () => {
     )
   })
 
+  test('has the theme switch', () => {
+    render(<Header />)
+
+    expect(screen.getByRole('button', { name: /^Theme:/ })).toBeVisible()
+  })
+
   test('keeps the mobile menu closed at first', () => {
     render(<Header />)
 

@@ -1,11 +1,13 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import { toast } from 'sonner'
+import { THEME_STORAGE_KEY, THEMES } from '@/constants'
 import { AppToasts } from './app-toasts.jsx'
 
 const mockReplace = vi.hoisted(() => vi.fn())
 const mockUsePathname = vi.hoisted(() => vi.fn())
 const mockUseSearchParams = vi.hoisted(() => vi.fn())
+const mockToaster = vi.hoisted(() => vi.fn(() => null))
 
 vi.mock('next/navigation', () => ({
   usePathname: () => mockUsePathname(),
@@ -14,7 +16,7 @@ vi.mock('next/navigation', () => ({
 }))
 
 vi.mock('sonner', () => ({
-  Toaster: () => null,
+  Toaster: mockToaster,
   toast: { success: vi.fn() },
 }))
 
@@ -62,5 +64,14 @@ describe('App Toasts', () => {
 
     expect(toast.success).not.toHaveBeenCalled()
     expect(mockReplace).not.toHaveBeenCalled()
+  })
+
+  test('gives the toaster the active theme', () => {
+    localStorage.setItem(THEME_STORAGE_KEY, THEMES.DARK)
+
+    renderWithSearch('')
+
+    expect(mockToaster.mock.calls[0][0].theme).toBe(THEMES.DARK)
+    localStorage.clear()
   })
 })
