@@ -66,8 +66,12 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `delete-quote-button`, `random-quotes-refresh-button`.
   - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
     `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`, `theme-icon`.
-- `hooks/` — `use-quote-form`, `use-search-form` (the two forms), `use-theme` (choice, resolved theme, `data-theme`, `theme-color`), `use-mobile-menu` (the menu dialog); a hook is `use-<name>/use-<name>.js`.
-- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup files: cleanup, jest-dom, `matchMedia`, the `<dialog>` methods jsdom lacks) and `utils/` (none yet), each in a folder with a barrel.
+- `hooks/` — one folder each, `use-<name>/use-<name>.js`.
+  - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog).
+  - `use-theme` (choice, resolved theme, `data-theme`, `theme-color`).
+- `tests/` — shared test code, each in a folder with a barrel.
+  - `mocks/` (`server-only`), `utils/` (none yet).
+  - `setup/` — Vitest setup files: cleanup, jest-dom, `matchMedia`, the `<dialog>` methods jsdom lacks.
 
 ## Environment
 

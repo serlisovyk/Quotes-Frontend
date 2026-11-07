@@ -64,16 +64,16 @@ Why: decisions `naming-like-backend` and `native-next-caching`. Layers, fetching
 
 - Real elements: `<button>` for actions, `Link` for navigation, `<form>`, `<label>`, `<input>`. A `div`
   with `onClick` is a bug.
-- Every field has a visible `<label>` above it, tied by `htmlFor` / `id`; every other control has an accessible
-  name from its text or an `aria-label`. A placeholder is only an example of the input, never the label.
+- Every field has a visible `<label>` above it, tied by `htmlFor` / `id`; every other control has an
+  accessible name from its text or an `aria-label`. A placeholder is only an example of the input, never
+  the label.
 - A field with an error is marked `aria-invalid` and linked to its message through `aria-describedby`; an
   inline form error is announced (`role="alert"`).
-- A disclosure control exposes `aria-expanded` and `aria-controls`; a menu that covers the page is a native
-  `<dialog>` opened with `showModal()` (Escape, inert page, focus in and back come from the browser); the
-  navigation has an `aria-label`;
-  the skip link stays the first focusable element.
+- A disclosure control exposes `aria-expanded` and `aria-controls`. A menu that covers the page is a native
+  `<dialog>` opened with `showModal()`: Escape, the inert page and the focus in and back come from the
+  browser. The navigation has an `aria-label`; the skip link stays the first focusable element.
 - A change a screen-reader user must hear is announced once: Sonner's region already announces success
   toasts, so no second live region for the same event.
-- Images have meaningful `alt` text, or an empty one when decorative. One `h1` per page, no skipped levels;
-  the logo is not a heading. A link whose text is a dash and a name gets an `aria-label` that says where it
-  goes.
+- Images have meaningful `alt` text, or an empty one when decorative.
+- One `h1` per page, no skipped levels; the logo is not a heading. A link whose text is a dash and a name
+  gets an `aria-label` that says where it goes.
