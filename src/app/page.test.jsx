@@ -51,6 +51,18 @@ describe('Home Page', () => {
     expect(screen.getByRole('link', { name: 'Random Quotes' })).toBeTruthy()
   })
 
+  test('has one h1, the hero quote, and no skipped heading level', async () => {
+    mockFetchQuoteByIdOrNull.mockResolvedValue(quote)
+
+    await renderHomePage('7')
+
+    expect(screen.getAllByRole('heading', { level: 1 })).toHaveLength(1)
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent(
+      'Success is not final, failure is not fatal',
+    )
+    expect(screen.queryAllByRole('heading', { level: 3 })).toHaveLength(0)
+  })
+
   test('renders without the card when HOME_QUOTE_ID is not set', async () => {
     await renderHomePage(undefined)
 

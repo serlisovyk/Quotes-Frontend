@@ -79,8 +79,8 @@ describe('Quote Component', () => {
   ])('encodes the author %s in the author link', (author, href) => {
     const { getByRole } = render(<Quote quote={{ ...mockQuote, author }} />)
 
-    expect(getByRole('link', { name: `- ${author}` }).getAttribute('href')).toBe(
-      href,
-    )
+    expect(
+      getByRole('link', { name: `Quotes by ${author}` }).getAttribute('href'),
+    ).toBe(href)
   })
 })

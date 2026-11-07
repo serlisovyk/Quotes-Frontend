@@ -44,9 +44,9 @@ describe('Quote page author link', () => {
       categories: [],
     })
 
-    expect(getByRole('link', { name: `- ${author}` }).getAttribute('href')).toBe(
-      href,
-    )
+    expect(
+      getByRole('link', { name: `Quotes by ${author}` }).getAttribute('href'),
+    ).toBe(href)
   })
 })
 
