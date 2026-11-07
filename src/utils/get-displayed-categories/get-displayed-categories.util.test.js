@@ -45,6 +45,26 @@ describe('Get Displayed Categories', () => {
     )
   })
 
+  test('puts a hidden selected category in place of the last visible one whatever its case', () => {
+    const categories = createCategories(MAX_VISIBLE_CATEGORIES + 3)
+    const hiddenCategory = categories.at(-1)
+
+    const displayed = getDisplayedCategories(
+      categories,
+      hiddenCategory.toUpperCase(),
+    )
+
+    expect(displayed.at(-1)).toBe(hiddenCategory)
+  })
+
+  test('keeps the list as it is when the selected category is visible in another case', () => {
+    const categories = createCategories(MAX_VISIBLE_CATEGORIES + 3)
+
+    expect(getDisplayedCategories(categories, 'TAG-2')).toEqual(
+      categories.slice(0, MAX_VISIBLE_CATEGORIES),
+    )
+  })
+
   test('ignores a selected category the quote does not have', () => {
     const categories = createCategories(MAX_VISIBLE_CATEGORIES + 3)
 

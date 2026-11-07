@@ -29,6 +29,17 @@ describe('Category Tags', () => {
     ).toBeNull()
   })
 
+  test('marks the selected category as current whatever its case', () => {
+    render(<CategoryTags categories={['life', 'hope']} selectedCategory="Life" />)
+
+    expect(
+      screen.getByRole('link', { name: 'life' }).getAttribute('aria-current'),
+    ).toBe('true')
+    expect(
+      screen.getByRole('link', { name: 'hope' }).getAttribute('aria-current'),
+    ).toBeNull()
+  })
+
   test('shows the first categories and an ellipsis when there are more', () => {
     render(
       <CategoryTags categories={createCategories(MAX_VISIBLE_CATEGORIES + 2)} />,
