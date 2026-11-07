@@ -1,28 +1,25 @@
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
 import { createSearchQueryString } from '@/utils/query-string'
+import { createSearchFormState } from '@/utils/search-form-state'
 import {
   getSearchInputValidationMessage,
   getSearchValidationErrors,
 } from '@/utils/validation'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 
-const createFormState = (searchValues) => ({
-  searchValues,
-  validationErrors: {},
-  showError: false,
-})
-
 export function useSearchForm(initialSearchValues) {
   const router = useRouter()
 
-  const [formState, setFormState] = useState(createFormState(initialSearchValues))
+  const [formState, setFormState] = useState(
+    createSearchFormState(initialSearchValues),
+  )
   const [previousInitialValues, setPreviousInitialValues] =
     useState(initialSearchValues)
 
   if (initialSearchValues !== previousInitialValues) {
     setPreviousInitialValues(initialSearchValues)
-    setFormState(createFormState(initialSearchValues))
+    setFormState(createSearchFormState(initialSearchValues))
   }
 
   const { searchValues, validationErrors, showError } = formState
@@ -57,7 +54,7 @@ export function useSearchForm(initialSearchValues) {
   }
 
   const handleClear = () => {
-    setFormState(createFormState({ ...INITIAL_SEARCH_VALUES }))
+    setFormState(createSearchFormState({ ...INITIAL_SEARCH_VALUES }))
     router.push(ROUTES.SEARCH)
   }
 
