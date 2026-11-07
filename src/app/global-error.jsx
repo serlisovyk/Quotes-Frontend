@@ -8,6 +8,7 @@ import './globals.css'
 
 export default function GlobalError({ error, reset }) {
   useTheme()
+
   useErrorLogging(error)
 
   return (
