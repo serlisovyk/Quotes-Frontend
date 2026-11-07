@@ -17,6 +17,7 @@ export async function createQuoteAction(_previousState, formData) {
   const values = createQuoteFormValuesFromFormData(formData)
 
   if (IS_READ_ONLY) return createQuoteActionState(values, {}, READ_ONLY_MESSAGE)
+
   const errors = getQuoteFormValidationErrors(values)
 
   if (Object.keys(errors).length) {
@@ -42,6 +43,7 @@ export async function updateQuoteAction(id, _previousState, formData) {
   const values = createQuoteFormValuesFromFormData(formData)
 
   if (IS_READ_ONLY) return createQuoteActionState(values, {}, READ_ONLY_MESSAGE)
+
   const errors = getQuoteFormValidationErrors(values)
 
   if (Object.keys(errors).length) {
