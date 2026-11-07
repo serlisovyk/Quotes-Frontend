@@ -6,6 +6,7 @@ export function InputField(props) {
   const {
     id,
     name = id,
+    label,
     placeholder,
     type = 'text',
     min,
@@ -45,10 +46,11 @@ export function InputField(props) {
 
   return (
     <div className="w-full">
+      <label htmlFor={id} className="mb-1 block text-base text-body">
+        {label}
+      </label>
+
       <div className="relative">
-        <label htmlFor={id} className="sr-only">
-          {placeholder}
-        </label>
         <input
           type={type}
           ref={inputRef}
@@ -62,13 +64,13 @@ export function InputField(props) {
           onChange={handleChange}
           aria-invalid={showError && !!error}
           aria-describedby={showError && error ? errorId : undefined}
-          className="py-2 pl-3 pr-12 w-full border border-line rounded bg-panel text-body"
+          className="w-full rounded border border-line bg-panel py-2 pr-12 pl-3 text-body placeholder:text-muted focus-visible:ring-2 focus-visible:ring-focus focus-visible:outline-none"
         />
         {currentValue && (
           <button
             type="button"
             onClick={handleClear}
-            aria-label={`Clear ${placeholder}`}
+            aria-label={`Clear ${label}`}
             className="absolute right-3 top-1/2 -translate-y-1/2 flex cursor-pointer items-center text-muted transition-colors duration-fast hover:text-body focus:outline-none focus-visible:ring-2 focus-visible:ring-focus"
           >
             <svg

@@ -4,7 +4,7 @@ export const createQuoteInputFields = ({ values, setValues, validationErrors }) 
   {
     id: 'text',
     name: 'text',
-    placeholder: 'Quote text',
+    label: 'Quote text',
     value: values.text,
     error: validationErrors.text,
     onChange: setValues
@@ -14,7 +14,7 @@ export const createQuoteInputFields = ({ values, setValues, validationErrors }) 
   {
     id: 'author',
     name: 'author',
-    placeholder: 'Author',
+    label: 'Author',
     value: values.author,
     error: validationErrors.author,
     onChange: setValues
@@ -24,7 +24,7 @@ export const createQuoteInputFields = ({ values, setValues, validationErrors }) 
   {
     id: 'categories',
     name: 'categories',
-    placeholder: 'Categories (comma-separated)',
+    label: 'Categories (comma-separated)',
     value: values.categories,
     error: validationErrors.categories,
     onChange: setValues
@@ -37,28 +37,31 @@ export const createSearchInputFields = ({ searchValues, validationErrors }) => [
   {
     id: 'text',
     name: 'text',
-    placeholder: 'Search by text',
+    label: 'Text',
+    placeholder: 'e.g. courage',
     value: searchValues.text,
     error: validationErrors.text,
   },
   {
     id: 'author',
     name: 'author',
-    placeholder: 'Search by author',
+    label: 'Author',
+    placeholder: 'e.g. Winston Churchill',
     value: searchValues.author,
     error: validationErrors.author,
   },
   {
     id: 'category',
     name: 'category',
-    placeholder: 'Search by category',
+    label: 'Category',
+    placeholder: 'e.g. leadership',
     value: searchValues.category,
     error: validationErrors.category,
   },
   {
     id: 'limit',
     name: 'limit',
-    placeholder: 'Limit',
+    label: 'Limit',
     type: 'number',
     min: 1,
     max: MAX_SEARCH_LIMIT,
@@ -69,7 +72,7 @@ export const createSearchInputFields = ({ searchValues, validationErrors }) => [
   {
     id: 'offset',
     name: 'offset',
-    placeholder: 'Offset',
+    label: 'Offset',
     type: 'number',
     min: 0,
     step: 1,

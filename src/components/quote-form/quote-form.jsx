@@ -24,7 +24,7 @@ export function QuoteForm(props) {
       />
 
       {formState.formError && (
-        <p className="text-center text-danger-text text-base mb-4">
+        <p role="alert" className="text-center text-danger-text text-base mb-4">
           {formState.formError}
         </p>
       )}

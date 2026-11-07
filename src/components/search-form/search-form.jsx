@@ -25,11 +25,12 @@ export function SearchForm({ initialSearchValues = INITIAL_SEARCH_VALUES }) {
     <form onSubmit={handleSubmit} noValidate>
       <div className="mb-6 grid grid-cols-1 gap-4 text-xl lg:grid-cols-[1fr_1fr_1fr_0.35fr_0.35fr]">
         {searchInputFields.map(
-          ({ id, name, placeholder, type, min, max, step, value, error }) => (
+          ({ id, name, label, placeholder, type, min, max, step, value, error }) => (
             <InputField
               key={id}
               id={id}
               name={name}
+              label={label}
               placeholder={placeholder}
               type={type}
               min={min}
