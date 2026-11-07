@@ -24,4 +24,27 @@ describe('MenuItems Component', () => {
 
     expect(screen.getByRole('link', { name: /home/i }).ariaCurrent).toBeNull()
   })
+
+  test('has Create New by default', () => {
+    mockUsePathname.mockReturnValue('/')
+
+    render(<MenuItems />)
+
+    expect(screen.getByRole('link', { name: 'Create New' })).toBeVisible()
+  })
+
+  test('has no Create New in read-only mode', () => {
+    mockUsePathname.mockReturnValue('/')
+
+    render(<MenuItems isReadOnly />)
+
+    expect(
+      screen.queryByRole('link', { name: 'Create New' }),
+    ).not.toBeInTheDocument()
+    expect(screen.getAllByRole('link').map((link) => link.textContent)).toEqual([
+      'Home',
+      'Random',
+      'Search',
+    ])
+  })
 })

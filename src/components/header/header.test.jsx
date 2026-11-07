@@ -148,4 +148,26 @@ describe('Header', () => {
 
     expect(queryMobileMenu()).not.toBeInTheDocument()
   })
+
+  test('has Create New in both menus by default', async () => {
+    const user = userEvent.setup()
+    render(<Header />)
+
+    const menu = await openMobileMenu(user)
+
+    expect(screen.getAllByRole('link', { name: 'Create New' })).toHaveLength(2)
+    expect(within(menu).getByRole('link', { name: 'Create New' })).toBeVisible()
+  })
+
+  test('has no Create New in either menu in read-only mode', async () => {
+    const user = userEvent.setup()
+    render(<Header isReadOnly />)
+
+    const menu = await openMobileMenu(user)
+
+    expect(
+      screen.queryByRole('link', { name: 'Create New' }),
+    ).not.toBeInTheDocument()
+    expect(within(menu).getByRole('link', { name: 'Search' })).toBeVisible()
+  })
 })
