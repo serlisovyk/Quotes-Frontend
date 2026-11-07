@@ -4,7 +4,11 @@ import { Button } from '@/components/button'
 import { fetchQuoteByIdOrNull } from '@/services/quotes'
 import { isQuoteValidId } from '@/utils/validation'
 import { HOME_QUOTE_ID } from '@/config'
-import { HOME_QUOTE_REVALIDATE_SECONDS, ROUTES } from '@/constants'
+import {
+  BUTTON_GROUP_CLASSES,
+  HOME_QUOTE_REVALIDATE_SECONDS,
+  ROUTES,
+} from '@/constants'
 
 export default async function HomePage() {
   const quote = isQuoteValidId(HOME_QUOTE_ID)
@@ -63,7 +67,9 @@ export default async function HomePage() {
           </div>
         )}
       </section>
-      <section className="flex flex-col justify-center sm:flex-row md:mb-10">
+      <section
+        className={`${BUTTON_GROUP_CLASSES} flex-col items-center sm:flex-row md:mb-10`}
+      >
         <Button href={ROUTES.RANDOM} text="Random Quotes" />
         <Button href={ROUTES.SEARCH} text="Search Quotes" variant="secondary" />
       </section>

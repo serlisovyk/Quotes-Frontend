@@ -15,7 +15,7 @@ export default function ErrorPage({ reset }) {
         size="large"
       />
 
-      <div className="mt-6">
+      <div className="mt-8 md:mt-11">
         <Button onClick={reset} text="Try again" />
       </div>
     </section>

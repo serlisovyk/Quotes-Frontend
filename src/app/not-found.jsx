@@ -14,7 +14,7 @@ export default function NotFound() {
         size="large"
       />
 
-      <div className="mt-6">
+      <div className="mt-8 md:mt-11">
         <Button href={ROUTES.HOME} text="Go to home page" />
       </div>
     </section>

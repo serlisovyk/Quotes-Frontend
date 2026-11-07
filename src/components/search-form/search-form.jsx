@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import { InputField } from '@/components/input-field'
 import { Button } from '@/components/button'
 import { createSearchInputFields } from '@/config'
-import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
+import { BUTTON_GROUP_CLASSES, INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 import { createSearchQueryString } from '@/utils/query-string'
 import { getSearchInputValidationMessage } from '@/utils/validation'
 
@@ -98,7 +98,7 @@ export function SearchForm({ initialSearchValues = INITIAL_SEARCH_VALUES }) {
         )}
       </div>
 
-      <div className="mb-6 flex justify-center">
+      <div className={`${BUTTON_GROUP_CLASSES} mb-6`}>
         <Button type="submit" text="Search" />
         <Button onClick={handleClear} text="Clear" variant="secondary" />
       </div>

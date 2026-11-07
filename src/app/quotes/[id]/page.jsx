@@ -6,7 +6,7 @@ import { DeleteQuoteButton } from '@/components/delete-quote-button'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import { createSearchQueryString } from '@/utils/query-string'
 import { isQuoteValidId } from '@/utils/validation'
-import { ROUTES } from '@/constants'
+import { BUTTON_GROUP_CLASSES, ROUTES } from '@/constants'
 
 export async function generateMetadata({ params }) {
   const { id } = await params
@@ -47,7 +47,7 @@ export default async function QuotePage({ params }) {
         </p>
         <CategoryTags categories={quote.categories} isSingleQuotePage={true} />
       </div>
-      <div className="flex justify-center mb-6">
+      <div className={`${BUTTON_GROUP_CLASSES} mb-6 items-start`}>
         <Button href={`${ROUTES.QUOTES}/${quote.id}/edit`} text="Edit" />
         <DeleteQuoteButton quoteId={quote.id} />
       </div>
