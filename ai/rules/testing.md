@@ -1,7 +1,7 @@
 # Testing Rules
 
-The project keeps an automated suite: Jest with Testing Library in jsdom through `next/jest` (decision
-`tests-jest-tdd`). `npm test` runs it once; `npm run test:watch` watches. End-to-end tests are rejected
+The project keeps an automated suite: Vitest with Testing Library in jsdom (decision `vitest`).
+`npm test` runs it once; `npm run test:watch` watches. End-to-end tests are rejected
 (decision `no-e2e-tests`). Work is test-driven and tests are written to the maximum.
 
 ## TDD
@@ -41,17 +41,21 @@ The project keeps an automated suite: Jest with Testing Library in jsdom through
   has a folder with an `index.js` (`ai/rules/style.md`).
 - Shared mocks live in `tests/mocks`, shared test-only helpers in `tests/utils`, each in a folder of its
   own with an `index.js`.
+- A test imports what it uses from `'vitest'` (`describe`, `test`, `expect`, `vi`, ...): there are no
+  globals.
 - A test imports the module it covers by its file (`./quote-form.jsx`); every other module comes through
-  the `@/` alias and its folder, and a mock names that same path (`jest.mock('@/services/quotes')`).
-- A `describe` label names the unit in PascalCase words (`Quote Form`); an `it` label says the behavior
+  the `@/` alias and its folder, and a mock names that same path (`vi.mock('@/services/quotes')`).
+- A `describe` label names the unit in PascalCase words (`Quote Form`); a `test` label says the behavior
   (`shows the error under the text field`).
 
 ## Mocking
 
 - Mock what is outside the unit: `next/navigation` hooks and `redirect`, `next/cache`, the services in an
   action or a page test, `fetch` in a service test. A test never calls the real API.
-- A test never depends on `.env`: `next/jest` loads it locally, but CI has none. A module that reads an
+- A test never depends on `.env`: Vitest does not load it, and CI has none. A module that reads an
   environment value at import (`SITE_URL`, `HOME_QUOTE_ID`) is mocked with the value the test needs.
+- A `vi.mock` factory is hoisted above the imports: a variable it reads comes from `vi.hoisted`, the
+  real module from `await vi.importActual`, and a default export is mocked as `{ default }`.
 - Keep a mock small and explicit; share one through `tests/mocks` only when it removes real repetition.
 - Server Actions are called directly as functions with a `FormData`; a component test mocks the action.
 

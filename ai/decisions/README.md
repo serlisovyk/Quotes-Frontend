@@ -60,10 +60,11 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 
 - [Tailwind CSS for styling](2026-11-06-tailwind-css.md)
 - [Sonner toasts for success, inline errors for failures](2026-11-06-toasts-and-inline-errors.md)
-- [Jest, Testing Library and TDD](2026-11-06-tests-jest-tdd.md)
+- [Vitest, Testing Library and TDD](2026-11-07-vitest.md)
 - [No end-to-end tests](2026-11-06-no-e2e-tests.md)
 
 ### Superseded
 
 - [Structure and naming conventions](2026-11-06-structure-and-naming.md): by `naming-like-backend`
 - [Jest and Testing Library stay](2026-11-06-jest-and-testing-library.md): by `tests-jest-tdd`
+- [Jest, Testing Library and TDD](2026-11-06-tests-jest-tdd.md): by `vitest`

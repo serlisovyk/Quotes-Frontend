@@ -19,7 +19,7 @@ template.
 
 - Runtime dependencies are `next`, `react`, `react-dom`, `sonner` (toasts) and `react-spinners` (the
   loader). Another one needs the author's explicit yes and, if it is a lasting choice, a decision record.
-- Tooling in scope: Prettier, ESLint, Jest + Testing Library, Tailwind CSS, Docker.
+- Tooling in scope: Prettier, ESLint, Vitest + Testing Library, Tailwind CSS, Docker.
 
 ## Prefer
 

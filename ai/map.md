@@ -8,7 +8,7 @@ Navigation only: where things live and who owns what. How it works is in the cod
 - `public/` — files served as they are: `churchill.jpg` (home page photo), `nav-icon.png` (logo, favicon, link preview).
 - `next.config.mjs` — `output: 'standalone'` (the production `Dockerfile` needs it), React Compiler, strict mode.
 - `jsconfig.json` — the one path alias, `@/*` → `src/*`.
-- `jest.config.js` — `next/jest`, jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`.
+- `vitest.config.js` — Vitest: jsdom, the same alias; `src/tests/mocks/server-only` stands in for `server-only`, `src/tests/setup` cleans up Testing Library.
 - `eslint.config.mjs` — flat config: `core-web-vitals`, `API_URL` and `fetch` limited to `src/services`, the naming scheme, Prettier.
 - `.husky/pre-commit`, `.lintstagedrc.json` — the pre-commit hook: lint-staged runs ESLint and Prettier on staged files, in chunks.
 - `.github/workflows/ci.yml` — CI on every push: lint, format check, tests, build; the build needs the secrets `API_URL`, `SITE_URL`.
@@ -65,7 +65,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - Server components: `quote`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `quote-form-fields`,
     `pagination`, `status-message`, `button`, `burger-button`, `loader`, `footer`.
 - `hooks/` — none yet; a hook is `use-<name>/use-<name>.js`.
-- `tests/` — shared `mocks/` (`server-only`) and `utils/` (none yet), each in a folder with a barrel.
+- `tests/` — shared `mocks/` (`server-only`), `setup/` (Vitest setup file) and `utils/` (none yet), each in a folder with a barrel.
 
 ## Environment
 

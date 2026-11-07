@@ -8,7 +8,7 @@ tool.
 
 A compact Next.js (App Router) + React frontend for a quotes application: browse, search, create,
 edit and delete quotes. The data lives in a separate backend API. JavaScript ESM, Tailwind CSS, Server
-Actions, Sonner toasts, Jest + Testing Library. No TypeScript. Keep the code practical, accessible and
+Actions, Sonner toasts, Vitest + Testing Library. No TypeScript. Keep the code practical, accessible and
 proportional to the project size; clarity, UX polish and maintainability matter more than clever
 abstractions.
 
@@ -51,7 +51,7 @@ The parts that never bend:
 - Merges happen locally into `main`, then `main` is pushed. No pull requests, and never a force-push
   of `main`.
 - Never bypass a git hook (`--no-verify`).
-- Tests are Jest + Testing Library only (no end-to-end), written first: a failing test committed as its
+- Tests are Vitest + Testing Library only (no end-to-end), written first: a failing test committed as its
   own `test:` commit, then the code, then the refactor; a bug starts with a test that reproduces it. A
   change to a service, an action, a util, a hook or a component keeps its tests green, and coverage
   only grows.
@@ -89,7 +89,7 @@ If a change materially reshapes a pattern, update the matching skill in the same
 - Stack: Next.js App Router, React 19 with the React Compiler, JavaScript ESM (`.js`, `.jsx`), Tailwind
   CSS 4, Sonner for toasts.
 - Sources: `src/` (alias `@/`); the build output is `.next/`.
-- Tests: Jest + Testing Library, next to the module they cover; shared mocks and helpers in
+- Tests: Vitest + Testing Library, next to the module they cover; shared mocks and helpers in
   `tests/mocks`, `tests/utils`; TDD (`ai/rules/testing.md`).
 - Naming: kebab-case, a singular role suffix per module (`.service.js`, `.util.js`), none on components
   and hooks, a folder with an `index.js` per module, one alias `@/` (`ai/rules/style.md`).
@@ -108,7 +108,7 @@ npm ci               # install from the lockfile
 npm run dev          # dev server on port 4000
 npm run build        # production build
 npm run start        # serve the production build
-npm run test:watch   # Jest in watch mode
+npm run test:watch   # Vitest in watch mode
 npm run lint:fix     # ESLint with --fix
 npm run format       # apply Prettier
 ```

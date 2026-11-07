@@ -43,7 +43,7 @@ Constraints:
 
 - Chat with the author in Russian. Spec, plan, code, and commits stay in English.
 - Touch only what this issue needs.
-- Keep Jest + Testing Library tests green, write the ones the change needs before its code, and never
+- Keep Vitest + Testing Library tests green, write the ones the change needs before its code, and never
   lower coverage.
 - Stop at the author-approval gate (workflow step 11): do not merge, do not push `main`, do not mark the
   issue `Done`.

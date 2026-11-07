@@ -37,7 +37,7 @@ approval.
 - The change was test-driven (`ai/rules/testing.md`): its failing test was committed first as its own
   `test:` commit, and a bug fix started with a test that reproduces the bug.
 - New or changed behavior in a service, the fetcher, an action, a util, a hook, a component or a page with
-  logic has a Jest test next to the module that fails without the change; tests query by role or
+  logic has a Vitest test next to the module that fails without the change; tests query by role or
   accessible name, as a user would.
 - `npm test` is green, coverage did not drop, and no test was deleted or skipped to make it pass.
 

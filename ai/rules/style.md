@@ -40,7 +40,7 @@ workspace code style standard plus this project's naming (decision `naming-like-
 ## Files, names and imports
 
 - Files and folders are kebab-case. A module carries its role as a singular suffix: `.service.js`,
-  `.fetcher.js`, `.action.js`, `.util.js`, `.constant.js`, `.config.js`, `.error.js`, `.mock.js`,
+  `.fetcher.js`, `.action.js`, `.util.js`, `.constant.js`, `.config.js`, `.error.js`, `.mock.js`, `.setup.js`,
   `.test.js` (`quotes.constant.js`, `escape-reg-exp.util.js`). A component and a hook have no suffix:
   `components/quote-form/quote-form.jsx`, `hooks/use-quote-form/use-quote-form.js`. Names Next.js
   requires stay as they are (`page.jsx`, `layout.jsx`, `not-found.jsx`, `robots.js`, `sitemap.js`).

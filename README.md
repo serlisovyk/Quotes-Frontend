@@ -19,7 +19,7 @@ https://quotes-backend-eight.vercel.app/
   <img width="12" />
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/tailwindcss-colored.svg" width="40" height="40" alt="Tailwind CSS" />
   <img width="12" />
-  <img src="https://www.svgrepo.com/show/353930/jest.svg" width="40" height="40" alt="Jest" />
+  <img src="https://vitest.dev/logo.svg" width="40" height="40" alt="Vitest" />
   <img width="12" />
   <img src="https://raw.githubusercontent.com/danielcranney/readme-generator/main/public/icons/skills/docker-colored.svg" width="40" height="40" alt="Docker" />
 </p>
@@ -34,7 +34,7 @@ https://quotes-backend-eight.vercel.app/
 - Native Next.js server-side data fetching and cache invalidation.
 - Inline error states and success toasts.
 - Metadata, favicon, sitemap, and robots configuration.
-- Unit and component tests with Jest and Testing Library.
+- Unit and component tests with Vitest and Testing Library.
 
 ## Getting Started
 
