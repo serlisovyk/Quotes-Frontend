@@ -55,6 +55,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Native Next.js caching instead of TanStack Query](2026-11-06-native-next-caching.md)
 - [`API_URL` is server-only](2026-11-06-api-url-server-only.md)
 - [No `loading.jsx` above a route that calls `notFound()`](2026-11-06-no-loading-above-not-found.md)
+- [Root layout at `src/app`, not in a route group](2026-11-07-root-layout-at-app-root.md)
 
 ### UI and tests
 

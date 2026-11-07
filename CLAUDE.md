@@ -5,7 +5,7 @@ Nothing agent-specific is duplicated here.
 
 @AGENTS.md
 
-Orientation: a Next.js App Router + React quotes frontend in JavaScript. Pages are in `src/app/(routes)`,
+Orientation: a Next.js App Router + React quotes frontend in JavaScript. Pages are in `src/app`,
 shared code in the other `src/` folders, agent docs in `ai/`: start with `ai/map.md`. Verify with the commands
 under "Verification" in `AGENTS.md`.
 
