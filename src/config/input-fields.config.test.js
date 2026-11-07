@@ -44,6 +44,17 @@ describe('Quote Input Fields', () => {
     expect(setValues).toHaveBeenCalledWith({ ...values, [id]: newValue })
   })
 
+  test('makes the categories field a multiple category combobox and the others plain inputs', () => {
+    const fields = createQuoteInputFields({ values, validationErrors: {} })
+
+    expect(fields.map(({ id, control }) => [id, control])).toEqual([
+      ['text', undefined],
+      ['author', undefined],
+      ['categories', 'category'],
+    ])
+    expect(fields.find(({ id }) => id === 'categories').isMultiple).toBe(true)
+  })
+
   test('leaves the fields without change handlers when there is no setValues', () => {
     const fields = createQuoteInputFields({ values, validationErrors: {} })
 
@@ -69,6 +80,14 @@ describe('Search Input Fields', () => {
       ['category', 'life'],
       ['limit', '20'],
     ])
+  })
+
+  test('makes the category a single category combobox', () => {
+    const fields = createSearchInputFields({ searchValues, validationErrors: {} })
+    const category = fields.find(({ id }) => id === 'category')
+
+    expect(category.control).toBe('category')
+    expect(category.isMultiple).toBeUndefined()
   })
 
   test('makes the limit a select of the allowed limits', () => {

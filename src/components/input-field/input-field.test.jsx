@@ -127,6 +127,34 @@ describe('Input Field', () => {
     expect(screen.queryByText('Author is required')).not.toBeInTheDocument()
   })
 
+  test('puts the given props on the input', () => {
+    const onKeyDown = vi.fn()
+    renderField({
+      inputProps: { role: 'combobox', 'aria-expanded': false, onKeyDown },
+    })
+
+    expect(screen.getByRole('combobox', { name: 'Author' })).toHaveAttribute(
+      'aria-expanded',
+      'false',
+    )
+  })
+
+  test('calls the key handler it is given through the input props', async () => {
+    const user = userEvent.setup()
+    const onKeyDown = vi.fn()
+    renderField({ inputProps: { onKeyDown } })
+
+    await user.type(screen.getByLabelText('Author'), 'a')
+
+    expect(onKeyDown).toHaveBeenCalledTimes(1)
+  })
+
+  test('renders its children next to the input', () => {
+    renderField({ children: <p>Suggestions</p> })
+
+    expect(screen.getByText('Suggestions')).toBeVisible()
+  })
+
   test('passes the number attributes to the input', () => {
     renderField({
       id: 'limit',

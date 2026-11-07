@@ -1,8 +1,13 @@
 import { describe, expect, test, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
+import { useCategorySuggestions } from '@/hooks/use-category-suggestions'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 import { SearchForm } from './search-form.jsx'
+
+vi.mock('@/hooks/use-category-suggestions', () => ({
+  useCategorySuggestions: vi.fn(() => []),
+}))
 
 const mockPush = vi.hoisted(() => vi.fn())
 
@@ -13,6 +18,34 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('SearchForm Component', () => {
+  test('suggests categories for the category field and puts the chosen one into the search', async () => {
+    const user = userEvent.setup()
+    useCategorySuggestions.mockImplementation((query) =>
+      query ? ['leadership', 'learning'] : [],
+    )
+    render(<SearchForm />)
+
+    await user.type(screen.getByRole('combobox', { name: 'Category' }), 'lea')
+    await user.click(screen.getByRole('option', { name: 'learning' }))
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
+
+    expect(mockPush).toHaveBeenCalledWith(`${ROUTES.SEARCH}?category=learning`)
+  })
+
+  test('does not submit the search when Enter picks a suggestion', async () => {
+    const user = userEvent.setup()
+    useCategorySuggestions.mockImplementation((query) =>
+      query ? ['leadership', 'learning'] : [],
+    )
+    render(<SearchForm />)
+
+    await user.type(screen.getByRole('combobox', { name: 'Category' }), 'lea')
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(screen.getByLabelText('Category')).toHaveValue('leadership')
+    expect(mockPush).not.toHaveBeenCalled()
+  })
+
   test('has no offset field', () => {
     render(<SearchForm />)
 

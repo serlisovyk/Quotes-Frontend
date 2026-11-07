@@ -1,7 +1,13 @@
 import { describe, expect, test, vi } from 'vitest'
 import { act, fireEvent, render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { useCategorySuggestions } from '@/hooks/use-category-suggestions'
 import { createInitialQuoteFormState } from '@/utils/quote-form'
 import { QuoteForm } from './quote-form.jsx'
+
+vi.mock('@/hooks/use-category-suggestions', () => ({
+  useCategorySuggestions: vi.fn(() => []),
+}))
 
 const emptyValues = { text: '', author: '', categories: '' }
 
@@ -29,6 +35,44 @@ const submitForm = () =>
   })
 
 describe('Quote Form', () => {
+  test('suggests categories for the text after the last comma and completes only that text', async () => {
+    const user = userEvent.setup()
+    useCategorySuggestions.mockImplementation((query) =>
+      query ? ['courage', 'courtesy'] : [],
+    )
+    renderQuoteForm()
+    const categories = screen.getByRole('combobox', {
+      name: 'Categories (comma-separated)',
+    })
+
+    await user.type(categories, 'life, hope, cou')
+    await user.click(screen.getByRole('option', { name: 'courage' }))
+
+    expect(categories).toHaveValue('life, hope, courage')
+  })
+
+  test('picks a suggestion with the keyboard without submitting the form', async () => {
+    const user = userEvent.setup()
+    const action = vi.fn()
+    useCategorySuggestions.mockImplementation((query) =>
+      query ? ['courage', 'courtesy'] : [],
+    )
+    renderQuoteForm({ action })
+    const categories = screen.getByLabelText('Categories (comma-separated)')
+
+    await user.type(categories, 'cou')
+    await user.keyboard('{ArrowDown}{Enter}')
+
+    expect(categories).toHaveValue('courage')
+    expect(action).not.toHaveBeenCalled()
+  })
+
+  test('gives the other fields no suggestions list', () => {
+    renderQuoteForm()
+
+    expect(screen.getAllByRole('combobox')).toHaveLength(1)
+  })
+
   test('shows the title it is given as the page heading', () => {
     renderQuoteForm({ title: 'Create New Quote', buttonText: 'Save' })
 
