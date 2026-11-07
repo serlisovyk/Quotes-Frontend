@@ -2,7 +2,11 @@ import 'server-only'
 
 import { createApiError } from '@/utils/create-api-error'
 import { createSearchQueryString } from '@/utils/query-string'
-import { ALLOWED_API_QUERY_PARAM_NAMES } from '@/constants'
+import {
+  ALLOWED_API_QUERY_PARAM_NAMES,
+  LEADING_SLASHES_PATTERN,
+  TRAILING_SLASHES_PATTERN,
+} from '@/constants'
 
 const getApiUrl = () => process.env.API_URL
 
@@ -18,9 +22,11 @@ const createUrl = (endpoint, queryParams = {}) => {
     ALLOWED_API_QUERY_PARAM_NAMES,
   )
 
-  return queryString
-    ? `${apiUrl}/${endpoint}?${queryString}`
-    : `${apiUrl}/${endpoint}`
+  const baseUrl = apiUrl.replace(TRAILING_SLASHES_PATTERN, '')
+  const path = endpoint.replace(LEADING_SLASHES_PATTERN, '')
+  const url = `${baseUrl}/${path}`
+
+  return queryString ? `${url}?${queryString}` : url
 }
 
 const request = async (
