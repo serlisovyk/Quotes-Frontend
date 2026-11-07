@@ -3,6 +3,7 @@ import { AuthorLink } from '@/components/author-link'
 import { Button } from '@/components/button'
 import { CategoryTags } from '@/components/category-tags'
 import { DeleteQuoteButton } from '@/components/delete-quote-button'
+import { QuoteActions } from '@/components/quote-actions'
 import { IS_READ_ONLY } from '@/config'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import { isQuoteValidId } from '@/utils/validation'
@@ -35,9 +36,12 @@ export default async function QuotePage({ params }) {
         <h1 className="text-xl md:text-2xl font-bold text-center mb-6 text-accent-text">
           {quote.text}
         </h1>
-        <p className="text-2xl text-center text-muted mb-10">
+        <p className="text-2xl text-center text-muted mb-4">
           <AuthorLink author={quote.author} />
         </p>
+        <div className="mb-6 flex justify-center">
+          <QuoteActions id={quote.id} text={quote.text} author={quote.author} />
+        </div>
         <CategoryTags categories={quote.categories} isSingleQuotePage />
       </div>
       {!IS_READ_ONLY && (

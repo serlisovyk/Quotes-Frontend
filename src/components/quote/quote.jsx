@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { AuthorLink } from '@/components/author-link'
 import { CategoryTags } from '@/components/category-tags'
+import { QuoteActions } from '@/components/quote-actions'
 import { renderQuoteText } from '@/utils/render-quote-text'
 import { LINK_FOCUS_CLASSES, MAX_VISIBLE_TEXT_LENGTH, ROUTES } from '@/constants'
 
@@ -25,9 +26,13 @@ export function Quote({ quote, selectedCategory, searchText }) {
         </p>
       </Link>
 
-      <p className="mb-10 text-right text-xl font-semibold text-muted">
+      <p className="mb-4 text-right text-xl font-semibold text-muted">
         <AuthorLink author={author} />
       </p>
+
+      <div className="mb-6 flex justify-end">
+        <QuoteActions id={id} text={text} author={author} />
+      </div>
 
       <CategoryTags categories={categories} selectedCategory={selectedCategory} />
     </div>
