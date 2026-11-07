@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
-import { act, renderHook } from '@testing-library/react'
+import { act, renderHook, waitFor } from '@testing-library/react'
 import { THEME_COLORS, THEME_STORAGE_KEY, THEMES } from '@/constants'
 import { useTheme } from './use-theme.js'
 
@@ -108,5 +108,18 @@ describe('useTheme', () => {
     act(() => first.result.current.setTheme(THEMES.DARK))
 
     expect(second.result.current.theme).toBe(THEMES.DARK)
+  })
+
+  test('puts the colour back when the page replaces the theme-color meta', async () => {
+    const { result } = renderHook(() => useTheme())
+    act(() => result.current.setTheme(THEMES.DARK))
+
+    document.head.innerHTML = '<meta name="theme-color" content="#ffffff">'
+
+    await waitFor(() =>
+      expect(document.querySelector('meta[name="theme-color"]').content).toBe(
+        THEME_COLORS.dark,
+      ),
+    )
   })
 })

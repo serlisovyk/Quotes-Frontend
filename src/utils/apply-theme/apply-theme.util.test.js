@@ -39,4 +39,17 @@ describe('applyTheme', () => {
   test('works without a theme-color meta', () => {
     expect(() => applyTheme(THEMES.LIGHT)).not.toThrow()
   })
+
+  test('writes nothing when the page already has the theme', () => {
+    addThemeColorMeta()
+    applyTheme(THEMES.DARK)
+    const observer = new MutationObserver(() => {})
+    observer.observe(document.documentElement, { attributes: true })
+    observer.observe(document.head, { attributes: true, subtree: true })
+
+    applyTheme(THEMES.DARK)
+
+    expect(observer.takeRecords()).toHaveLength(0)
+    observer.disconnect()
+  })
 })
