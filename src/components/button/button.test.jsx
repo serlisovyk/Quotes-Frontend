@@ -42,6 +42,18 @@ describe('Button Component', () => {
     expect(mockOnClick).toHaveBeenCalledTimes(1)
   })
 
+  test('renders the button itself, with no wrapper around it', () => {
+    const { container } = render(<Button text="Click Me" />)
+
+    expect(container.firstElementChild).toBe(screen.getByRole('button'))
+  })
+
+  test('renders the link itself, with no wrapper around it', () => {
+    const { container } = render(<Button text="Go to Search" href="/search" />)
+
+    expect(container.firstElementChild).toBe(screen.getByRole('link'))
+  })
+
   test('renders a link when href is provided', () => {
     render(<Button text="Go to Search" href="/search" />)
 
