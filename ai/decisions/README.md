@@ -60,6 +60,7 @@ Not decisions: one-off task details, plain current-state facts, a choice nobody 
 - [Root layout at `src/app`, not in a route group](2026-11-07-root-layout-at-app-root.md)
 - [A `notFound()` page is a 404 with an empty server shell](2026-11-07-not-found-server-shell.md)
 - [Category suggestions through a Route Handler](2026-11-07-category-suggestions-route-handler.md)
+- [Security headers without a full CSP](2026-11-07-security-headers-without-csp.md)
 
 ### UI and tests
 
