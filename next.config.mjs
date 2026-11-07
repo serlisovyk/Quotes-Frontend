@@ -5,6 +5,7 @@ const nextConfig = {
   poweredByHeader: false,
   compress: true,
   productionBrowserSourceMaps: false,
+  agentRules: false,
 }
 
 export default nextConfig
