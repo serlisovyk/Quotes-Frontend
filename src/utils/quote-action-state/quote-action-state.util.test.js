@@ -20,6 +20,14 @@ describe('quoteActionState utilities', () => {
     })
   })
 
+  test('falls back to empty strings for missing FormData entries', () => {
+    expect(createQuoteFormValuesFromFormData(new FormData())).toEqual({
+      text: '',
+      author: '',
+      categories: '',
+    })
+  })
+
   test('creates a default quote action state', () => {
     const values = {
       text: 'Quote text',
@@ -54,6 +62,16 @@ describe('quoteActionState utilities', () => {
         categories: 'Category is invalid',
       },
       formError: 'Category is invalid (categories)',
+    })
+  })
+
+  test('creates an api error state without field errors for a plain error', () => {
+    const values = { text: 'Quote text', author: 'Author', categories: '' }
+
+    expect(createApiErrorState(new Error('Server down'), values)).toEqual({
+      values,
+      errors: {},
+      formError: 'Server down',
     })
   })
 
