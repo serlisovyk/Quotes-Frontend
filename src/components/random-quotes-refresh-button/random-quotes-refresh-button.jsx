@@ -13,19 +13,14 @@ export function RandomQuotesRefreshButton({ quotes, hasError }) {
   const [isPending, startTransition] = useTransition()
 
   const buttonText = isPending ? 'Loading...' : 'Get Random Quotes'
+  const contentClasses = isPending
+    ? 'opacity-50 transition-opacity duration-fast'
+    : 'transition-opacity duration-fast'
 
   const refreshQuotes = () => {
     startTransition(() => {
       router.refresh()
     })
-  }
-
-  const renderContent = () => {
-    if (isPending) return <Loader />
-
-    if (hasError) return <StatusMessage text="Error while fetching random quotes" />
-
-    return <Quotes quotes={quotes} />
   }
 
   return (
@@ -34,8 +29,24 @@ export function RandomQuotesRefreshButton({ quotes, hasError }) {
         <Button onClick={refreshQuotes} text={buttonText} disabled={isPending} />
       </div>
 
-      <div aria-busy={isPending} aria-live="polite" className="min-h-80 pt-5">
-        {renderContent()}
+      <div
+        aria-busy={isPending}
+        aria-live="polite"
+        className="relative min-h-80 pt-5"
+      >
+        <div className={contentClasses}>
+          {hasError ? (
+            <StatusMessage text="Error while fetching random quotes" />
+          ) : (
+            <Quotes quotes={quotes} />
+          )}
+        </div>
+
+        {isPending && (
+          <div className="absolute inset-x-0 top-0 flex justify-center">
+            <Loader />
+          </div>
+        )}
       </div>
     </>
   )
