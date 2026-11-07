@@ -38,7 +38,12 @@ describe('Categories Service', () => {
       expect(result).toEqual(body)
       expect(global.fetch).toHaveBeenCalledWith(
         `${API_URL}/categories?name=lif&limit=3&offset=6`,
-        { cache: 'no-store', method: 'GET', headers: {} },
+        {
+          cache: 'no-store',
+          method: 'GET',
+          headers: {},
+          signal: expect.any(AbortSignal),
+        },
       )
     })
 

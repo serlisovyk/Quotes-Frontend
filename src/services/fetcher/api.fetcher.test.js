@@ -1,4 +1,6 @@
 import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
+import { API_REQUEST_TIMEOUT_MS } from '@/constants'
+
 const API_URL = 'http://api.test'
 
 async function importFreshFetcher({ apiUrl = API_URL } = {}) {
@@ -19,7 +21,9 @@ function createResponse({ ok, status = 200, body }) {
 }
 
 describe('Services fetcher', () => {
-  beforeEach(() => (global.fetch = vi.fn()))
+  beforeEach(() => {
+    global.fetch = vi.fn()
+  })
 
   afterEach(() => {
     delete global.fetch
@@ -41,6 +45,7 @@ describe('Services fetcher', () => {
       {
         method: 'GET',
         headers: {},
+        signal: expect.any(AbortSignal),
       },
     )
   })
@@ -60,7 +65,7 @@ describe('Services fetcher', () => {
 
     expect(global.fetch).toHaveBeenCalledWith(
       `${API_URL}/categories?name=lif&limit=3`,
-      { method: 'GET', headers: {} },
+      { method: 'GET', headers: {}, signal: expect.any(AbortSignal) },
     )
   })
 
@@ -78,6 +83,7 @@ describe('Services fetcher', () => {
     expect(global.fetch).toHaveBeenCalledWith('http://private-api.test/quotes', {
       method: 'GET',
       headers: {},
+      signal: expect.any(AbortSignal),
     })
   })
 
@@ -122,6 +128,7 @@ describe('Services fetcher', () => {
     expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/quotes`, {
       method: 'GET',
       headers: {},
+      signal: expect.any(AbortSignal),
       cache: 'no-store',
     })
   })
@@ -139,6 +146,84 @@ describe('Services fetcher', () => {
 
     expect(result).toBe(true)
     expect(json).not.toHaveBeenCalled()
+  })
+
+  describe('timeout', () => {
+    const mockTimeoutSignal = () => {
+      const timeoutController = new AbortController()
+      const timeoutSpy = vi
+        .spyOn(AbortSignal, 'timeout')
+        .mockReturnValue(timeoutController.signal)
+
+      return { timeoutController, timeoutSpy }
+    }
+
+    test('gives every request a signal that fires after the request timeout', async () => {
+      const { timeoutController, timeoutSpy } = mockTimeoutSignal()
+      global.fetch.mockResolvedValue(createResponse({ ok: true, body: {} }))
+
+      const fetcher = await importFreshFetcher()
+      await fetcher.get('quotes')
+
+      const { signal } = global.fetch.mock.calls[0][1]
+
+      expect(timeoutSpy).toHaveBeenCalledWith(API_REQUEST_TIMEOUT_MS)
+      expect(signal.aborted).toBe(false)
+
+      timeoutController.abort()
+
+      expect(signal.aborted).toBe(true)
+    })
+
+    test('rejects when the backend never answers before the timeout', async () => {
+      const { timeoutController } = mockTimeoutSignal()
+      global.fetch.mockImplementation(
+        (_url, { signal }) =>
+          new Promise((_resolve, reject) => {
+            signal.addEventListener('abort', () => reject(signal.reason))
+          }),
+      )
+
+      const fetcher = await importFreshFetcher()
+      const request = fetcher.get('quotes')
+
+      timeoutController.abort(new DOMException('Timed out', 'TimeoutError'))
+
+      await expect(request).rejects.toMatchObject({ name: 'TimeoutError' })
+    })
+
+    test('aborts the request when the caller signal fires first', async () => {
+      mockTimeoutSignal()
+      global.fetch.mockResolvedValue(createResponse({ ok: true, body: {} }))
+      const callerController = new AbortController()
+
+      const fetcher = await importFreshFetcher()
+      await fetcher.get('quotes', '', { signal: callerController.signal })
+
+      const { signal } = global.fetch.mock.calls[0][1]
+
+      expect(signal.aborted).toBe(false)
+
+      callerController.abort()
+
+      expect(signal.aborted).toBe(true)
+    })
+
+    test('aborts the request when the timeout fires while the caller signal is idle', async () => {
+      const { timeoutController } = mockTimeoutSignal()
+      global.fetch.mockResolvedValue(createResponse({ ok: true, body: {} }))
+      const callerController = new AbortController()
+
+      const fetcher = await importFreshFetcher()
+      await fetcher.get('quotes', '', { signal: callerController.signal })
+
+      const { signal } = global.fetch.mock.calls[0][1]
+
+      timeoutController.abort()
+
+      expect(signal.aborted).toBe(true)
+      expect(callerController.signal.aborted).toBe(false)
+    })
   })
 
   test('throws before any request when API_URL is missing', async () => {
@@ -166,6 +251,7 @@ describe('Services fetcher', () => {
     expect(global.fetch).toHaveBeenCalledWith(`${API_URL}/quotes/1`, {
       method,
       headers: { 'Content-Type': 'application/json' },
+      signal: expect.any(AbortSignal),
       body: JSON.stringify(payload),
     })
   })
@@ -193,8 +279,16 @@ describe('Services fetcher', () => {
     await fetcher.get('quotes')
     await fetcher.delete('quotes/1')
 
-    expect(global.fetch.mock.calls[0][1]).toEqual({ method: 'GET', headers: {} })
-    expect(global.fetch.mock.calls[1][1]).toEqual({ method: 'DELETE', headers: {} })
+    expect(global.fetch.mock.calls[0][1]).toEqual({
+      method: 'GET',
+      headers: {},
+      signal: expect.any(AbortSignal),
+    })
+    expect(global.fetch.mock.calls[1][1]).toEqual({
+      method: 'DELETE',
+      headers: {},
+      signal: expect.any(AbortSignal),
+    })
   })
 
   test('throws normalized backend errors with code and fields', async () => {
