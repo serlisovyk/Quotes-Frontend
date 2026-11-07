@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest'
 import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
 import {
   createSearchQueryString,
@@ -68,7 +69,7 @@ describe('createSearchQueryString utility function', () => {
 describe('createSearchValuesFromQueryString utility function', () => {
   test('should correctly create an object with allowed params from searchParams', () => {
     const mockSearchParams = {
-      get: jest.fn((param) => {
+      get: vi.fn((param) => {
         const params = {
           text: 'some text',
           author: 'John Doe',
@@ -98,7 +99,7 @@ describe('createSearchValuesFromQueryString utility function', () => {
 
   test('should return empty strings for missing searchParams', () => {
     const mockSearchParams = {
-      get: jest.fn((param) => {
+      get: vi.fn((param) => {
         const params = {
           text: 'another text',
         }
@@ -115,7 +116,7 @@ describe('createSearchValuesFromQueryString utility function', () => {
 
   test('should ignore unsupported params', () => {
     const mockSearchParams = {
-      get: jest.fn((param) => {
+      get: vi.fn((param) => {
         const params = {
           text: 'valid text',
           author: 'Jane Doe',

@@ -1,8 +1,9 @@
+import { describe, expect, test } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import NotFound from './not-found'
 
 describe('Not Found page', () => {
-  it('tells the page was not found', () => {
+  test('tells the page was not found', () => {
     render(<NotFound />)
 
     expect(
@@ -10,7 +11,7 @@ describe('Not Found page', () => {
     ).toBeTruthy()
   })
 
-  it('links back to the home page', () => {
+  test('links back to the home page', () => {
     render(<NotFound />)
 
     expect(

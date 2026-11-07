@@ -1,11 +1,12 @@
+import { describe, expect, test, vi } from 'vitest'
 import sitemap from './sitemap'
 
-jest.mock('@/config', () => ({
+vi.mock('@/config', () => ({
   SITE_URL: 'http://localhost:4000',
 }))
 
 describe('Sitemap', () => {
-  it('lists the public pages', () => {
+  test('lists the public pages', () => {
     const urls = sitemap().map(({ url }) => url)
 
     expect(urls).toEqual([
@@ -15,7 +16,7 @@ describe('Sitemap', () => {
     ])
   })
 
-  it('does not list the create page', () => {
+  test('does not list the create page', () => {
     const urls = sitemap().map(({ url }) => url)
 
     expect(urls).not.toContain('http://localhost:4000/quotes/create')

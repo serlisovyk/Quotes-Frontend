@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { escapeRegExp } from './escape-reg-exp.util.js'
 
 describe('escapeRegExp utility function', () => {

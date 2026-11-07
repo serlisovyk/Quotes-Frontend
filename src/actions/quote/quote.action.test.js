@@ -1,3 +1,4 @@
+import { describe, expect, test, vi } from 'vitest'
 import { revalidatePath } from 'next/cache'
 import { redirect } from 'next/navigation'
 import { deleteQuote, patchQuote, postQuote } from '@/services/quotes'
@@ -8,8 +9,8 @@ import {
   updateQuoteAction,
 } from './quote.action.js'
 
-jest.mock('next/navigation', () => ({
-  redirect: jest.fn((url) => {
+vi.mock('next/navigation', () => ({
+  redirect: vi.fn((url) => {
     const error = new Error('NEXT_REDIRECT')
 
     error.digest = `NEXT_REDIRECT;push;${url};307;`
@@ -18,14 +19,14 @@ jest.mock('next/navigation', () => ({
   }),
 }))
 
-jest.mock('next/cache', () => ({
-  revalidatePath: jest.fn(),
+vi.mock('next/cache', () => ({
+  revalidatePath: vi.fn(),
 }))
 
-jest.mock('@/services/quotes', () => ({
-  postQuote: jest.fn(),
-  patchQuote: jest.fn(),
-  deleteQuote: jest.fn(),
+vi.mock('@/services/quotes', () => ({
+  postQuote: vi.fn(),
+  patchQuote: vi.fn(),
+  deleteQuote: vi.fn(),
 }))
 
 const QUOTE_ID = '42'
@@ -61,8 +62,6 @@ async function catchError(promise) {
 }
 
 describe('Quote Server Actions', () => {
-  afterEach(() => jest.clearAllMocks())
-
   describe('createQuoteAction', () => {
     test('returns validation errors and does not call the API', async () => {
       const state = await createQuoteAction(null, createFormData(invalidValues))

@@ -1,20 +1,21 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import HomePage from './page'
 
-const mockFetchQuoteByIdOrNull = jest.fn()
-const mockHome = { homeQuoteId: undefined }
+const mockFetchQuoteByIdOrNull = vi.hoisted(() => vi.fn())
+const mockHome = vi.hoisted(() => ({ homeQuoteId: undefined }))
 
-jest.mock('@/config', () => ({
+vi.mock('@/config', () => ({
   get HOME_QUOTE_ID() {
     return mockHome.homeQuoteId
   },
 }))
 
-jest.mock('@/services/quotes', () => ({
+vi.mock('@/services/quotes', () => ({
   fetchQuoteByIdOrNull: (...args) => mockFetchQuoteByIdOrNull(...args),
 }))
 
-jest.mock('@/components/quote', () => ({
+vi.mock('@/components/quote', () => ({
   Quote: ({ quote }) => <div data-testid="quote">{quote.text}</div>,
 }))
 
@@ -37,7 +38,7 @@ const expectHomeWithoutCard = () => {
 }
 
 describe('Home Page', () => {
-  it('shows the quote card for the id from HOME_QUOTE_ID', async () => {
+  test('shows the quote card for the id from HOME_QUOTE_ID', async () => {
     mockFetchQuoteByIdOrNull.mockResolvedValue(quote)
 
     await renderHomePage('7')
@@ -50,14 +51,14 @@ describe('Home Page', () => {
     expect(screen.getByRole('link', { name: 'Random Quotes' })).toBeTruthy()
   })
 
-  it('renders without the card when HOME_QUOTE_ID is not set', async () => {
+  test('renders without the card when HOME_QUOTE_ID is not set', async () => {
     await renderHomePage(undefined)
 
     expectHomeWithoutCard()
     expect(mockFetchQuoteByIdOrNull).not.toHaveBeenCalled()
   })
 
-  it.each(['', 'abc', '0', '-5', '2147483648'])(
+  test.each(['', 'abc', '0', '-5', '2147483648'])(
     'renders without the card and skips the API for the invalid id "%s"',
     async (invalidId) => {
       await renderHomePage(invalidId)
@@ -67,7 +68,7 @@ describe('Home Page', () => {
     },
   )
 
-  it('renders without the card when the quote is missing or the API failed', async () => {
+  test('renders without the card when the quote is missing or the API failed', async () => {
     mockFetchQuoteByIdOrNull.mockResolvedValue(null)
 
     await renderHomePage('7')
@@ -76,7 +77,7 @@ describe('Home Page', () => {
     expect(mockFetchQuoteByIdOrNull).toHaveBeenCalledTimes(1)
   })
 
-  it('renders without the card when the response has no id', async () => {
+  test('renders without the card when the response has no id', async () => {
     mockFetchQuoteByIdOrNull.mockResolvedValue({})
 
     await renderHomePage('7')

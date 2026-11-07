@@ -1,24 +1,27 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { fetchQuoteIfExists } from '@/services/quotes'
 import EditQuotePage, { generateMetadata } from './page'
 
-const mockNotFound = jest.fn(() => {
-  throw new Error('NEXT_NOT_FOUND')
-})
+const mockNotFound = vi.hoisted(() =>
+  vi.fn(() => {
+    throw new Error('NEXT_NOT_FOUND')
+  }),
+)
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   notFound: () => mockNotFound(),
 }))
 
-jest.mock('@/services/quotes', () => ({
-  fetchQuoteIfExists: jest.fn(),
+vi.mock('@/services/quotes', () => ({
+  fetchQuoteIfExists: vi.fn(),
 }))
 
-jest.mock('@/actions/quote', () => ({
-  updateQuoteAction: jest.fn(),
+vi.mock('@/actions/quote', () => ({
+  updateQuoteAction: vi.fn(),
 }))
 
-jest.mock('@/components/quote-form', () => ({
+vi.mock('@/components/quote-form', () => ({
   QuoteForm: ({ buttonText }) => (
     <form aria-label="Quote form">
       <button type="submit">{buttonText}</button>
@@ -29,7 +32,7 @@ jest.mock('@/components/quote-form', () => ({
 const renderWithId = (id) => EditQuotePage({ params: Promise.resolve({ id }) })
 
 describe('Edit quote page', () => {
-  it('renders the form for an existing quote', async () => {
+  test('renders the form for an existing quote', async () => {
     fetchQuoteIfExists.mockResolvedValue({
       id: 7,
       text: 'Some text',
@@ -43,7 +46,7 @@ describe('Edit quote page', () => {
     expect(fetchQuoteIfExists).toHaveBeenCalledWith('7', { cache: 'no-store' })
   })
 
-  it.each(['abc', '0', '-5', '2147483648'])(
+  test.each(['abc', '0', '-5', '2147483648'])(
     'calls notFound for the invalid id "%s" without calling the API',
     async (invalidId) => {
       await expect(renderWithId(invalidId)).rejects.toThrow('NEXT_NOT_FOUND')
@@ -52,20 +55,20 @@ describe('Edit quote page', () => {
     },
   )
 
-  it('calls notFound when the quote does not exist', async () => {
+  test('calls notFound when the quote does not exist', async () => {
     fetchQuoteIfExists.mockResolvedValue(null)
 
     await expect(renderWithId('999999999')).rejects.toThrow('NEXT_NOT_FOUND')
   })
 
-  it('lets a failed request propagate to the error page', async () => {
+  test('lets a failed request propagate to the error page', async () => {
     fetchQuoteIfExists.mockRejectedValue(new Error('Network down'))
 
     await expect(renderWithId('7')).rejects.toThrow('Network down')
     expect(mockNotFound).not.toHaveBeenCalled()
   })
 
-  it('is not indexed', async () => {
+  test('is not indexed', async () => {
     const metadata = await generateMetadata({ params: Promise.resolve({ id: '7' }) })
 
     expect(metadata.robots.index).toBe(false)

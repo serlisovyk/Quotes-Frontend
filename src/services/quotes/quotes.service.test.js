@@ -1,7 +1,8 @@
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 const API_URL = 'http://api.test'
 
 async function importFreshServices() {
-  jest.resetModules()
+  vi.resetModules()
   process.env.API_URL = API_URL
 
   return import('./quotes.service.js')
@@ -11,19 +12,18 @@ function createResponse({ ok, status = 200, body }) {
   return {
     ok,
     status,
-    json: jest.fn().mockResolvedValue(body),
+    json: vi.fn().mockResolvedValue(body),
   }
 }
 
 describe('Services result helpers', () => {
   beforeEach(() => {
-    global.fetch = jest.fn()
+    global.fetch = vi.fn()
   })
 
   afterEach(() => {
     delete global.fetch
     delete process.env.API_URL
-    jest.clearAllMocks()
   })
 
   test('returns random quotes result without error on success', async () => {
@@ -190,13 +190,12 @@ describe('Services result helpers', () => {
 
 describe('fetchQuoteIfExists', () => {
   beforeEach(() => {
-    global.fetch = jest.fn()
+    global.fetch = vi.fn()
   })
 
   afterEach(() => {
     delete global.fetch
     delete process.env.API_URL
-    jest.clearAllMocks()
   })
 
   test('returns the quote on success', async () => {
@@ -273,7 +272,7 @@ describe('fetchQuoteByIdOrNull', () => {
   })
 
   test('still returns null for any failure', async () => {
-    global.fetch = jest.fn().mockRejectedValue(new TypeError('fetch failed'))
+    global.fetch = vi.fn().mockRejectedValue(new TypeError('fetch failed'))
 
     const { fetchQuoteByIdOrNull } = await importFreshServices()
 

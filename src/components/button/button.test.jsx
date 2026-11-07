@@ -1,10 +1,9 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render, screen, fireEvent } from '@testing-library/react'
 import { Button } from './button.jsx'
 
 describe('Button Component', () => {
-  const mockOnClick = jest.fn()
-
-  afterEach(() => jest.clearAllMocks())
+  const mockOnClick = vi.fn()
 
   test('renders with primary variant by default', () => {
     render(<Button text="Click Me" onClick={mockOnClick} />)

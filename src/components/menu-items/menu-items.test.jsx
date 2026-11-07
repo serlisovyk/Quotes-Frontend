@@ -1,9 +1,10 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render, screen } from '@testing-library/react'
 import { MenuItems } from './menu-items.jsx'
 
-const mockUsePathname = jest.fn()
+const mockUsePathname = vi.hoisted(() => vi.fn())
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   usePathname: () => mockUsePathname(),
 }))
 

@@ -1,7 +1,8 @@
+import { afterEach, beforeEach, describe, expect, test, vi } from 'vitest'
 const API_URL = 'http://api.test'
 
 async function importFreshFetcher({ apiUrl = API_URL } = {}) {
-  jest.resetModules()
+  vi.resetModules()
   process.env.API_URL = apiUrl
 
   const fetcherModule = await import('./api.fetcher.js')
@@ -13,17 +14,16 @@ function createResponse({ ok, status = 200, body }) {
   return {
     ok,
     status,
-    json: jest.fn().mockResolvedValue(body),
+    json: vi.fn().mockResolvedValue(body),
   }
 }
 
 describe('Services fetcher', () => {
-  beforeEach(() => (global.fetch = jest.fn()))
+  beforeEach(() => (global.fetch = vi.fn()))
 
   afterEach(() => {
     delete global.fetch
     delete process.env.API_URL
-    jest.clearAllMocks()
   })
 
   test('returns JSON data for successful GET requests with query params', async () => {
@@ -79,7 +79,7 @@ describe('Services fetcher', () => {
   })
 
   test('returns true for successful DELETE requests without parsing JSON', async () => {
-    const json = jest.fn()
+    const json = vi.fn()
     global.fetch.mockResolvedValue({
       ok: true,
       status: 204,

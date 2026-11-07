@@ -1,20 +1,21 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import { toast } from 'sonner'
 import { AppToasts } from './app-toasts.jsx'
 
-const mockReplace = jest.fn()
-const mockUsePathname = jest.fn()
-const mockUseSearchParams = jest.fn()
+const mockReplace = vi.hoisted(() => vi.fn())
+const mockUsePathname = vi.hoisted(() => vi.fn())
+const mockUseSearchParams = vi.hoisted(() => vi.fn())
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   usePathname: () => mockUsePathname(),
   useRouter: () => ({ replace: mockReplace }),
   useSearchParams: () => mockUseSearchParams(),
 }))
 
-jest.mock('sonner', () => ({
+vi.mock('sonner', () => ({
   Toaster: () => null,
-  toast: { success: jest.fn() },
+  toast: { success: vi.fn() },
 }))
 
 const renderWithSearch = (search) => {

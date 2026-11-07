@@ -1,20 +1,17 @@
+import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
 import { ROUTES } from '@/constants'
 import { SearchForm } from './search-form.jsx'
 
-const mockPush = jest.fn()
+const mockPush = vi.hoisted(() => vi.fn())
 
-jest.mock('next/navigation', () => ({
+vi.mock('next/navigation', () => ({
   useRouter: () => ({
     push: mockPush,
   }),
 }))
 
 describe('SearchForm Component', () => {
-  beforeEach(() => {
-    mockPush.mockClear()
-  })
-
   test('renders limit and offset as numeric backend query controls', () => {
     render(<SearchForm />)
 

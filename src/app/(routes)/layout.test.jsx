@@ -1,14 +1,17 @@
+import { describe, expect, test, vi } from 'vitest'
 import { renderToString } from 'react-dom/server'
 import RootLayout from './layout'
 
-jest.mock('next/font/local', () => () => ({ variable: 'font-variable' }))
+vi.mock('next/font/local', () => ({
+  default: () => ({ variable: 'font-variable' }),
+}))
 
-jest.mock('@/config', () => ({
-  ...jest.requireActual('@/config'),
+vi.mock('@/config', async () => ({
+  ...(await vi.importActual('@/config')),
   SITE_URL: 'http://localhost:4000',
 }))
 
-jest.mock('@/components/app-toasts', () => {
+vi.mock('@/components/app-toasts', () => {
   const pendingPromise = new Promise(() => {})
 
   return {
@@ -18,7 +21,7 @@ jest.mock('@/components/app-toasts', () => {
   }
 })
 
-jest.mock('@/components/header', () => {
+vi.mock('@/components/header', () => {
   return {
     Header: function Header() {
       return <header>Header</header>
@@ -26,7 +29,7 @@ jest.mock('@/components/header', () => {
   }
 })
 
-jest.mock('@/components/footer', () => {
+vi.mock('@/components/footer', () => {
   return {
     Footer: function Footer() {
       return <footer>Footer</footer>

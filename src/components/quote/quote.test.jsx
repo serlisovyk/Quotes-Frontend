@@ -1,7 +1,8 @@
+import { describe, expect, test, vi } from 'vitest'
 import { render } from '@testing-library/react'
 import { Quote } from './quote.jsx'
 
-jest.mock('@/components/category-tags', () => ({
+vi.mock('@/components/category-tags', () => ({
   CategoryTags: () => <div data-testid="category-tags" />,
 }))
 

@@ -1,3 +1,4 @@
+import { beforeEach, describe, expect, test, vi } from 'vitest'
 import {
   createQuotePayload,
   getQuoteFormValidationErrors,
@@ -8,7 +9,7 @@ import {
 describe('isQuoteFormValid utility function', () => {
   let setValidationErrors
 
-  beforeEach(() => (setValidationErrors = jest.fn()))
+  beforeEach(() => (setValidationErrors = vi.fn()))
 
   test('validates valid input and returns true', () => {
     const values = {

@@ -1,3 +1,4 @@
+import { describe, expect, test } from 'vitest'
 import { render } from '@testing-library/react'
 import { HIGHLIGHT_STYLES } from '@/constants'
 import { highlightText } from './highlight-text.util.jsx'
