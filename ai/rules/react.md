@@ -70,7 +70,7 @@ Why: decisions `naming-like-backend` and `native-next-caching`. Layers, fetching
   the label.
 - A field with an error is marked `aria-invalid` and linked to its message through `aria-describedby`; an
   inline form error is announced (`role="alert"`).
-- A disclosure control exposes `aria-expanded` and `aria-controls`. A menu that covers the page is a native
+- A disclosure control exposes `aria-expanded` and `aria-controls`. A menu or a confirmation that covers the page is a native
   `<dialog>` opened with `showModal()`: Escape, the inert page and the focus in and back come from the
   browser. The navigation has an `aria-label`; the skip link stays the first focusable element.
 - A change a screen-reader user must hear is announced once: Sonner's region already announces success

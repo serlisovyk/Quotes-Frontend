@@ -22,7 +22,7 @@ approval.
 ## Accessibility
 
 - Controls are real elements (`<button>`, `<input>`, `<form>`, `Link`) with an accessible name; a field
-  has a visible label above it (a placeholder is not a label); a modal menu is a `<dialog>`; one `h1` per
+  has a visible label above it (a placeholder is not a label); a modal menu or confirmation is a `<dialog>`; one `h1` per
   page, no skipped heading levels.
 - Everything works from the keyboard, the focus ring shows on `focus-visible` of every control in both
   themes, and after an action the focus lands somewhere meaningful.

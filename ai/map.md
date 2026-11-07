@@ -65,7 +65,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - `create-api-error`, `get-api-error-messages` — turn a failed response or an error into `ApiError` and its messages.
   - `highlight-text`, `render-quote-text` — `.util.jsx` modules that return markup for a search match.
   - `parse-theme`, `resolve-theme`, `get-next-theme`, `get-theme-init-script`, `apply-theme`, `theme-storage`, `system-scheme` — the theme: choice, storage, head script, `<html data-theme>`.
-- `constants/` — one file per domain (`api`, `error-screen`, `combobox`, `menu`, `quotes`, `routes`, `search`, `security`, `validation`, `toast`, `theme`,
+- `constants/` — one file per domain (`api`, `error-screen`, `combobox`, `menu`, `quotes`, `routes`, `search`, `security`, `validation`, `toast`, `theme`, `delete-dialog`,
   class variants).
 - `config/` — `home.config.js` (`HOME_QUOTE_ID`), `input-fields.config.js` (form and search field definitions), `site.config.js`
   (site name, description, `SITE_URL`, skip-link classes).
@@ -76,7 +76,7 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
     `form-field`, `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner),
     `footer`, `theme-icon`.
 - `hooks/` — one folder each, `use-<name>/use-<name>.js`.
-  - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog).
+  - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog), `use-delete-quote-button` (the delete confirmation dialog).
   - `use-category-field` (combobox state and keys), `use-category-suggestions` (debounced, cancellable lookup).
   - `use-theme` (choice, resolved theme, `data-theme`, `theme-color`).
   - `use-error-logging` (writes a page error to the console).
