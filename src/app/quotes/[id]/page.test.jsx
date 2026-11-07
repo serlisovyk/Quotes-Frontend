@@ -22,6 +22,12 @@ vi.mock('@/components/delete-quote-button', () => ({
   DeleteQuoteButton: () => <button type="button">Delete</button>,
 }))
 
+vi.mock('@/components/quote-actions', () => ({
+  QuoteActions: ({ id, text, author }) => (
+    <button type="button" aria-label={`Actions for ${id}: ${text} by ${author}`} />
+  ),
+}))
+
 const mockConfig = vi.hoisted(() => ({ isReadOnly: false }))
 
 vi.mock('@/config', () => ({
@@ -81,6 +87,27 @@ describe('Quote page buttons', () => {
     expect(getByRole('heading', { name: 'Some text' })).toBeVisible()
     expect(queryByRole('link', { name: 'Edit' })).not.toBeInTheDocument()
     expect(queryByRole('button', { name: 'Delete' })).not.toBeInTheDocument()
+  })
+})
+
+describe('Quote page copy and share', () => {
+  const quote = { id: 3, text: 'Some text', author: 'Author', categories: [] }
+  const actionsName = 'Actions for 3: Some text by Author'
+
+  test('shows the quote actions with the full quote', async () => {
+    const { getByRole } = await renderPage(quote)
+
+    expect(getByRole('button', { name: actionsName })).toBeVisible()
+  })
+
+  test('keeps the quote actions in read-only mode', async () => {
+    mockConfig.isReadOnly = true
+
+    const { getByRole } = await renderPage(quote)
+
+    mockConfig.isReadOnly = false
+
+    expect(getByRole('button', { name: actionsName })).toBeVisible()
   })
 })
 

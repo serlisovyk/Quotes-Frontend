@@ -6,6 +6,12 @@ vi.mock('@/components/category-tags', () => ({
   CategoryTags: () => <div data-testid="category-tags" />,
 }))
 
+vi.mock('@/components/quote-actions', () => ({
+  QuoteActions: ({ id, text, author }) => (
+    <button type="button" aria-label={`Actions for ${id}: ${text} by ${author}`} />
+  ),
+}))
+
 describe('Quote Component', () => {
   const mockQuote = {
     id: 1,
@@ -33,6 +39,18 @@ describe('Quote Component', () => {
         /This is a test quote text which is greater than 200 characters. This is really very long text which is displayed on the quuotes page in the quotes application which helps to work with different quotes\.\.\./,
       ),
     ).toBeTruthy()
+  })
+
+  test('renders the quote actions with the full text, not the truncated one', () => {
+    const { getByRole } = render(
+      <Quote quote={mockQuote} selectedCategory="category1" searchText="" />,
+    )
+
+    expect(
+      getByRole('button', {
+        name: `Actions for 1: ${mockQuote.text} by Test Author`,
+      }),
+    ).toBeVisible()
   })
 
   test('renders the CategoryTags component', () => {
