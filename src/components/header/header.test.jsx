@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { render, screen } from '@testing-library/react'
+import { act, render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { Header } from './header.jsx'
 
@@ -10,6 +10,17 @@ vi.mock('next/navigation', () => ({
 const getMenuToggle = () =>
   screen.getByRole('button', { name: 'Open navigation menu' })
 
+const getMobileMenu = () => screen.getByRole('dialog', { name: 'Mobile navigation' })
+
+const queryMobileMenu = () =>
+  screen.queryByRole('dialog', { name: 'Mobile navigation' })
+
+const openMobileMenu = async (user) => {
+  await user.click(getMenuToggle())
+
+  return getMobileMenu()
+}
+
 describe('Header', () => {
   test('shows the app name as a link home', () => {
     render(<Header />)
@@ -18,6 +29,12 @@ describe('Header', () => {
       'href',
       '/',
     )
+  })
+
+  test('does not make the logo a heading', () => {
+    render(<Header />)
+
+    expect(screen.queryByRole('heading')).not.toBeInTheDocument()
   })
 
   test('has the theme switch', () => {
@@ -30,66 +47,105 @@ describe('Header', () => {
     render(<Header />)
 
     expect(getMenuToggle()).toHaveAttribute('aria-expanded', 'false')
-    expect(
-      screen.queryByRole('button', { name: 'Close mobile navigation' }),
-    ).not.toBeInTheDocument()
+    expect(queryMobileMenu()).not.toBeInTheDocument()
   })
 
-  test('opens the mobile menu with its links', async () => {
+  test('links the burger button to the menu it controls', () => {
+    render(<Header />)
+
+    const menuId = getMenuToggle().getAttribute('aria-controls')
+
+    expect(document.getElementById(menuId)).toBe(
+      screen.getByRole('dialog', { hidden: true }),
+    )
+  })
+
+  test('opens the mobile menu as a dialog with its links', async () => {
     const user = userEvent.setup()
     render(<Header />)
-    const linksBefore = screen.getAllByRole('link', { name: 'Random' }).length
 
-    await user.click(getMenuToggle())
+    const menu = await openMobileMenu(user)
 
+    expect(menu).toBeVisible()
+    expect(within(menu).getByRole('link', { name: 'Random' })).toBeVisible()
     expect(
       screen.getAllByRole('button', { name: 'Close navigation menu' })[0],
     ).toHaveAttribute('aria-expanded', 'true')
-    expect(screen.getAllByRole('link', { name: 'Random' })).toHaveLength(
-      linksBefore + 1,
-    )
   })
 
-  test('closes the mobile menu with the burger button', async () => {
+  test('moves the focus into the menu when it opens', async () => {
     const user = userEvent.setup()
     render(<Header />)
-    await user.click(getMenuToggle())
+
+    const menu = await openMobileMenu(user)
+
+    expect(menu).toContainElement(document.activeElement)
+  })
+
+  test('closes the menu on Escape and puts the focus back on the burger button', async () => {
+    const user = userEvent.setup()
+    render(<Header />)
+    await openMobileMenu(user)
+
+    await user.keyboard('{Escape}')
+
+    expect(queryMobileMenu()).not.toBeInTheDocument()
+    expect(getMenuToggle()).toHaveAttribute('aria-expanded', 'false')
+    expect(getMenuToggle()).toHaveFocus()
+  })
+
+  test('closes the menu with its own close button and returns the focus', async () => {
+    const user = userEvent.setup()
+    render(<Header />)
+    const menu = await openMobileMenu(user)
 
     await user.click(
-      screen.getAllByRole('button', { name: 'Close navigation menu' })[0],
+      within(menu).getByRole('button', { name: 'Close navigation menu' }),
     )
 
+    expect(queryMobileMenu()).not.toBeInTheDocument()
+    expect(getMenuToggle()).toHaveFocus()
+  })
+
+  test('closes the menu with a click on the backdrop', async () => {
+    const user = userEvent.setup()
+    render(<Header />)
+    const menu = await openMobileMenu(user)
+
+    await user.click(menu)
+
+    expect(queryMobileMenu()).not.toBeInTheDocument()
     expect(getMenuToggle()).toHaveAttribute('aria-expanded', 'false')
   })
 
-  test('closes the mobile menu with the overlay', async () => {
+  test('closes the menu after a link is followed', async () => {
     const user = userEvent.setup()
     render(<Header />)
-    await user.click(getMenuToggle())
+    const menu = await openMobileMenu(user)
 
-    await user.click(screen.getByRole('button', { name: 'Close mobile navigation' }))
+    await user.click(within(menu).getByRole('link', { name: 'Search' }))
 
-    expect(getMenuToggle()).toBeInTheDocument()
+    expect(queryMobileMenu()).not.toBeInTheDocument()
+    expect(getMenuToggle()).toHaveAttribute('aria-expanded', 'false')
   })
 
-  test('closes the mobile menu when the logo link is followed', async () => {
+  test('closes the open menu when the window grows to the desktop width', async () => {
     const user = userEvent.setup()
+    const listeners = []
+    vi.stubGlobal('matchMedia', () => ({
+      matches: false,
+      addEventListener: (type, listener) => listeners.push(listener),
+      removeEventListener: () => {},
+    }))
     render(<Header />)
-    await user.click(getMenuToggle())
+    await openMobileMenu(user)
 
-    await user.click(screen.getByRole('link', { name: /quotes app/i }))
+    act(() => listeners.forEach((listener) => listener({ matches: false })))
 
-    expect(getMenuToggle()).toBeInTheDocument()
-  })
+    expect(getMobileMenu()).toBeVisible()
 
-  test('closes the mobile menu after a link is followed', async () => {
-    const user = userEvent.setup()
-    render(<Header />)
-    await user.click(getMenuToggle())
-    const [mobileSearchLink] = screen.getAllByRole('link', { name: 'Search' })
+    act(() => listeners.forEach((listener) => listener({ matches: true })))
 
-    await user.click(mobileSearchLink)
-
-    expect(getMenuToggle()).toBeInTheDocument()
+    expect(queryMobileMenu()).not.toBeInTheDocument()
   })
 })
