@@ -50,13 +50,13 @@ describe('useSearchForm', () => {
     const { result } = renderSearchForm()
     const event = createEvent()
 
-    act(() => result.current.handleInputChange('offset', '-1'))
+    act(() => result.current.handleInputChange('limit', '100'))
     act(() => result.current.handleSubmit(event))
 
     expect(event.preventDefault).toHaveBeenCalledTimes(1)
     expect(result.current.showError).toBe(true)
-    expect(result.current.validationErrors.offset).toBe(
-      'Offset must be a positive integer or zero.',
+    expect(result.current.validationErrors.limit).toBe(
+      'Limit must be in range 1..50.',
     )
     expect(mockPush).not.toHaveBeenCalled()
   })
@@ -68,6 +68,19 @@ describe('useSearchForm', () => {
     act(() => result.current.handleSubmit(createEvent()))
 
     expect(mockPush).toHaveBeenCalledWith(`${ROUTES.SEARCH}?text=courage`)
+  })
+
+  test('handleSubmit leaves the offset of the URL out of the new search', () => {
+    const { result } = renderSearchForm({
+      ...INITIAL_SEARCH_VALUES,
+      text: 'life',
+      limit: '20',
+      offset: '40',
+    })
+
+    act(() => result.current.handleSubmit(createEvent()))
+
+    expect(mockPush).toHaveBeenCalledWith(`${ROUTES.SEARCH}?text=life&limit=20`)
   })
 
   test('handleSubmit navigates to the bare search route when nothing is filled', () => {

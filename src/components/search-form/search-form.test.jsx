@@ -1,5 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
-import { fireEvent, render, screen } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 import { SearchForm } from './search-form.jsx'
 
@@ -12,138 +13,153 @@ vi.mock('next/navigation', () => ({
 }))
 
 describe('SearchForm Component', () => {
-  test('renders limit and offset as numeric backend query controls', () => {
+  test('has no offset field', () => {
     render(<SearchForm />)
 
-    const limitInput = screen.getByLabelText('Limit')
-    const offsetInput = screen.getByLabelText('Offset')
-
-    expect(limitInput.getAttribute('type')).toBe('number')
-    expect(limitInput.getAttribute('min')).toBe('1')
-    expect(limitInput.getAttribute('max')).toBe('50')
-    expect(offsetInput.getAttribute('type')).toBe('number')
-    expect(offsetInput.getAttribute('min')).toBe('0')
+    expect(screen.queryByLabelText('Offset')).not.toBeInTheDocument()
   })
 
-  test('submits search values as a route query string', () => {
+  test('offers the limit as a labelled choice of 10, 20 and 50 shown as 10 by default', () => {
     render(<SearchForm />)
 
-    fireEvent.change(screen.getByLabelText('Text'), {
-      target: { value: 'courage' },
-    })
-    fireEvent.change(screen.getByLabelText('Author'), {
-      target: { value: 'Churchill' },
-    })
-    fireEvent.change(screen.getByLabelText('Category'), {
-      target: { value: 'leadership' },
-    })
-    fireEvent.change(screen.getByLabelText('Limit'), {
-      target: { value: '10' },
-    })
-    fireEvent.change(screen.getByLabelText('Offset'), {
-      target: { value: '20' },
-    })
+    const limitSelect = screen.getByRole('combobox', { name: 'Limit' })
+    const options = screen
+      .getAllByRole('option')
+      .map(({ textContent }) => textContent)
 
-    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
+    expect(limitSelect).toHaveValue('10')
+    expect(options).toEqual(['10', '20', '50'])
+  })
+
+  test('shows the limit of the URL as the chosen one', () => {
+    render(
+      <SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES, limit: '20' }} />,
+    )
+
+    expect(screen.getByRole('combobox', { name: 'Limit' })).toHaveValue('20')
+  })
+
+  test('submits search values as a route query string', async () => {
+    const user = userEvent.setup()
+    render(<SearchForm />)
+
+    await user.type(screen.getByLabelText('Text'), 'courage')
+    await user.type(screen.getByLabelText('Author'), 'Churchill')
+    await user.type(screen.getByLabelText('Category'), 'leadership')
+    await user.selectOptions(screen.getByLabelText('Limit'), '50')
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
 
     expect(mockPush).toHaveBeenCalledWith(
-      `${ROUTES.SEARCH}?text=courage&author=Churchill&category=leadership&limit=10&offset=20`,
+      `${ROUTES.SEARCH}?text=courage&author=Churchill&category=leadership&limit=50`,
     )
   })
 
-  test('shows inline validation and prevents navigation for invalid offset', () => {
+  test('sends a category typed with uppercase letters as typed', async () => {
+    const user = userEvent.setup()
     render(<SearchForm />)
 
-    fireEvent.change(screen.getByLabelText('Offset'), {
-      target: { value: '-1' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
+    await user.type(screen.getByLabelText('Category'), 'Leadership')
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
+
+    expect(mockPush).toHaveBeenCalledWith(`${ROUTES.SEARCH}?category=Leadership`)
+  })
+
+  test('shows inline validation and prevents navigation for an invalid category', async () => {
+    const user = userEvent.setup()
+    render(<SearchForm />)
+
+    await user.type(screen.getByLabelText('Category'), 'bad category')
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
 
     expect(
-      screen.getByText('Offset must be a positive integer or zero.'),
-    ).toBeTruthy()
+      screen.getByText('Category can only contain letters, numbers and dashes.'),
+    ).toBeVisible()
     expect(mockPush).not.toHaveBeenCalled()
   })
 
-  test('shows the new initial values when the page passes them', () => {
-    const { rerender } = render(
-      <SearchForm
-        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'life' }}
-      />,
-    )
-
-    fireEvent.change(screen.getByLabelText('Author'), {
-      target: { value: 'typed by the user' },
-    })
-    rerender(
-      <SearchForm
-        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'hope' }}
-      />,
-    )
-
-    expect(screen.getByLabelText('Text').value).toBe('hope')
-    expect(screen.getByLabelText('Author').value).toBe('')
-  })
-
-  test('clears the errors when the page passes new initial values', () => {
-    const { rerender } = render(
-      <SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />,
-    )
-
-    fireEvent.change(screen.getByLabelText('Offset'), {
-      target: { value: '-1' },
-    })
-    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
-    expect(
-      screen.getByText('Offset must be a positive integer or zero.'),
-    ).toBeTruthy()
-
-    rerender(<SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />)
-
-    expect(
-      screen.queryByText('Offset must be a positive integer or zero.'),
-    ).toBeNull()
-  })
-
-  test('keeps what the user typed while the initial values stay the same', () => {
-    const initialSearchValues = { ...INITIAL_SEARCH_VALUES }
-    const { rerender } = render(
-      <SearchForm initialSearchValues={initialSearchValues} />,
-    )
-
-    fireEvent.change(screen.getByLabelText('Text'), {
-      target: { value: 'courage' },
-    })
-    rerender(<SearchForm initialSearchValues={initialSearchValues} />)
-
-    expect(screen.getByLabelText('Text').value).toBe('courage')
-  })
-
-  test('shows the error of a field as soon as it is typed, after the first submit', () => {
-    render(<SearchForm />)
-
-    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
-    fireEvent.change(screen.getByLabelText('Limit'), {
-      target: { value: '100' },
-    })
-
-    expect(screen.getByText('Limit must be in range 1..50.')).toBeTruthy()
-  })
-
-  test('clears search values and returns to the search route', () => {
+  test('starts a new search on the first page, without the offset of the URL', async () => {
+    const user = userEvent.setup()
     render(
       <SearchForm
         initialSearchValues={{
+          ...INITIAL_SEARCH_VALUES,
           text: 'life',
-          author: '',
-          category: '',
           limit: '10',
           offset: '20',
         }}
       />,
     )
 
-    fireEvent.click(screen.getByRole('button', { name: /^clear$/i }))
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
+
+    expect(mockPush).toHaveBeenCalledWith(`${ROUTES.SEARCH}?text=life&limit=10`)
+  })
+
+  test('shows the new initial values when the page passes them', async () => {
+    const user = userEvent.setup()
+    const { rerender } = render(
+      <SearchForm
+        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'life' }}
+      />,
+    )
+
+    await user.type(screen.getByLabelText('Author'), 'typed by the user')
+    rerender(
+      <SearchForm
+        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'hope' }}
+      />,
+    )
+
+    expect(screen.getByLabelText('Text')).toHaveValue('hope')
+    expect(screen.getByLabelText('Author')).toHaveValue('')
+  })
+
+  test('clears the errors when the page passes new initial values', async () => {
+    const user = userEvent.setup()
+    const { rerender } = render(
+      <SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />,
+    )
+
+    await user.type(screen.getByLabelText('Category'), 'bad category')
+    await user.click(screen.getByRole('button', { name: /^search$/i }))
+    expect(
+      screen.getByText('Category can only contain letters, numbers and dashes.'),
+    ).toBeVisible()
+
+    rerender(<SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />)
+
+    expect(
+      screen.queryByText('Category can only contain letters, numbers and dashes.'),
+    ).not.toBeInTheDocument()
+  })
+
+  test('keeps what the user typed while the initial values stay the same', async () => {
+    const user = userEvent.setup()
+    const initialSearchValues = { ...INITIAL_SEARCH_VALUES }
+    const { rerender } = render(
+      <SearchForm initialSearchValues={initialSearchValues} />,
+    )
+
+    await user.type(screen.getByLabelText('Text'), 'courage')
+    rerender(<SearchForm initialSearchValues={initialSearchValues} />)
+
+    expect(screen.getByLabelText('Text')).toHaveValue('courage')
+  })
+
+  test('clears search values and returns to the search route', async () => {
+    const user = userEvent.setup()
+    render(
+      <SearchForm
+        initialSearchValues={{
+          text: 'life',
+          author: '',
+          category: '',
+          limit: '20',
+        }}
+      />,
+    )
+
+    await user.click(screen.getByRole('button', { name: /^clear$/i }))
 
     expect(mockPush).toHaveBeenCalledWith(ROUTES.SEARCH)
   })

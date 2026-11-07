@@ -1,5 +1,5 @@
 import { describe, expect, test, vi } from 'vitest'
-import { MAX_SEARCH_LIMIT } from '@/constants'
+import { DEFAULT_SEARCH_LIMIT, SEARCH_LIMIT_OPTIONS } from '@/constants'
 import {
   createQuoteInputFields,
   createSearchInputFields,
@@ -56,39 +56,37 @@ describe('Search Input Fields', () => {
     text: 'sharp',
     author: 'Someone',
     category: 'life',
-    limit: '10',
+    limit: '20',
     offset: '5',
   }
 
-  test('describes the five search fields with their values', () => {
+  test('describes the four search fields with their values and no offset', () => {
     const fields = createSearchInputFields({ searchValues, validationErrors: {} })
 
     expect(fields.map(({ id, value }) => [id, value])).toEqual([
       ['text', 'sharp'],
       ['author', 'Someone'],
       ['category', 'life'],
-      ['limit', '10'],
-      ['offset', '5'],
+      ['limit', '20'],
     ])
   })
 
-  test('gives the number fields their bounds', () => {
+  test('makes the limit a select of the allowed limits', () => {
     const fields = createSearchInputFields({ searchValues, validationErrors: {} })
     const limit = fields.find(({ id }) => id === 'limit')
-    const offset = fields.find(({ id }) => id === 'offset')
 
-    expect(limit).toMatchObject({ type: 'number', min: 1, max: MAX_SEARCH_LIMIT })
-    expect(offset).toMatchObject({ type: 'number', min: 0 })
+    expect(limit).toMatchObject({ control: 'select', options: SEARCH_LIMIT_OPTIONS })
   })
 
-  test('shows an empty value for an empty limit and offset', () => {
+  test('shows the default limit for an empty one', () => {
     const fields = createSearchInputFields({
-      searchValues: { ...searchValues, limit: '', offset: undefined },
+      searchValues: { ...searchValues, limit: '' },
       validationErrors: {},
     })
 
-    expect(fields.find(({ id }) => id === 'limit').value).toBe('')
-    expect(fields.find(({ id }) => id === 'offset').value).toBe('')
+    expect(fields.find(({ id }) => id === 'limit').value).toBe(
+      String(DEFAULT_SEARCH_LIMIT),
+    )
   })
 
   test('passes the validation errors to their fields', () => {

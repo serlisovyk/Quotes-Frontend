@@ -106,7 +106,6 @@ describe('getSearchValidationErrors utility function', () => {
       author: '',
       category: 'valid-category',
       limit: '10',
-      offset: '0',
     })
 
     expect(result).toEqual({})
@@ -117,13 +116,11 @@ describe('getSearchValidationErrors utility function', () => {
       text: 'life',
       category: 'Bad Category!',
       limit: '100',
-      offset: '-1',
     })
 
     expect(result).toEqual({
       category: 'Category can only contain letters, numbers and dashes.',
       limit: 'Limit must be in range 1..50.',
-      offset: 'Offset must be a positive integer or zero.',
     })
   })
 })
@@ -221,13 +218,8 @@ describe('getSearchInputValidationMessage utility function', () => {
     expect(result).toBeUndefined()
   })
 
-  test('returns error message for invalid offset', () => {
+  test('does not validate the offset: it changes only through the pagination', () => {
     const result = getSearchInputValidationMessage('offset', '-1')
-    expect(result).toBe('Offset must be a positive integer or zero.')
-  })
-
-  test('returns no message for valid offset', () => {
-    const result = getSearchInputValidationMessage('offset', '0')
     expect(result).toBeUndefined()
   })
 })
