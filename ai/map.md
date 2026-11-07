@@ -68,7 +68,8 @@ one barrel. Layers: `ai/rules/architecture.md`; names: `ai/rules/style.md`.
   - Client components (`'use client'`): `app-toasts`, `header`, `menu-items`, `theme-switch`, `input-field`, `select-field`,
     `category-field`, `quote-form`, `search-form`, `delete-quote-button`, `random-quotes-refresh-button`.
   - Server components: `quote`, `author-link`, `quotes`, `loading-status`, `category-tag`, `category-tags`, `category-suggestions`, `form-field`,
-    `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner), `footer`, `theme-icon`.
+    `quote-form-fields`, `pagination`, `pagination-link`, `status-message`, `button`, `burger-button`, `loader` (a CSS spinner),
+    `footer`, `theme-icon`.
 - `hooks/` — one folder each, `use-<name>/use-<name>.js`.
   - `use-quote-form`, `use-search-form` (the two forms), `use-mobile-menu` (the menu dialog).
   - `use-category-field` (combobox state and keys), `use-category-suggestions` (debounced, cancellable lookup).
