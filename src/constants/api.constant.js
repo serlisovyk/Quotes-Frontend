@@ -1,5 +1,8 @@
 export const DEFAULT_ERROR_MESSAGE = 'Some error occurred'
 
+export const TOO_MANY_REQUESTS_MESSAGE =
+  'Too many requests, please try again in a few minutes.'
+
 export const QUOTES_API_ENDPOINT = 'quotes'
 
 export const RANDOM_QUOTES_API_ENDPOINT = 'quotes/random'
@@ -11,6 +14,8 @@ export const API_REQUEST_TIMEOUT_MS = 8000
 export const HTTP_STATUS_BAD_REQUEST = 400
 
 export const HTTP_STATUS_NOT_FOUND = 404
+
+export const HTTP_STATUS_TOO_MANY_REQUESTS = 429
 
 export const HTTP_STATUS_BAD_GATEWAY = 502
 
