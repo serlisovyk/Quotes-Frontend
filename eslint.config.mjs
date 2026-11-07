@@ -8,7 +8,7 @@ const SOURCES = ['src/**/*.{js,jsx}']
 const SERVICES_FOLDER = 'src/services/**'
 
 const ROUTE_FILES = [
-  'src/app/**/{page,layout,not-found,error,loading}.jsx',
+  'src/app/**/{page,layout,not-found,error,global-error,loading}.jsx',
   'src/app/{robots,sitemap}.js',
 ]
 
