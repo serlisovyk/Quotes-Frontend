@@ -45,6 +45,36 @@ describe('MenuItems Component', () => {
       'Home',
       'Random',
       'Search',
+      'Favorites',
     ])
+  })
+
+  test('has Favorites between Search and Create New', () => {
+    mockUsePathname.mockReturnValue('/')
+
+    render(<MenuItems />)
+
+    expect(screen.getAllByRole('link').map((link) => link.textContent)).toEqual([
+      'Home',
+      'Random',
+      'Search',
+      'Favorites',
+      'Create New',
+    ])
+    expect(screen.getByRole('link', { name: 'Favorites' })).toHaveAttribute(
+      'href',
+      '/favorites',
+    )
+  })
+
+  test('marks Favorites as current on its page', () => {
+    mockUsePathname.mockReturnValue('/favorites')
+
+    render(<MenuItems />)
+
+    expect(screen.getByRole('link', { name: 'Favorites' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    )
   })
 })
