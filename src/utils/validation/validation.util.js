@@ -39,13 +39,6 @@ export function createQuotePayload(values) {
   }
 }
 
-export function isQuoteFormValid({ values, setValidationErrors }) {
-  const errors = getQuoteFormValidationErrors(values)
-
-  setValidationErrors(errors)
-  return Object.keys(errors).length === 0
-}
-
 export function getSearchInputValidationMessage(name, value) {
   if (name === 'category' && value && !CATEGORY_NAME_REGEX.test(value)) {
     return 'Category can only contain lowercase letters, numbers, and dashes.'

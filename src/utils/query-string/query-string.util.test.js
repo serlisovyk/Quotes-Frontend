@@ -1,8 +1,6 @@
-import { describe, expect, test, vi } from 'vitest'
-import { ALLOWED_SEARCH_PARAM_NAMES } from '@/constants'
+import { describe, expect, test } from 'vitest'
 import {
   createSearchQueryString,
-  createSearchValuesFromQueryString,
   createSearchValuesFromSearchParamsObject,
 } from './query-string.util.js'
 
@@ -63,83 +61,6 @@ describe('createSearchQueryString utility function', () => {
 
     const result = createSearchQueryString(queryParams)
     expect(result).toBe('author=Alice&limit=50&offset=0')
-  })
-})
-
-describe('createSearchValuesFromQueryString utility function', () => {
-  test('should correctly create an object with allowed params from searchParams', () => {
-    const mockSearchParams = {
-      get: vi.fn((param) => {
-        const params = {
-          text: 'some text',
-          author: 'John Doe',
-          category: 'category1',
-          limit: '10',
-          offset: '20',
-        }
-
-        return params[param] || null
-      }),
-    }
-
-    const result = createSearchValuesFromQueryString(mockSearchParams)
-
-    expect(result).toEqual({
-      text: 'some text',
-      author: 'John Doe',
-      category: 'category1',
-      limit: '10',
-      offset: '20',
-    })
-
-    ALLOWED_SEARCH_PARAM_NAMES.forEach((param) => {
-      expect(mockSearchParams.get).toHaveBeenCalledWith(param)
-    })
-  })
-
-  test('should return empty strings for missing searchParams', () => {
-    const mockSearchParams = {
-      get: vi.fn((param) => {
-        const params = {
-          text: 'another text',
-        }
-        return params[param] || null
-      }),
-    }
-
-    const result = createSearchValuesFromQueryString(mockSearchParams)
-
-    expect(result).toEqual({
-      text: 'another text',
-    })
-  })
-
-  test('should ignore unsupported params', () => {
-    const mockSearchParams = {
-      get: vi.fn((param) => {
-        const params = {
-          text: 'valid text',
-          author: 'Jane Doe',
-          unsupportedParam1: 'value1', // Unsupported param
-          unsupportedParam2: 'value2', // Unsupported param
-        }
-        return params[param] || null
-      }),
-    }
-
-    const result = createSearchValuesFromQueryString(mockSearchParams)
-
-    expect(result).toEqual({
-      text: 'valid text',
-      author: 'Jane Doe',
-    })
-
-    ALLOWED_SEARCH_PARAM_NAMES.forEach((param) => {
-      expect(mockSearchParams.get).toHaveBeenCalledWith(param)
-    })
-
-    expect(mockSearchParams.get).not.toHaveBeenCalledWith('unsupportedParam1')
-    expect(mockSearchParams.get).not.toHaveBeenCalledWith('unsupportedParam2')
   })
 })
 

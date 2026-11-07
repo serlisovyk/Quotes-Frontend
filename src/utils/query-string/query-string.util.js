@@ -14,16 +14,6 @@ export const createSearchQueryString = (queryParams = {}) => {
   return new URLSearchParams(filteredParams).toString()
 }
 
-export const createSearchValuesFromQueryString = (searchParams) => {
-  return ALLOWED_SEARCH_PARAM_NAMES.reduce((acc, searchParamName) => {
-    const value = searchParams.get(searchParamName)
-    if (value) {
-      acc[searchParamName] = value
-    }
-    return acc
-  }, {})
-}
-
 export const createSearchValuesFromSearchParamsObject = (searchParams = {}) => {
   return ALLOWED_SEARCH_PARAM_NAMES.reduce((acc, searchParamName) => {
     const rawValue = searchParams[searchParamName]
