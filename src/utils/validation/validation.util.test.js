@@ -93,7 +93,7 @@ describe('getQuoteFormValidationErrors utility function', () => {
     )
 
     expect(result.categories).toBe(
-      'Invalid categories: Bad, no_pe. Category names can only contain lowercase letters, numbers and dashes.',
+      'Invalid categories: Bad, no_pe. Category can only contain lowercase letters, numbers and dashes.',
     )
   })
 })
@@ -120,7 +120,7 @@ describe('getSearchValidationErrors utility function', () => {
     })
 
     expect(result).toEqual({
-      category: 'Category can only contain lowercase letters, numbers, and dashes.',
+      category: 'Category can only contain lowercase letters, numbers and dashes.',
       limit: 'Limit must be in range 1..50.',
       offset: 'Offset must be a positive integer or zero.',
     })
@@ -180,7 +180,7 @@ describe('getSearchInputValidationMessage utility function', () => {
   test('returns error message for invalid category', () => {
     const result = getSearchInputValidationMessage('category', 'invalid-category@')
     expect(result).toBe(
-      'Category can only contain lowercase letters, numbers, and dashes.',
+      'Category can only contain lowercase letters, numbers and dashes.',
     )
   })
 
