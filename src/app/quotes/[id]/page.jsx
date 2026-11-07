@@ -45,7 +45,7 @@ export default async function QuotePage({ params }) {
             </span>
           </Link>
         </p>
-        <CategoryTags categories={quote.categories} isSingleQuotePage={true} />
+        <CategoryTags categories={quote.categories} isSingleQuotePage />
       </div>
       <div className={`${BUTTON_GROUP_CLASSES} mb-6 items-start`}>
         <Button href={`${ROUTES.QUOTES}/${quote.id}/edit`} text="Edit" />

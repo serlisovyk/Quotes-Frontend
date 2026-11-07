@@ -1,8 +1,8 @@
 import { escapeRegExp } from '@/utils/escape-reg-exp'
-import { HIGHLIGHT_STYLES } from '@/constants'
+import { HIGHLIGHT_STYLES, MIN_HIGHLIGHT_LENGTH } from '@/constants'
 
 export function highlightText(text, searchText) {
-  if (!searchText || searchText.length < 3) return text
+  if (!searchText || searchText.length < MIN_HIGHLIGHT_LENGTH) return text
 
   const parts = text.split(new RegExp(`(${escapeRegExp(searchText)})`, 'gi'))
 

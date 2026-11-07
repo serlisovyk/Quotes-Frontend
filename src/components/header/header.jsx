@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { useState } from 'react'
 import { BurgerButton } from '@/components/burger-button'
 import { MenuItems } from '@/components/menu-items'
+import { ROUTES } from '@/constants'
 
 export function Header() {
   const [isOpen, setIsOpen] = useState(false)
@@ -20,7 +21,7 @@ export function Header() {
       <nav aria-label="Primary" className="bg-white dark:bg-gray-800 p-4 shadow-md">
         <div className="container mx-auto flex items-center">
           <Link
-            href="/"
+            href={ROUTES.HOME}
             className="flex items-center gap-3 sm:gap-7"
             onClick={closeMenu}
           >

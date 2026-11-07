@@ -2,25 +2,28 @@
 
 import { useRef, useState } from 'react'
 
-export function InputField({
-  id,
-  name = id,
-  placeholder,
-  type = 'text',
-  min,
-  max,
-  step,
-  value,
-  defaultValue = '',
-  onChange,
-  error,
-  showError,
-}) {
-  const inputRef = useRef(null)
-  const hasControlledValue = value !== undefined
-  const [innerValue, setInnerValue] = useState(defaultValue)
-  const errorId = `${id}-error`
+export function InputField(props) {
+  const {
+    id,
+    name = id,
+    placeholder,
+    type = 'text',
+    min,
+    max,
+    step,
+    value,
+    defaultValue = '',
+    onChange,
+    error,
+    showError,
+  } = props
 
+  const inputRef = useRef(null)
+
+  const [innerValue, setInnerValue] = useState(defaultValue)
+
+  const hasControlledValue = value !== undefined
+  const errorId = `${id}-error`
   const currentValue = hasControlledValue ? (value ?? '') : innerValue
 
   const handleChange = (event) => {

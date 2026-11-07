@@ -3,15 +3,12 @@
 import { useActionState } from 'react'
 import { Button } from '@/components/button'
 import { deleteQuoteAction } from '@/actions/quote'
-
-const initialState = {
-  error: '',
-}
+import { INITIAL_DELETE_STATE } from '@/constants'
 
 export function DeleteQuoteButton({ quoteId }) {
   const [state, formAction, isPending] = useActionState(
     deleteQuoteAction.bind(null, quoteId),
-    initialState,
+    INITIAL_DELETE_STATE,
   )
 
   return (

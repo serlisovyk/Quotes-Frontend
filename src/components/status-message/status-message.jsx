@@ -1,14 +1,8 @@
-export function StatusMessage({ text, size = 'base', className = '' }) {
-  const sizeClasses = {
-    base: 'text-base',
-    large: 'text-2xl',
-  }
+import { STATUS_MESSAGE_CLASSES, STATUS_MESSAGE_SIZE_CLASSES } from '@/constants'
 
-  return (
-    <p
-      className={`text-center text-gray-600 dark:text-gray-400 ${sizeClasses[size]} ${className}`.trim()}
-    >
-      {text}
-    </p>
-  )
+export function StatusMessage({ text, size = 'base', className = '' }) {
+  const sizeClasses = STATUS_MESSAGE_SIZE_CLASSES[size]
+  const classes = `${STATUS_MESSAGE_CLASSES} ${sizeClasses} ${className}`.trim()
+
+  return <p className={classes}>{text}</p>
 }

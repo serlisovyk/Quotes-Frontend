@@ -19,7 +19,7 @@ export function QuoteFormFields({ values, setValues, validationErrors }) {
           value={value}
           onChange={onChange}
           error={error}
-          showError={true}
+          showError
         />
       ))}
     </div>

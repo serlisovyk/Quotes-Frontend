@@ -12,7 +12,7 @@ export function Quote({ quote, selectedCategory, searchText }) {
 
   return (
     <div className="rounded-lg bg-gray-200 p-4 shadow-md transition-transform duration-300 hover:-translate-y-1.5 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700">
-      <Link href={`/quotes/${id}`}>
+      <Link href={`${ROUTES.QUOTES}/${id}`}>
         <p className="mb-4 text-xl italic text-gray-900 dark:text-gray-100">
           &quot;
           {renderQuoteText({
