@@ -1,6 +1,6 @@
 import { describe, expect, test, vi } from 'vitest'
 import { fireEvent, render, screen } from '@testing-library/react'
-import { ROUTES } from '@/constants'
+import { INITIAL_SEARCH_VALUES, ROUTES } from '@/constants'
 import { SearchForm } from './search-form.jsx'
 
 const mockPush = vi.hoisted(() => vi.fn())
@@ -63,6 +63,71 @@ describe('SearchForm Component', () => {
       screen.getByText('Offset must be a positive integer or zero.'),
     ).toBeTruthy()
     expect(mockPush).not.toHaveBeenCalled()
+  })
+
+  test('shows the new initial values when the page passes them', () => {
+    const { rerender } = render(
+      <SearchForm
+        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'life' }}
+      />,
+    )
+
+    fireEvent.change(screen.getByPlaceholderText(/search by author/i), {
+      target: { value: 'typed by the user' },
+    })
+    rerender(
+      <SearchForm
+        initialSearchValues={{ ...INITIAL_SEARCH_VALUES, text: 'hope' }}
+      />,
+    )
+
+    expect(screen.getByPlaceholderText(/search by text/i).value).toBe('hope')
+    expect(screen.getByPlaceholderText(/search by author/i).value).toBe('')
+  })
+
+  test('clears the errors when the page passes new initial values', () => {
+    const { rerender } = render(
+      <SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />,
+    )
+
+    fireEvent.change(screen.getByPlaceholderText(/offset/i), {
+      target: { value: '-1' },
+    })
+    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
+    expect(
+      screen.getByText('Offset must be a positive integer or zero.'),
+    ).toBeTruthy()
+
+    rerender(<SearchForm initialSearchValues={{ ...INITIAL_SEARCH_VALUES }} />)
+
+    expect(
+      screen.queryByText('Offset must be a positive integer or zero.'),
+    ).toBeNull()
+  })
+
+  test('keeps what the user typed while the initial values stay the same', () => {
+    const initialSearchValues = { ...INITIAL_SEARCH_VALUES }
+    const { rerender } = render(
+      <SearchForm initialSearchValues={initialSearchValues} />,
+    )
+
+    fireEvent.change(screen.getByPlaceholderText(/search by text/i), {
+      target: { value: 'courage' },
+    })
+    rerender(<SearchForm initialSearchValues={initialSearchValues} />)
+
+    expect(screen.getByPlaceholderText(/search by text/i).value).toBe('courage')
+  })
+
+  test('shows the error of a field as soon as it is typed, after the first submit', () => {
+    render(<SearchForm />)
+
+    fireEvent.click(screen.getByRole('button', { name: /^search$/i }))
+    fireEvent.change(screen.getByPlaceholderText(/limit/i), {
+      target: { value: '100' },
+    })
+
+    expect(screen.getByText('Limit must be in range 1..50.')).toBeTruthy()
   })
 
   test('clears search values and returns to the search route', () => {
