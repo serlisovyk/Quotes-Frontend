@@ -3,8 +3,11 @@
 import { useActionState, useEffect, useState } from 'react'
 import { QuoteFormFields } from '@/components/quote-form-fields'
 import { Button } from '@/components/button'
+import { BUTTON_GROUP_CLASSES } from '@/constants'
 
-export function QuoteForm({ action, initialState, buttonText }) {
+export function QuoteForm(props) {
+  const { action, initialState, title, buttonText } = props
+
   const [actionState, formAction, isPending] = useActionState(action, initialState)
   const [formState, setFormState] = useState(initialState)
 
@@ -26,9 +29,8 @@ export function QuoteForm({ action, initialState, buttonText }) {
 
   return (
     <form action={formAction} className="p-4">
-      <h1 className="text-3xl mb-6 text-center dark:text-white">
-        {buttonText === 'Create' ? 'Create New Quote' : 'Edit Quote'}
-      </h1>
+      <h1 className="text-3xl mb-6 text-center dark:text-white">{title}</h1>
+
       <QuoteFormFields
         values={formState.values}
         setValues={setValues}
@@ -41,7 +43,7 @@ export function QuoteForm({ action, initialState, buttonText }) {
         </p>
       )}
 
-      <div className="flex justify-center gap-4 mb-6">
+      <div className={`${BUTTON_GROUP_CLASSES} mb-6`}>
         <Button type="submit" text={buttonText} disabled={isPending} />
         <Button onClick={handleReset} text="Reset" variant="secondary" />
       </div>

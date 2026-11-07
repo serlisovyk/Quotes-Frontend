@@ -19,6 +19,7 @@ export default function CreateQuotePage() {
     <QuoteForm
       action={createQuoteAction}
       initialState={createInitialQuoteFormState(INITIAL_FORM_VALUES)}
+      title="Create New Quote"
       buttonText="Create"
     />
   )

@@ -39,6 +39,7 @@ export default async function EditQuotePage({ params }) {
     <QuoteForm
       action={updateQuoteAction.bind(null, id)}
       initialState={createInitialQuoteFormState(createQuoteFormValues(quote))}
+      title="Edit Quote"
       buttonText="Update"
     />
   )
