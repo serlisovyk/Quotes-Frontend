@@ -5,9 +5,9 @@ export function PaginationLink(props) {
   const { children, href, isActive = false, isDisabled = false } = props
 
   const getVariantClasses = () => {
-    if (isDisabled) return PAGINATION_LINK_CLASSES.disabled
-
     if (isActive) return PAGINATION_LINK_CLASSES.primary
+
+    if (isDisabled) return PAGINATION_LINK_CLASSES.disabled
 
     return PAGINATION_LINK_CLASSES.secondary
   }

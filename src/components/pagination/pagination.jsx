@@ -47,7 +47,6 @@ export function Pagination({ total, queryParams }) {
             key={page}
             href={createPageHref(queryParams, page, limit)}
             isActive={isCurrentPage}
-            isDisabled={isCurrentPage}
           >
             {page}
           </PaginationLink>
